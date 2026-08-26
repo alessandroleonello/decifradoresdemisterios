@@ -237,21 +237,32 @@ function updateHeaderUI() {
     const studentAvatar = document.getElementById('header-student-avatar');
     const studentName = document.getElementById('header-student-name');
     const studentXp = document.getElementById('header-student-xp');
+    const btnHeaderTeacherDash = document.getElementById('btn-header-teacher-dash');
 
-    if (AppState.activeStudent) {
-        studentBadge.style.display = 'flex';
-        btnLogout.style.display = 'flex';
+    if (AppState.isTeacher) {
+        if (studentBadge) studentBadge.style.display = 'none';
+        if (btnLogout) btnLogout.style.display = 'flex';
+        if (btnHeaderTeacherDash) btnHeaderTeacherDash.style.display = 'inline-flex';
+    } else if (AppState.activeStudent) {
+        if (studentBadge) studentBadge.style.display = 'flex';
+        if (btnLogout) btnLogout.style.display = 'flex';
+        if (btnHeaderTeacherDash) btnHeaderTeacherDash.style.display = 'none';
 
         const avatarObj = AVATARES_DISPONIVEIS.find(a => a.id === AppState.activeStudent.avatar) || AVATARES_DISPONIVEIS[0];
-        studentAvatar.textContent = avatarObj.icone;
-        studentName.textContent = AppState.activeStudent.codinome;
+        if (studentAvatar) studentAvatar.textContent = avatarObj.icone;
+        if (studentName) studentName.textContent = AppState.activeStudent.codinome;
 
         const totalXp = AppState.activeStudent.totalXp || 0;
-        studentXp.textContent = `${totalXp} XP`;
+        if (studentXp) studentXp.textContent = `${totalXp} XP`;
     } else {
-        studentBadge.style.display = 'none';
-        btnLogout.style.display = 'none';
+        if (studentBadge) studentBadge.style.display = 'none';
+        if (btnLogout) btnLogout.style.display = 'none';
+        if (btnHeaderTeacherDash) btnHeaderTeacherDash.style.display = 'none';
     }
+}
+
+function updateHeaderAuthUI() {
+    updateHeaderUI();
 }
 
 // ============================================================================
@@ -374,9 +385,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupTeacherDashboardListeners();
     setupLiveSessionListeners();
 
-    // Carrega sessão salva se houver
+    // Carrega sessão salva se houver (Professor ou Aluno)
+    const isTeacherSession = sessionStorage.getItem('decifradores_is_teacher') === 'true';
     const savedStudent = dbService.getActiveStudent();
-    if (savedStudent) {
+
+    if (isTeacherSession) {
+        AppState.isTeacher = true;
+        AppState.activeStudent = null;
+        updateHeaderAuthUI();
+
+        // Se existir sessão de Jogar Junto ativa, entra direto na sala ao vivo!
+        const isLiveOngoing = AppState.currentLiveSession && ['lobby', 'playing', 'enigma_ranking'].includes(AppState.currentLiveSession.status);
+        if (isLiveOngoing) {
+            const subject = getDisciplina(AppState.currentLiveSession.subjectKey);
+            const lesson = getAula(AppState.currentLiveSession.subjectKey, AppState.currentLiveSession.lessonId);
+            const lessonTitle = lesson ? `Aula ${lesson.numero}: ${lesson.titulo}` : AppState.currentLiveSession.lessonTitle;
+            document.getElementById('teacher-live-lesson-title').textContent = `${subject?.nome || 'MATEMÁTICA'} • ${lessonTitle}`;
+            
+            showView('view-teacher-live-session');
+            handleLiveSessionUpdate(AppState.currentLiveSession);
+            showToast('📡 Sessão do "Jogar Junto" recuperada com sucesso!', 'info', 4000);
+        } else {
+            openTeacherDashboard();
+        }
+    } else if (savedStudent) {
         AppState.activeStudent = savedStudent;
         AppState.isTeacher = false;
         updateHeaderAuthUI();
@@ -529,6 +561,7 @@ function setupNavigationListeners() {
     // Botão Sair (Aluno ou Professor)
     document.getElementById('btn-logout')?.addEventListener('click', () => {
         soundManager.playClick();
+        sessionStorage.removeItem('decifradores_is_teacher');
         dbService.clearActiveStudent();
         AppState.activeStudent = null;
         AppState.isTeacher = false;
@@ -3262,11 +3295,26 @@ function setupTeacherDashboardListeners() {
             document.getElementById('modal-teacher-auth')?.classList.remove('active');
             AppState.isTeacher = true;
             AppState.activeStudent = null;
+            sessionStorage.setItem('decifradores_is_teacher', 'true');
             dbService.clearActiveStudent();
             updateHeaderAuthUI();
             soundManager.playSuccess();
-            showToast('Acesso concedido ao Painel do Professor!', 'success');
-            openTeacherDashboard();
+
+            // SE EXISTIR UMA SESSÃO DE "JOGAR JUNTO" ATIVA EM ANDAMENTO, ABRE DIRETO NELA!
+            const isLiveOngoing = AppState.currentLiveSession && ['lobby', 'playing', 'enigma_ranking'].includes(AppState.currentLiveSession.status);
+            if (isLiveOngoing) {
+                const subject = getDisciplina(AppState.currentLiveSession.subjectKey);
+                const lesson = getAula(AppState.currentLiveSession.subjectKey, AppState.currentLiveSession.lessonId);
+                const lessonTitle = lesson ? `Aula ${lesson.numero}: ${lesson.titulo}` : AppState.currentLiveSession.lessonTitle;
+                document.getElementById('teacher-live-lesson-title').textContent = `${subject?.nome || 'MATEMÁTICA'} • ${lessonTitle}`;
+                
+                showView('view-teacher-live-session');
+                handleLiveSessionUpdate(AppState.currentLiveSession);
+                showToast('📡 Retornando à sessão do "Jogar Junto" em andamento!', 'info', 4000);
+            } else {
+                showToast('Acesso concedido ao Painel do Professor!', 'success');
+                openTeacherDashboard();
+            }
         } else {
             soundManager.playError();
             showToast('Senha de professor incorreta! Verifique e tente novamente.', 'error');
@@ -3276,6 +3324,7 @@ function setupTeacherDashboardListeners() {
     // Sair do Painel do Professor
     document.getElementById('btn-teacher-exit')?.addEventListener('click', () => {
         soundManager.playClick();
+        sessionStorage.removeItem('decifradores_is_teacher');
         AppState.isTeacher = false;
         updateHeaderAuthUI();
         showView('view-welcome');
@@ -3854,9 +3903,24 @@ function handleLiveSessionUpdate(session) {
         }
     }
 
-    // 2. VISÃO DO PROFESSOR (Se estiver na tela view-teacher-live-session)
-    const currentTeacherView = document.getElementById('view-teacher-live-session');
-    if (currentTeacherView && currentTeacherView.classList.contains('active')) {
+    // 2. VISÃO DO PROFESSOR
+    if (AppState.isTeacher) {
+        const isLiveOngoing = ['lobby', 'playing', 'enigma_ranking'].includes(session.status);
+
+        if (isLiveOngoing) {
+            const subject = getDisciplina(session.subjectKey);
+            const lesson = getAula(session.subjectKey, session.lessonId);
+            const lessonTitle = lesson ? `Aula ${lesson.numero}: ${lesson.titulo}` : session.lessonTitle;
+            document.getElementById('teacher-live-lesson-title').textContent = `${subject?.nome || 'MATEMÁTICA'} • ${lessonTitle}`;
+
+            // Se o professor estiver no dashboard, na landing ou já na tela ao vivo, sincroniza na tela ao vivo
+            const teacherDashActive = document.getElementById('view-teacher-dashboard')?.classList.contains('active');
+            const welcomeActive = document.getElementById('view-welcome')?.classList.contains('active');
+            if (teacherDashActive || welcomeActive || !document.querySelector('.view-section.active')) {
+                showView('view-teacher-live-session');
+            }
+        }
+
         if (session.status === 'lobby') {
             renderTeacherLiveLobby(session);
         } else if (session.status === 'playing' || session.status === 'enigma_ranking') {
