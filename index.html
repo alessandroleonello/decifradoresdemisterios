@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decifradores de Mistérios: entre Palavras e Códigos 🕵️‍♂️🔍</title>
+    <meta name="description" content="Plataforma de investigação educativa onde os alunos decifram enigmas de Matemática e Língua Portuguesa para solucionar casos misteriosos.">
+    <meta name="theme-color" content="#f1f5f9">
+
+    <!-- Favicon com lupa de detetive -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕵️</text></svg>">
+
+    <!-- Ícones e Fontes Externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Estilos Customizados Neon Cyber-Noir -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase SDK (Compat v10) via CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Canvas Confetti para celebrações de casos solucionados -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- ====================================================================
+         CABECALHO PRINCIPAL DA AGÊNCIA
+         ==================================================================== -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="#" class="brand-logo" id="btn-brand-home">
+                <div class="brand-badge-icon">
+                    <i class="fa-solid fa-magnifying-glass-location"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">Decifradores de Mistérios</span>
+                    <span class="brand-subtitle">Entre Palavras e Códigos</span>
+                </div>
+            </a>
+
+            <div class="header-actions">
+                <!-- Modo Claro / Escuro -->
+                <button type="button" class="btn-icon-top" id="btn-toggle-theme" title="Alternar para Modo Escuro" aria-label="Alternar Tema">
+                    <i class="fa-solid fa-sun" style="color: var(--neon-amber);"></i>
+                </button>
+
+                <!-- Som / Efeitos Sonoros -->
+                <button type="button" class="btn-icon-top" id="btn-toggle-sound" title="Alternar Efeitos Sonoros" aria-label="Alternar Som">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <!-- Badge do Aluno (quando logado) -->
+                <div class="student-status-badge" id="header-student-badge" style="display: none;">
+                    <div class="student-avatar-circle" id="header-student-avatar">🕵️</div>
+                    <div class="student-info-mini">
+                        <span class="student-codename-display" id="header-student-name">Codinome</span>
+                        <span class="student-rank-display" id="header-student-rank">
+                            <i class="fa-solid fa-star"></i> <span id="header-student-xp">0 XP</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Badge do Professor (quando logado como Professor) -->
+                <div class="teacher-active-badge" id="header-teacher-badge" style="display: none;">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>Modo Professor</span>
+                </div>
+
+                <!-- Atalho Painel do Professor (quando logado como Professor) -->
+                <button type="button" class="btn-teacher-access" id="btn-header-teacher-dash" style="display: none;">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>Painel da Turma</span>
+                </button>
+
+                <!-- Botão Sair (quando logado como Aluno ou Professor) -->
+                <button type="button" class="btn-logout" id="btn-logout" style="display: none;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Sair</span>
+                </button>
+
+                <!-- Acesso Painel do Professor (quando deslogado) -->
+                <button type="button" class="btn-teacher-access" id="btn-open-teacher-auth">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Área do Professor</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         CONTAINER PRINCIPAL DE TELAS (SPA)
+         ==================================================================== -->
+    <main class="main-container">
+
+        <!-- ================================================================
+             1. TELA INICIAL (LANDING / BEM-VINDO)
+             ================================================================ -->
+        <section id="view-welcome" class="view-section active">
+            <div class="hero-wrapper">
+                <div class="hero-classified-tag">
+                    <i class="fa-solid fa-fingerprint"></i> QG SECRETO DE INVESTIGAÇÃO
+                </div>
+                
+                <div class="hero-main-logo">
+                    <div class="hero-badge-art">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                </div>
+
+                <h1 class="hero-title">Decifradores de Mistérios</h1>
+                <p class="hero-subtitle">
+                    Entre palavras cifradas e códigos numéricos, apenas os detetives mais atentos desvendarão a verdade oculta em cada lição.
+                </p>
+
+                <div class="hero-actions-container">
+                    <button type="button" class="btn-neon-primary" id="btn-go-create-profile">
+                        <i class="fa-solid fa-id-badge"></i>
+                        <span>Criar um Perfil</span>
+                    </button>
+
+                    <button type="button" class="btn-neon-secondary" id="btn-go-login-profile">
+                        <i class="fa-solid fa-door-open"></i>
+                        <span>Acessar meu Perfil</span>
+                    </button>
+
+                    <button type="button" class="btn-neon-teacher" id="btn-welcome-teacher-login">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <span>Acesso do Professor</span>
+                    </button>
+                </div>
+
+                <div class="landing-features">
+                    <div class="feature-box">
+                        <span class="feature-icon">🔢</span>
+                        <h3 class="feature-title">Matemática Enigmática</h3>
+                        <p class="feature-desc">Cálculos, coordenadas secretas e equações que desarmam cofres e armadilhas.</p>
+                    </div>
+                    <div class="feature-box">
+                        <span class="feature-icon">📖</span>
+                        <h3 class="feature-title">Língua Portuguesa</h3>
+                        <p class="feature-desc">Depoimentos contraditórios, cifras de letras e análise minuciosa de testemunhos.</p>
+                    </div>
+                    <div class="feature-box">
+                        <span class="feature-icon">🏆</span>
+                        <h3 class="feature-title">Dossiês & Conquistas</h3>
+                        <p class="feature-desc">Evolua de Recruta até Mestre Decifrador ganhando XP a cada caso solucionado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             2. TELA CRIAR PERFIL (CADASTRO)
+             ================================================================ -->
+        <section id="view-create-profile" class="view-section">
+            <div class="auth-container">
+                <div class="dossier-card">
+                    <div class="dossier-header">
+                        <span class="dossier-stamp">REGISTRO DE NOVO AGENTE</span>
+                        <h2 class="dossier-title">Criar Perfil de Detetive</h2>
+                        <p class="dossier-subtitle">Escolha seu codinome secreto e senha para ingressar nas investigações.</p>
+                    </div>
+
+                    <form id="form-create-profile" autocomplete="off">
+                        <!-- Nome Real -->
+                        <div class="form-group">
+                            <label class="form-label" for="input-create-fullname">
+                                Nome Real do Aluno <span class="req">*</span> <small style="color: var(--text-muted); font-weight: normal;">(Apenas o professor verá)</small>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-user input-icon"></i>
+                                <input type="text" id="input-create-fullname" class="form-input" placeholder="Ex: Lucas Silva, Maria Eduarda..." required maxlength="60">
+                            </div>
+                        </div>
+
+                        <!-- Codinome -->
+                        <div class="form-group">
+                            <label class="form-label" for="input-create-codename">
+                                Codinome de Detetive <span class="req">*</span> <small style="color: var(--text-muted); font-weight: normal;">(Pode ser editado depois)</small>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-mask input-icon"></i>
+                                <input type="text" id="input-create-codename" class="form-input" placeholder="Ex: SombraFalcão, Lince07, DetetiveAna..." required maxlength="25">
+                            </div>
+                        </div>
+
+                        <!-- Seleção de Avatar -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Escolha seu Avatar de Detetive <span class="req">*</span>
+                            </label>
+                            <div class="avatar-selection-grid" id="create-avatar-grid">
+                                <!-- Preenchido dinamicamente via JS -->
+                            </div>
+                            <input type="hidden" id="input-create-avatar" value="detetive_classico">
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="form-group">
+                            <label class="form-label" for="input-create-password">
+                                Senha de Acesso <span class="req">*</span>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-key input-icon"></i>
+                                <input type="password" id="input-create-password" class="form-input" placeholder="Digite uma senha simples" required maxlength="30">
+                            </div>
+                        </div>
+
+                        <!-- Confirmação de Senha -->
+                        <div class="form-group">
+                            <label class="form-label" for="input-create-password-confirm">
+                                Confirmação da Senha <span class="req">*</span>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="input-create-password-confirm" class="form-input" placeholder="Digite a senha novamente" required maxlength="30">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-neon-primary" style="width: 100%; margin-top: 1rem;">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Concluir Registro & Entrar</span>
+                        </button>
+
+                        <div class="auth-form-footer">
+                            <button type="button" class="link-btn btn-go-welcome">
+                                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+                            </button>
+                            <button type="button" class="link-btn" id="btn-switch-to-login">
+                                Já tenho perfil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             3. TELA ACESSAR PERFIL (LOGIN)
+             ================================================================ -->
+        <section id="view-login-profile" class="view-section">
+            <div class="auth-container">
+                <div class="dossier-card">
+                    <div class="dossier-header">
+                        <span class="dossier-stamp">AUTENTICAÇÃO DE AGENTE</span>
+                        <h2 class="dossier-title">Acessar Meu Perfil</h2>
+                        <p class="dossier-subtitle">Selecione seu codinome na lista e digite sua senha de detetive.</p>
+                    </div>
+
+                    <form id="form-login-profile" autocomplete="off">
+                        <!-- Lista / Grid de Codinomes -->
+                        <div class="codename-select-container">
+                            <label class="form-label">
+                                Selecione seu Codinome <span class="req">*</span>
+                            </label>
+                            
+                            <div class="search-input-box codename-search-bar" style="max-width: 100%;">
+                                <input type="text" id="input-search-codenames" placeholder="Buscar meu codinome...">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+
+                            <div class="codename-grid-scroll" id="login-codename-grid">
+                                <!-- Lista de alunos preenchida dinamicamente -->
+                            </div>
+                            <input type="hidden" id="input-login-selected-codename">
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="form-group">
+                            <label class="form-label" for="input-login-password">
+                                Senha do Aluno <span class="req">*</span>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="input-login-password" class="form-input" placeholder="Digite sua senha" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-neon-secondary" style="width: 100%; margin-top: 1rem;">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span>Entrar na Agência</span>
+                        </button>
+
+                        <div class="auth-form-footer">
+                            <button type="button" class="link-btn btn-go-welcome">
+                                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+                            </button>
+                            <button type="button" class="link-btn" id="btn-switch-to-create">
+                                Criar novo perfil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             4. HUB DO ALUNO (ÁREA LOGADA - ESCOLHA DE MATÉRIA)
+             ================================================================ -->
+        <section id="view-student-hub" class="view-section">
+            <!-- Banner do Dossiê do Agente -->
+            <div class="agent-profile-banner">
+                <div class="agent-dossier-main">
+                    <div class="agent-large-avatar" id="hub-agent-avatar" title="Clique para editar seu Avatar e Codinome" style="cursor: pointer;">🕵️</div>
+                    <div class="agent-details">
+                        <span class="dossier-stamp">DOSSIÊ DO AGENTE</span>
+                        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+                            <h2 id="hub-agent-name" style="margin: 0;">Codinome</h2>
+                            <button type="button" class="btn-icon-top" id="btn-open-edit-codename" title="Editar meu Perfil (Codinome & Avatar)" style="width: 34px; height: 34px; font-size: 0.9rem; border-color: var(--neon-cyan); color: var(--neon-cyan);">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                        <div id="hub-agent-fullname-box" style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                            <i class="fa-solid fa-user-check" style="color: var(--neon-emerald);"></i> Aluno(a): <strong id="hub-agent-fullname-text" style="color: var(--text-primary);">Nome Real</strong>
+                        </div>
+                        <div class="agent-rank-badge">
+                            <span id="hub-agent-rank-badge">🔰 Recruta Investigador</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats do Aluno -->
+                <div class="agent-stats-group" id="hub-student-stats-group">
+                    <div class="stat-chip">
+                        <div class="stat-chip-label">Total de XP</div>
+                        <div class="stat-chip-value" id="hub-stat-xp">0</div>
+                    </div>
+                    <div class="stat-chip">
+                        <div class="stat-chip-label">Casos Solucionados</div>
+                        <div class="stat-chip-value" id="hub-stat-cases">0 / 10</div>
+                    </div>
+                </div>
+
+                <!-- Ações Exclusivas do Professor no Hub -->
+                <div class="teacher-hub-actions-bar" id="hub-teacher-actions-group" style="display: none;">
+                    <button type="button" class="btn-teacher-action" id="btn-hub-teacher-open-dash" style="background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(124,58,237,0.5)); border-color: var(--neon-purple); color: #fff; padding: 0.55rem 1.1rem;">
+                        <i class="fa-solid fa-chalkboard-user"></i> Painel da Turma
+                    </button>
+                    <button type="button" class="btn-logout" id="btn-hub-teacher-exit-mode" style="padding: 0.55rem 1.1rem;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair do Modo Professor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Escolha de Disciplinas -->
+            <div class="section-heading-wrapper">
+                <h3 class="section-title">
+                    <i class="fa-solid fa-folder-tree" style="color: var(--neon-cyan);"></i> Escolha a Divisão de Investigação
+                </h3>
+                <p class="section-subtitle">Selecione a disciplina para abrir os relatórios de casos e atividades.</p>
+            </div>
+
+            <div class="subjects-grid">
+                <!-- Card de Matemática -->
+                <div class="subject-card math" id="card-subject-math">
+                    <div class="subject-top-row">
+                        <div class="subject-icon-box">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <span class="subject-badge-pill" id="badge-math-count">0 / 5 Aulas</span>
+                    </div>
+
+                    <div>
+                        <h4 class="subject-title">Matemática</h4>
+                        <p class="subject-tagline">Códigos numéricos, lógica, proporções e mapas periciais.</p>
+                    </div>
+
+                    <div class="subject-progress-box">
+                        <div class="progress-labels">
+                            <span>Progresso da Divisão</span>
+                            <span id="label-math-percent">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-math-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Língua Portuguesa -->
+                <div class="subject-card portuguese" id="card-subject-portuguese">
+                    <div class="subject-top-row">
+                        <div class="subject-icon-box">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <span class="subject-badge-pill" id="badge-port-count">0 / 5 Aulas</span>
+                    </div>
+
+                    <div>
+                        <h4 class="subject-title">Língua Portuguesa</h4>
+                        <p class="subject-tagline">Testemunhos, criptogramas, análise gramatical e coerência textual.</p>
+                    </div>
+
+                    <div class="subject-progress-box">
+                        <div class="progress-labels">
+                            <span>Progresso da Divisão</span>
+                            <span id="label-port-percent">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="bar-port-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             5. TELA DE AULAS DA DISCIPLINA (STATUS E LISTA DE DOSSIÊS)
+             ================================================================ -->
+        <section id="view-subject-lessons" class="view-section">
+            <div class="subject-header-banner">
+                <button type="button" class="btn-back" id="btn-back-to-hub">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar às Disciplinas
+                </button>
+                <div class="dossier-stamp" id="subject-view-stamp">DIVISÃO DE INVESTIGAÇÃO</div>
+            </div>
+
+            <div class="section-heading-wrapper">
+                <h2 class="hero-title" style="font-size: 2rem; margin-bottom: 0.25rem;" id="subject-view-title">Matemática</h2>
+                <p class="hero-subtitle" style="margin-bottom: 1.5rem;" id="subject-view-subtitle">Resolva os casos e desvende os mistérios em sequência.</p>
+            </div>
+
+            <!-- Destaques: Última Atividade Realizada e Próxima Aula (Clicáveis) -->
+            <div class="mission-tracker-grid">
+                <!-- Última Atividade / Aula -->
+                <div class="tracker-card last-activity" id="tracker-card-last">
+                    <div class="tracker-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="tracker-details">
+                        <span class="tracker-badge-label">Última Realizada</span>
+                        <div class="tracker-title" id="tracker-last-title">Nenhuma aula concluída ainda</div>
+                        <div class="tracker-subtext" id="tracker-last-subtext">Inicie sua primeira investigação abaixo</div>
+                    </div>
+                    <div class="tracker-action-arrow" id="tracker-last-arrow" style="display: none;">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Próxima Aula -->
+                <div class="tracker-card next-activity" id="tracker-card-next">
+                    <div class="tracker-icon">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="tracker-details">
+                        <span class="tracker-badge-label">Próxima Investigação</span>
+                        <div class="tracker-title" id="tracker-next-title">Aula 1 - O Enigma das Coordenadas</div>
+                        <div class="tracker-subtext" id="tracker-next-subtext">Clique no card para abrir e iniciar</div>
+                    </div>
+                    <div class="tracker-action-arrow" id="tracker-next-arrow">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Aulas / Casos -->
+            <div class="section-heading-wrapper" style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <h3 class="section-title" style="margin: 0;">
+                    <i class="fa-solid fa-list-check" style="color: var(--neon-cyan);"></i> Dossiês das Aulas
+                </h3>
+                <button type="button" class="btn-jogar-junto" id="btn-jogar-junto-subject-header">
+                    <i class="fa-solid fa-gamepad"></i> <span>JOGAR JUNTO (Sessão Coletiva)</span>
+                </button>
+            </div>
+
+            <div class="lessons-dossier-list" id="lessons-dossier-list-container">
+                <!-- Preenchido dinamicamente via JS -->
+            </div>
+        </section>
+
+        <!-- ================================================================
+             6. TELA DA AULA & ATIVIDADES / ENIGMAS
+             ================================================================ -->
+        <section id="view-lesson-detail" class="view-section">
+            <div class="lesson-container-box">
+                <div class="subject-header-banner">
+                    <button type="button" class="btn-back" id="btn-back-to-lessons">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar à Lista de Aulas
+                    </button>
+                    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn-jogar-junto" id="btn-jogar-junto-lesson-header">
+                            <i class="fa-solid fa-gamepad"></i> <span>JOGAR JUNTO</span>
+                        </button>
+                        <div class="dossier-stamp" id="lesson-detail-subject-pill">MATEMÁTICA</div>
+                    </div>
+                </div>
+
+                <!-- Header da Aula -->
+                <div class="lesson-banner-hero">
+                    <div class="lesson-top-indicator">
+                        <span class="lesson-case-number" id="lesson-detail-case-num">CASO #01</span>
+                        <span class="lesson-status-pill status-in-progress" id="lesson-detail-status-pill">
+                            <i class="fa-solid fa-magnifying-glass"></i> Investigação em Aberto
+                        </span>
+                    </div>
+
+                    <h2 class="lesson-big-title" id="lesson-detail-title">Título da Aula</h2>
+                    <p class="lesson-objective-text" id="lesson-detail-desc">Descrição completa da investigação...</p>
+                </div>
+
+                <!-- Contêiner do Enigma Ativo (Exibe 1 por vez) -->
+                <div class="activities-stream" id="activities-stream-container">
+                    <!-- Preenchido dinamicamente com o enigma atual -->
+                </div>
+
+                <!-- Barra de Progresso da Aula & Seletor de Enigmas (No Fim da Página) -->
+                <div class="lesson-wizard-header" style="margin-top: 1.5rem;">
+                    <div class="wizard-header-top">
+                        <div class="wizard-step-title">
+                            <i class="fa-solid fa-puzzle-piece" style="color: var(--neon-cyan);"></i>
+                            <span id="lesson-wizard-step-label">Enigma 1 de 3</span>
+                        </div>
+                        <div class="wizard-step-percent" id="lesson-wizard-percent-label">33% Concluído</div>
+                    </div>
+
+                    <!-- Barra de progresso visual -->
+                    <div class="lesson-progress-bar-bg">
+                        <div class="lesson-progress-bar-fill" id="lesson-wizard-progress-bar" style="width: 33%;"></div>
+                    </div>
+
+                    <!-- Indicadores de Passos / Enigmas clicáveis -->
+                    <div class="wizard-step-dots" id="lesson-wizard-step-dots">
+                        <!-- Preenchido dinamicamente via JS -->
+                    </div>
+                </div>
+
+                <!-- Rodapé de Conclusão e Navegação de Enigmas -->
+                <div class="lesson-footer-actions">
+                    <div class="lesson-score-summary">
+                        <i class="fa-solid fa-award" style="font-size: 1.5rem; color: var(--neon-amber);"></i>
+                        <div>
+                            <span style="font-size: 0.78rem; color: var(--text-secondary); display: block;">Pontuação Acumulada</span>
+                            <span class="score-counter-pill" id="lesson-accumulated-score">0 / 100 XP</span>
+                        </div>
+                    </div>
+
+                    <div class="lesson-nav-buttons">
+                        <button type="button" class="btn-wizard-nav btn-wizard-prev" id="btn-prev-activity" disabled>
+                            <i class="fa-solid fa-chevron-left"></i>
+                            <span>Anterior</span>
+                        </button>
+
+                        <button type="button" class="btn-wizard-nav btn-wizard-next" id="btn-next-activity">
+                            <span>Próximo Enigma</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             7. PAINEL DO PROFESSOR (MONITORAMENTO DA TURMA)
+             ================================================================ -->
+        <section id="view-teacher-dashboard" class="view-section">
+            <div class="teacher-dashboard-container">
+                <!-- Banner do Professor -->
+                <div class="teacher-top-banner">
+                    <div>
+                        <h1 class="teacher-title-h1">
+                            <i class="fa-solid fa-chalkboard-user"></i> Painel do Professor
+                        </h1>
+                        <p class="teacher-subtitle-p">Monitoramento em tempo real dos perfis de alunos, senhas, progresso e notas.</p>
+                    </div>
+
+                    <div class="teacher-header-buttons">
+                        <button type="button" class="btn-teacher-action" id="btn-teacher-go-hub" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); border-color: var(--neon-rose); color: #ffffff;">
+                            <i class="fa-solid fa-gamepad"></i> Ver Aulas / Jogar Junto
+                        </button>
+                        <button type="button" class="btn-teacher-action" id="btn-export-students-csv">
+                            <i class="fa-solid fa-file-csv"></i> Exportar Relatório
+                        </button>
+                        <button type="button" class="btn-teacher-action" id="btn-teacher-exit">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair do Painel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Métricas Rápidas -->
+                <div class="teacher-metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                    <div class="metric-card">
+                        <div class="metric-icon-box metric-students">
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Total de Alunos</h4>
+                            <div class="metric-num" id="teacher-metric-total-students">0</div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon-box metric-completion">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Aulas Concluídas</h4>
+                            <div class="metric-num" id="teacher-metric-total-completed">0</div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon-box metric-score">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Média de XP</h4>
+                            <div class="metric-num" id="teacher-metric-avg-xp">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Abas do Painel do Professor -->
+                <div class="teacher-tabs-nav" style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <button type="button" class="teacher-tab-btn active" id="tab-btn-teacher-students">
+                        <i class="fa-solid fa-users"></i> Monitoramento de Alunos
+                    </button>
+                    <button type="button" class="teacher-tab-btn" id="tab-btn-teacher-rankings">
+                        <i class="fa-solid fa-trophy"></i> Histórico de Rankings (Jogar Junto)
+                    </button>
+                </div>
+
+                <!-- Conteúdo da Aba 1: Alunos -->
+                <div id="teacher-tab-content-students">
+                    <!-- Controles da Tabela -->
+                    <div class="teacher-table-controls">
+                        <div class="search-input-box">
+                            <input type="text" id="teacher-search-input" placeholder="Buscar aluno por codinome...">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="button" class="btn-teacher-action" id="btn-refresh-teacher-data">
+                                <i class="fa-solid fa-arrows-rotate"></i> Atualizar Dados
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Alunos -->
+                    <div class="table-responsive-wrapper">
+                        <table class="teacher-students-table">
+                            <thead>
+                                <tr>
+                                    <th>Aluno / Codinome</th>
+                                    <th>Senha de Acesso</th>
+                                    <th>Matemática</th>
+                                    <th>Português</th>
+                                    <th>Status / Última Atividade</th>
+                                    <th>Pontuação Geral</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacher-students-table-body">
+                                <!-- Preenchido dinamicamente via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo da Aba 2: Histórico de Rankings Jogar Junto -->
+                <div id="teacher-tab-content-rankings" style="display: none;">
+                    <div class="ranking-history-header" style="margin-bottom: 1.25rem;">
+                        <h3 style="font-family: var(--font-heading); color: var(--neon-amber); margin-bottom: 0.35rem;">
+                            <i class="fa-solid fa-award"></i> Histórico de Partidas Coletivas
+                        </h3>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Registros gravados de todas as investigações sincronizadas com a turma.</p>
+                    </div>
+
+                    <div class="ranking-history-list" id="teacher-ranking-history-list">
+                        <!-- Preenchido dinamicamente via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             8. TELA DO PROFESSOR: JOGAR JUNTO (SALA DE AULA AO VIVO)
+             ================================================================ -->
+        <section id="view-teacher-live-session" class="view-section">
+            <div class="live-session-container">
+                <!-- Top Bar do Professor -->
+                <div class="live-top-banner">
+                    <div class="live-info-group">
+                        <span class="live-status-pill"><span class="live-pulse-dot"></span> AO VIVO COM A TURMA</span>
+                        <h2 class="live-lesson-heading" id="teacher-live-lesson-title">Aula 1: Senso Numérico e Contagem</h2>
+                    </div>
+                    <div class="live-actions-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" class="btn-teacher-action" id="btn-teacher-pause-session" style="background: rgba(245, 158, 11, 0.18); border-color: var(--neon-amber); color: #fef08a;">
+                            <i class="fa-solid fa-floppy-disk"></i> <span>Pausar & Salvar Progresso</span>
+                        </button>
+                        <button type="button" class="btn-teacher-action btn-danger-soft" id="btn-teacher-cancel-session">
+                            <i class="fa-solid fa-circle-xmark"></i> <span>Encerrar Sala</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FASE 1: LOBBY DE ESPERA DO PROFESSOR -->
+                <div class="live-phase-box" id="teacher-live-phase-lobby">
+                    <div class="lobby-header-card">
+                        <div class="lobby-radar-icon">📡</div>
+                        <h3>Sala de Espera da Missão Conjunta</h3>
+                        <p>Aguardando os detetives ingressarem na sala. Os alunos receberão o chamado do QG na tela automaticamente.</p>
+                        
+                        <div id="teacher-checkpoint-badge" style="display: none; background: rgba(56, 189, 248, 0.15); border: 1.5px dashed var(--neon-cyan); border-radius: var(--radius-sm); padding: 0.5rem 1rem; color: var(--neon-cyan); margin: 0.65rem auto; max-width: 480px; font-weight: 700; font-size: 0.9rem;">
+                            <i class="fa-solid fa-clock-rotate-left"></i> <span id="teacher-checkpoint-text">Sessão retomada a partir do Enigma #1</span>
+                        </div>
+
+                        <div class="lobby-counter-badge">
+                            <i class="fa-solid fa-users"></i> <span id="teacher-lobby-count">0</span> Agente(s) Conectado(s)
+                        </div>
+                    </div>
+
+                    <!-- Grid de Agentes Conectados no Lobby -->
+                    <div class="live-agents-grid" id="teacher-lobby-agents-grid">
+                        <!-- Preenchido dinamicamente com os alunos conectados -->
+                    </div>
+
+                    <div class="lobby-start-action">
+                        <button type="button" class="btn-neon-primary btn-start-live-game" id="btn-teacher-start-game">
+                            <i class="fa-solid fa-rocket"></i>
+                            <span id="btn-teacher-start-game-text">Iniciar Investigação Coletiva (Liberar Enigma #1)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FASE 2: ENIGMA AO VIVO (MONITORAMENTO E FEEDBACK) -->
+                <div class="live-phase-box" id="teacher-live-phase-playing" style="display: none;">
+                    <div class="live-enigma-monitor-header">
+                        <div class="live-enigma-badge-group">
+                            <span class="enigma-number-pill" id="teacher-live-enigma-number">ENIGMA #1 DE 10</span>
+                            <h3 class="enigma-live-name" id="teacher-live-enigma-name">Quadro Secreto de 1 a 100</h3>
+                        </div>
+                        <div class="live-progress-stats">
+                            <span class="stats-counter" id="teacher-live-solved-counter">0 / 0 Concluíram</span>
+                            <button type="button" class="btn-neon-primary btn-next-live-enigma" id="btn-teacher-next-enigma">
+                                <span>Próximo Enigma</span> <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="live-monitoring-layout">
+                        <!-- Grid de Progresso dos Alunos -->
+                        <div class="live-agents-status-panel">
+                            <h4 class="panel-section-title"><i class="fa-solid fa-users-viewfinder"></i> Status dos Agentes em Tempo Real</h4>
+                            <div class="live-agents-status-grid" id="teacher-live-agents-status-grid">
+                                <!-- Preenchido dinamicamente com cartões de status dos alunos -->
+                            </div>
+                        </div>
+
+                        <!-- Ranking de Velocidade do Enigma Atual -->
+                        <div class="live-speed-ranking-panel">
+                            <h4 class="panel-section-title"><i class="fa-solid fa-bolt"></i> Ranking de Velocidade do Enigma</h4>
+                            <div class="live-ranking-list" id="teacher-live-enigma-ranking-list">
+                                <!-- Preenchido dinamicamente com quem terminou primeiro -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FASE 3: RANKING FINAL & PÓDIO DA AULA -->
+                <div class="live-phase-box" id="teacher-live-phase-final" style="display: none;">
+                    <div class="final-celebration-header">
+                        <div class="celebration-trophy">🏆</div>
+                        <h2 class="celebration-title">Missão Coletiva Concluída!</h2>
+                        <p class="celebration-subtitle">Confira o ranking pericial final de velocidade e pontuação de todos os agentes!</p>
+                    </div>
+
+                    <!-- Pódio Top 3 -->
+                    <div class="podium-container" id="teacher-live-podium-container">
+                        <!-- Preenchido dinamicamente com 1º, 2º e 3º lugares -->
+                    </div>
+
+                    <!-- Tabela Geral de Pontuação -->
+                    <div class="final-ranking-table-wrapper">
+                        <table class="ranking-table-live">
+                            <thead>
+                                <tr>
+                                    <th>Posição</th>
+                                    <th>Detetive</th>
+                                    <th>Nome Real</th>
+                                    <th>Tempo Total</th>
+                                    <th>XP Acumulado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacher-live-final-table-body">
+                                <!-- Preenchido via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="final-actions-row">
+                        <button type="button" class="btn-neon-primary" id="btn-teacher-finish-and-save">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar no Histórico & Fechar Sala
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             9. TELA DO ALUNO: JOGAR JUNTO (SALA DE AULA SINCRONIZADA)
+             ================================================================ -->
+        <section id="view-student-live-session" class="view-section">
+            <div class="live-session-container">
+                <!-- Top Bar Sincronizada do Aluno -->
+                <div class="student-live-header">
+                    <div class="student-live-info">
+                        <span class="live-status-pill"><span class="live-pulse-dot"></span> MISSÃO SINCRONIZADA</span>
+                        <h3 class="student-live-lesson-title" id="student-live-lesson-title">Aula 1: Senso Numérico</h3>
+                        <span class="student-live-enigma-label" id="student-live-enigma-label">Enigma 1 de 10</span>
+                    </div>
+                    <div class="student-live-timer-box">
+                        <i class="fa-solid fa-stopwatch"></i>
+                        <span class="live-timer-text" id="student-live-timer">00:00</span>
+                    </div>
+                </div>
+
+                <!-- FASE DE ESPERA DO ALUNO (LOBBY) -->
+                <div class="student-phase-box" id="student-live-phase-lobby">
+                    <div class="student-lobby-card">
+                        <div class="lobby-radar-icon">📡</div>
+                        <h3>Você está na Sala de Espera da Missão!</h3>
+                        <p>Aguarde o Perito Chefe (Professor) iniciar a investigação coletiva para todos...</p>
+                        <div class="student-lobby-agents-preview" id="student-lobby-agents-preview">
+                            <!-- Avatares dos colegas conectados -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FASE DE RESOLUÇÃO DO ENIGMA -->
+                <div class="student-phase-box" id="student-live-phase-playing" style="display: none;">
+                    <div class="student-enigma-render-area" id="student-live-enigma-container">
+                        <!-- Renderiza o Enigma Atual -->
+                    </div>
+                </div>
+
+                <!-- FASE DE ESPERA APÓS RESPONDER O ENIGMA -->
+                <div class="student-phase-box" id="student-live-phase-waiting" style="display: none;">
+                    <div class="student-waiting-card">
+                        <div class="waiting-check-icon">✅</div>
+                        <h3 id="student-waiting-headline">Enigma Solucionado com Sucesso!</h3>
+                        <p id="student-waiting-subtext">Você concluiu em <strong>18 segundos (+50 XP)</strong>. Aguarde os demais agentes e a autorização do Professor para o próximo caso!</p>
+                        
+                        <div class="student-waiting-progress-panel">
+                            <h4 style="color: var(--neon-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-list-ol"></i> Ordem de Conclusão Deste Enigma:</h4>
+                            <div class="live-ranking-mini-list" id="student-waiting-enigma-rank-list">
+                                <!-- Lista de quem já acabou -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FASE DO PÓDIO FINAL DO ALUNO -->
+                <div class="student-phase-box" id="student-live-phase-final" style="display: none;">
+                    <div class="final-celebration-header">
+                        <div class="celebration-trophy">🏆</div>
+                        <h2 class="celebration-title">Missão Concluída!</h2>
+                        <p class="celebration-subtitle">Parabéns por sua dedicação pericial!</p>
+                    </div>
+                    <div class="podium-container" id="student-live-podium-container">
+                        <!-- Pódio -->
+                    </div>
+                    <div class="student-final-score-summary" id="student-final-score-summary">
+                        <!-- Resumo pessoal do aluno -->
+                    </div>
+                    <div class="final-actions-row">
+                        <button type="button" class="btn-neon-primary" id="btn-student-exit-live-session">
+                            <i class="fa-solid fa-house"></i> Voltar ao QG
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ====================================================================
+         MODAL: AUTENTICAÇÃO DO PROFESSOR
+         ==================================================================== -->
+    <div class="modal-backdrop" id="modal-teacher-auth">
+        <div class="modal-box">
+            <button type="button" class="modal-close-btn" id="btn-close-teacher-modal">&times;</button>
+            <h3 class="modal-title">
+                <i class="fa-solid fa-lock" style="color: var(--neon-purple);"></i> Acesso do Professor
+            </h3>
+            <p class="modal-desc">Digite a senha mestre de professor para gerenciar as turmas e visualizar os perfis dos alunos.</p>
+
+            <form id="form-teacher-auth">
+                <div class="form-group">
+                    <label class="form-label" for="input-teacher-master-password">Senha de Acesso do Professor</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-key input-icon" style="color: var(--neon-purple);"></i>
+                        <input type="password" id="input-teacher-master-password" class="form-input" placeholder="Digite a senha de professor" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-neon-primary" style="width: 100%; background: linear-gradient(135deg, #7c3aed, #6d28d9); border-color: var(--neon-purple);">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Desbloquear Painel</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: EDITAR PERFIL DO ALUNO (CODINOME E AVATAR)
+         ==================================================================== -->
+    <div class="modal-backdrop" id="modal-edit-codename">
+        <div class="modal-box" style="max-width: 520px;">
+            <button type="button" class="modal-close-btn" id="btn-close-edit-codename">&times;</button>
+            <h3 class="modal-title">
+                <i class="fa-solid fa-user-pen" style="color: var(--neon-cyan);"></i> Editar Perfil do Detetive
+            </h3>
+            <p class="modal-desc">
+                Você pode atualizar seu codinome e escolher um novo avatar a qualquer momento. Seu nome real não pode ser alterado.
+            </p>
+
+            <form id="form-edit-codename">
+                <div class="form-group">
+                    <label class="form-label">Nome Real do Aluno (Fixo / Não editável)</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon" style="color: var(--text-muted);"></i>
+                        <input type="text" id="input-edit-fullname-static" class="form-input" disabled style="opacity: 0.75; cursor: not-allowed; background: rgba(0,0,0,0.05);">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="input-edit-new-codename">
+                        Codinome de Detetive <span class="req">*</span>
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-mask input-icon"></i>
+                        <input type="text" id="input-edit-new-codename" class="form-input" required maxlength="25" placeholder="Digite seu novo codinome...">
+                    </div>
+                    <small style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; display: block;">
+                        Dica: O codinome é a sua identidade secreta na plataforma.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Escolha seu Avatar de Detetive</label>
+                    <div class="avatar-selection-grid" id="edit-avatar-grid" style="max-height: 180px; overflow-y: auto;">
+                        <!-- Preenchido dinamicamente via JS -->
+                    </div>
+                    <input type="hidden" id="input-edit-avatar" name="avatar">
+                </div>
+
+                <button type="submit" class="btn-neon-primary" style="width: 100%; margin-top: 0.75rem;">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Salvar Alterações do Perfil</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: CONFIRMAÇÃO DE AÇÃO DO DETETIVE
+         ==================================================================== -->
+    <div class="modal-backdrop" id="modal-custom-confirm">
+        <div class="modal-box" style="max-width: 480px; text-align: center;">
+            <button type="button" class="modal-close-btn" id="btn-close-confirm-modal">&times;</button>
+            
+            <div id="confirm-modal-icon" style="font-size: 2.75rem; margin-bottom: 0.75rem; color: var(--neon-amber);">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h3 class="modal-title" id="confirm-modal-title" style="justify-content: center; font-size: 1.35rem; margin-bottom: 0.5rem;">
+                Atenção, Detetive!
+            </h3>
+            
+            <p class="modal-desc" id="confirm-modal-message" style="margin-bottom: 1.5rem; line-height: 1.55; color: var(--text-secondary);">
+                Você ainda não decifrou este enigma. Deseja avançar mesmo assim?
+            </p>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <button type="button" class="btn-back" id="btn-confirm-modal-cancel" style="flex: 1 1 140px; min-height: 46px; justify-content: center;">
+                    Continuar Tentando
+                </button>
+                <button type="button" class="btn-neon-primary" id="btn-confirm-modal-ok" style="flex: 1 1 160px; min-height: 46px; justify-content: center; background: linear-gradient(135deg, #d97706, #b45309); border-color: var(--neon-amber);">
+                    Avançar Mesmo Assim
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL: CHAMADO DE EMERGÊNCIA DO DEPARTAMENTO (JOGAR JUNTO)
+         ==================================================================== -->
+    <div class="modal-backdrop modal-urgent-call" id="modal-jogar-junto-invite">
+        <div class="modal-box modal-call-box">
+            <div class="call-siren-animation">🚨</div>
+            <div class="call-badge-tag">MENSAGEM DE EMERGÊNCIA DO QG</div>
+            <h3 class="call-modal-title">O Departamento precisa de você para resolver um mistério!</h3>
+            <p class="call-modal-desc">
+                O Perito Chefe convocou todos os agentes para uma <strong>Missão Sincronizada em Tempo Real</strong>!
+            </p>
+            <div class="call-mission-card">
+                <div class="call-mission-icon">🔍</div>
+                <div class="call-mission-info">
+                    <span class="call-mission-subj" id="invite-mission-subject">MATEMÁTICA</span>
+                    <h4 class="call-mission-name" id="invite-mission-title">Aula 1 - Senso Numérico e Contagem</h4>
+                    <span class="call-mission-extra" id="invite-mission-extra">10 Enigmas Sincronizados com a Turma</span>
+                </div>
+            </div>
+            <div class="modal-call-actions">
+                <button type="button" class="btn-neon-primary btn-accept-mission" id="btn-accept-live-invite">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>Entrar na Missão Conjunta</span>
+                </button>
+                <button type="button" class="btn-decline-mission" id="btn-decline-live-invite">
+                    Recusar Agora
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         CONTAINER DE NOTIFICAÇÕES (TOASTS)
+         ==================================================================== -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts da Aplicação -->
+    <script src="firebase-config.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
