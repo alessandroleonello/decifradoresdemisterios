@@ -3771,35 +3771,50 @@ async function startTeacherLiveSession(subjectKey, lessonId) {
 // Manipulador Geral de Atualizações da Sessão
 function handleLiveSessionUpdate(session) {
     AppState.currentLiveSession = session;
+    const rejoinBanner = document.getElementById('student-live-banner-rejoin');
 
-    if (!session || session.status === 'closed') {
+    if (!session || session.status === 'closed' || session.status === 'paused') {
         document.getElementById('modal-jogar-junto-invite')?.classList.remove('active');
+        if (rejoinBanner) rejoinBanner.style.display = 'none';
+
         if (AppState.isLiveSessionActive && AppState.activeStudent) {
             AppState.isLiveSessionActive = false;
             stopLiveTimer();
             renderStudentHub();
             showView('view-student-hub');
-            showToast('A sessão coletiva foi finalizada pelo professor.', 'info');
+            if (session && session.status === 'paused') {
+                showToast('💾 A missão foi pausada pelo Professor. Seu progresso e pontuação foram salvos com sucesso!', 'info', 5000);
+            } else {
+                showToast('A sessão coletiva foi finalizada pelo professor.', 'info');
+            }
         }
         return;
     }
 
-    if (session.status === 'paused') {
+    if (session.status === 'final_ranking') {
         document.getElementById('modal-jogar-junto-invite')?.classList.remove('active');
-        if (AppState.isLiveSessionActive && AppState.activeStudent) {
-            AppState.isLiveSessionActive = false;
-            stopLiveTimer();
-            renderStudentHub();
-            showView('view-student-hub');
-            showToast('💾 A missão foi pausada pelo Professor. Seu progresso e pontuação foram salvos com sucesso!', 'info', 5000);
-        }
-        return;
+        if (rejoinBanner) rejoinBanner.style.display = 'none';
     }
 
     // 1. VISÃO DO ALUNO LOGADO
     if (AppState.activeStudent) {
         const myCodename = AppState.activeStudent.codinome;
         const myParticipant = session.participantes ? session.participantes[myCodename] : null;
+        const isStudentInLiveView = document.getElementById('view-student-live-session')?.classList.contains('active');
+        const isWelcomeActive = document.getElementById('view-welcome')?.classList.contains('active');
+
+        // Exibição da barra de reingresso para alunos que estão fora da sala ao vivo
+        if (!isStudentInLiveView && !isWelcomeActive && ['lobby', 'playing', 'enigma_ranking'].includes(session.status)) {
+            if (rejoinBanner) {
+                rejoinBanner.style.display = 'flex';
+                const bannerLessonInfo = document.getElementById('live-banner-lesson-info');
+                if (bannerLessonInfo) {
+                    bannerLessonInfo.textContent = `${session.lessonTitle} • Investigação ao vivo com a turma`;
+                }
+            }
+        } else {
+            if (rejoinBanner) rejoinBanner.style.display = 'none';
+        }
 
         // Se o aluno ainda não entrou e o status é lobby -> Mostra o convite urgente
         if (!myParticipant && session.status === 'lobby') {
@@ -3817,6 +3832,7 @@ function handleLiveSessionUpdate(session) {
         if (myParticipant) {
             document.getElementById('modal-jogar-junto-invite')?.classList.remove('active');
             AppState.isLiveSessionActive = true;
+            if (rejoinBanner) rejoinBanner.style.display = 'none';
 
             if (session.status === 'lobby') {
                 showView('view-student-live-session');

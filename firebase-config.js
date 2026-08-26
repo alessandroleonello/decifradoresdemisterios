@@ -401,12 +401,27 @@ const liveSessionService = {
             this.activeUnsubscribe = null;
         }
 
+        const handleIncomingSession = (session) => {
+            if (!session || session.status === 'closed' || session.status === 'paused') {
+                this.localSession = null;
+                try {
+                    localStorage.removeItem('decifradores_active_live_session');
+                } catch(e) {}
+                callback(null);
+            } else {
+                this.localSession = session;
+                try {
+                    localStorage.setItem('decifradores_active_live_session', JSON.stringify(session));
+                } catch(e) {}
+                callback(session);
+            }
+        };
+
         // 1. Escuta via BroadcastChannel local
         if (liveBroadcast) {
             liveBroadcast.onmessage = (event) => {
                 if (event.data) {
-                    this.localSession = event.data.data;
-                    callback(this.localSession);
+                    handleIncomingSession(event.data.data);
                 }
             };
         }
@@ -418,11 +433,9 @@ const liveSessionService = {
                     .onSnapshot((doc) => {
                         if (doc.exists) {
                             const data = doc.data();
-                            this.localSession = data;
-                            callback(data);
+                            handleIncomingSession(data);
                         } else {
-                            this.localSession = null;
-                            callback(null);
+                            handleIncomingSession(null);
                         }
                     }, (err) => {
                         console.warn("⚠️ [LiveSession] Erro no listener Firestore:", err);
@@ -432,17 +445,27 @@ const liveSessionService = {
             }
         }
 
-        // Retorna estado salvo atual se houver
-        if (this.localSession) {
-            callback(this.localSession);
-        } else {
-            const saved = localStorage.getItem('decifradores_active_live_session');
-            if (saved) {
-                try {
-                    this.localSession = JSON.parse(saved);
+        // Fallback inicial: Só aciona o callback se houver sessão REALMENTE ativa em andamento
+        const saved = localStorage.getItem('decifradores_active_live_session');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                if (parsed && ['lobby', 'playing', 'enigma_ranking'].includes(parsed.status)) {
+                    this.localSession = parsed;
                     callback(this.localSession);
-                } catch(e) {}
+                } else {
+                    this.localSession = null;
+                    localStorage.removeItem('decifradores_active_live_session');
+                    callback(null);
+                }
+            } catch(e) {
+                this.localSession = null;
+                localStorage.removeItem('decifradores_active_live_session');
+                callback(null);
             }
+        } else {
+            this.localSession = null;
+            callback(null);
         }
     },
 
@@ -720,19 +743,29 @@ const liveSessionService = {
 
     // Pausar sessão no meio da aula e salvar o progresso para continuar depois
     async pauseSession() {
-        if (!this.localSession) return null;
         const session = this.localSession;
-
-        // Salva checkpoint da aula
-        await this.saveCheckpoint(session.subjectKey, session.lessonId, session);
+        if (session) {
+            await this.saveCheckpoint(session.subjectKey, session.lessonId, session);
+        }
 
         const pausedSession = {
-            ...session,
+            ...(session || {}),
             status: 'paused',
             pausedAt: new Date().toISOString()
         };
 
-        await this.updateSession(pausedSession);
+        this.localSession = null;
+        try {
+            localStorage.removeItem('decifradores_active_live_session');
+        } catch (e) {}
+
+        this.broadcast('SESSION_UPDATE', pausedSession);
+
+        if (isFirebaseReady && firestoreDb) {
+            try {
+                await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set(pausedSession);
+            } catch (err) {}
+        }
         return pausedSession;
     },
 
@@ -855,18 +888,22 @@ const liveSessionService = {
 
     // Fechar e encerrar sessão ativa
     async closeSession() {
-        if (this.localSession) {
-            this.localSession = null;
+        this.localSession = null;
+        try {
             localStorage.removeItem('decifradores_active_live_session');
-            this.broadcast('SESSION_UPDATE', null);
+        } catch (e) {}
+        
+        this.broadcast('SESSION_UPDATE', { status: 'closed' });
 
-            if (isFirebaseReady && firestoreDb) {
-                try {
-                    await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').delete();
-                    console.log("🛑 [LiveSession] Sessão encerrada e removida.");
-                } catch (err) {
-                    console.error("Erro ao encerrar sessão no Firestore:", err);
-                }
+        if (isFirebaseReady && firestoreDb) {
+            try {
+                await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set({
+                    status: 'closed',
+                    closedAt: new Date().toISOString()
+                });
+                console.log("🛑 [LiveSession] Sessão encerrada e desativada.");
+            } catch (err) {
+                console.error("Erro ao encerrar sessão no Firestore:", err);
             }
         }
     }
