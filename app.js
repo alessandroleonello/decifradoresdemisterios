@@ -213,6 +213,21 @@ function showView(viewId) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Gerencia visibilidade da barra de reingresso na sessão ao vivo
+    const rejoinBanner = document.getElementById('student-live-banner-rejoin');
+    if (rejoinBanner) {
+        const isLiveOngoing = AppState.currentLiveSession && ['lobby', 'playing', 'enigma_ranking'].includes(AppState.currentLiveSession.status);
+        if (AppState.activeStudent && isLiveOngoing && viewId !== 'view-student-live-session' && viewId !== 'view-welcome') {
+            rejoinBanner.style.display = 'flex';
+            const bannerLessonInfo = document.getElementById('live-banner-lesson-info');
+            if (bannerLessonInfo && AppState.currentLiveSession) {
+                bannerLessonInfo.textContent = `${AppState.currentLiveSession.lessonTitle} • Investigação ao vivo com a turma`;
+            }
+        } else {
+            rejoinBanner.style.display = 'none';
+        }
+    }
+
     updateHeaderUI();
 }
 
@@ -3554,6 +3569,8 @@ function setupLiveSessionListeners() {
         if (!AppState.activeStudent || !AppState.currentLiveSession) return;
         await liveSessionService.joinSession(AppState.activeStudent);
         document.getElementById('modal-jogar-junto-invite')?.classList.remove('active');
+        const banner = document.getElementById('student-live-banner-rejoin');
+        if (banner) banner.style.display = 'none';
         AppState.isLiveSessionActive = true;
         showView('view-student-live-session');
     });
@@ -3562,6 +3579,30 @@ function setupLiveSessionListeners() {
         soundManager.playClick();
         document.getElementById('modal-jogar-junto-invite')?.classList.remove('active');
         AppState.declinedSessionId = AppState.currentLiveSession?.id;
+
+        // Exibe a barra de reingresso no topo para o aluno poder entrar quando quiser
+        const banner = document.getElementById('student-live-banner-rejoin');
+        const bannerLessonInfo = document.getElementById('live-banner-lesson-info');
+        if (banner && AppState.currentLiveSession) {
+            banner.style.display = 'flex';
+            if (bannerLessonInfo) {
+                bannerLessonInfo.textContent = `${AppState.currentLiveSession.lessonTitle} • Investigação ao vivo com a turma`;
+            }
+        }
+        showToast('Você pode entrar na investigação coletiva a qualquer momento pelo botão no topo da tela!', 'info', 5000);
+    });
+
+    // Botão na Barra de Alerta para Reingressar na Missão
+    document.getElementById('btn-rejoin-live-banner')?.addEventListener('click', async () => {
+        soundManager.playClick();
+        if (!AppState.activeStudent || !AppState.currentLiveSession) return;
+        await liveSessionService.joinSession(AppState.activeStudent);
+        AppState.isLiveSessionActive = true;
+        AppState.declinedSessionId = null;
+        const banner = document.getElementById('student-live-banner-rejoin');
+        if (banner) banner.style.display = 'none';
+        showView('view-student-live-session');
+        showToast('Você ingressou na missão com a turma! 🚀', 'success');
     });
 
     // Botão JOGAR JUNTO no Header da Aula
