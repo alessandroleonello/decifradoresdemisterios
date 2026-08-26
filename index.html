@@ -753,20 +753,30 @@
                         </div>
                     </div>
 
+                    <!-- CARD DE PROJEÇÃO DO ENIGMA PARA A SALA DE AULA (LEITURA & EXPLICAÇÃO DO PROFESSOR) -->
+                    <div class="teacher-projection-wrapper">
+                        <div class="projection-banner-tag">
+                            <i class="fa-solid fa-chalkboard-user"></i> PROJEÇÃO DO ENIGMA NA SALA • LEITURA DO PROFESSOR
+                        </div>
+                        <div id="teacher-live-enigma-projection-container" class="teacher-enigma-projection-box">
+                            <!-- Preenchido dinamicamente com o enigma para o professor ler e explicar -->
+                        </div>
+                    </div>
+
                     <div class="live-monitoring-layout">
-                        <!-- Grid de Progresso dos Alunos -->
+                        <!-- Grid de Progresso dos Alunos (Apenas Codinomes) -->
                         <div class="live-agents-status-panel">
                             <h4 class="panel-section-title"><i class="fa-solid fa-users-viewfinder"></i> Status dos Agentes em Tempo Real</h4>
                             <div class="live-agents-status-grid" id="teacher-live-agents-status-grid">
-                                <!-- Preenchido dinamicamente com cartões de status dos alunos -->
+                                <!-- Preenchido dinamicamente com cartões de status dos alunos (Apenas Codinome) -->
                             </div>
                         </div>
 
-                        <!-- Ranking de Velocidade do Enigma Atual -->
+                        <!-- Ranking de Velocidade do Enigma Atual (Apenas Codinomes) -->
                         <div class="live-speed-ranking-panel">
-                            <h4 class="panel-section-title"><i class="fa-solid fa-bolt"></i> Ranking de Velocidade do Enigma</h4>
+                            <h4 class="panel-section-title"><i class="fa-solid fa-bolt"></i> Ordem de Conclusão do Enigma</h4>
                             <div class="live-ranking-list" id="teacher-live-enigma-ranking-list">
-                                <!-- Preenchido dinamicamente com quem terminou primeiro -->
+                                <!-- Preenchido dinamicamente com quem terminou primeiro (Apenas Codinome) -->
                             </div>
                         </div>
                     </div>
@@ -777,7 +787,7 @@
                     <div class="final-celebration-header">
                         <div class="celebration-trophy">🏆</div>
                         <h2 class="celebration-title">Missão Coletiva Concluída!</h2>
-                        <p class="celebration-subtitle">Confira o ranking pericial final de velocidade e pontuação de todos os agentes!</p>
+                        <p class="celebration-subtitle">Confira o ranking pericial final de pontuação de todos os agentes!</p>
                     </div>
 
                     <!-- Pódio Top 3 -->
@@ -785,20 +795,18 @@
                         <!-- Preenchido dinamicamente com 1º, 2º e 3º lugares -->
                     </div>
 
-                    <!-- Tabela Geral de Pontuação -->
+                    <!-- Tabela Geral de Pontuação (Apenas Codinomes Projetados) -->
                     <div class="final-ranking-table-wrapper">
                         <table class="ranking-table-live">
                             <thead>
                                 <tr>
                                     <th>Posição</th>
                                     <th>Detetive</th>
-                                    <th>Nome Real</th>
-                                    <th>Tempo Total</th>
                                     <th>XP Acumulado</th>
                                 </tr>
                             </thead>
                             <tbody id="teacher-live-final-table-body">
-                                <!-- Preenchido via JS -->
+                                <!-- Preenchido via JS (Sem exibir Nome Real) -->
                             </tbody>
                         </table>
                     </div>
@@ -817,16 +825,12 @@
              ================================================================ -->
         <section id="view-student-live-session" class="view-section">
             <div class="live-session-container">
-                <!-- Top Bar Sincronizada do Aluno -->
+                <!-- Top Bar Sincronizada do Aluno (Sem cronômetro visível para evitar pressão) -->
                 <div class="student-live-header">
                     <div class="student-live-info">
                         <span class="live-status-pill"><span class="live-pulse-dot"></span> MISSÃO SINCRONIZADA</span>
                         <h3 class="student-live-lesson-title" id="student-live-lesson-title">Aula 1: Senso Numérico</h3>
                         <span class="student-live-enigma-label" id="student-live-enigma-label">Enigma 1 de 10</span>
-                    </div>
-                    <div class="student-live-timer-box">
-                        <i class="fa-solid fa-stopwatch"></i>
-                        <span class="live-timer-text" id="student-live-timer">00:00</span>
                     </div>
                 </div>
 
@@ -849,15 +853,15 @@
                     </div>
                 </div>
 
-                <!-- FASE DE ESPERA APÓS RESPONDER O ENIGMA -->
+                <!-- FASE DE ESPERA APÓS RESPONDER O ENIGMA (Sem contagem de tempo estressante) -->
                 <div class="student-phase-box" id="student-live-phase-waiting" style="display: none;">
                     <div class="student-waiting-card">
                         <div class="waiting-check-icon">✅</div>
                         <h3 id="student-waiting-headline">Enigma Solucionado com Sucesso!</h3>
-                        <p id="student-waiting-subtext">Você concluiu em <strong>18 segundos (+50 XP)</strong>. Aguarde os demais agentes e a autorização do Professor para o próximo caso!</p>
+                        <p id="student-waiting-subtext">Você decifrou o enigma com sucesso e conquistou <strong>+50 XP</strong>! Aguarde os demais agentes e a autorização do Professor para o próximo caso!</p>
                         
                         <div class="student-waiting-progress-panel">
-                            <h4 style="color: var(--neon-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-list-ol"></i> Ordem de Conclusão Deste Enigma:</h4>
+                            <h4 style="color: var(--neon-cyan); margin-bottom: 0.75rem;"><i class="fa-solid fa-list-ol"></i> Agentes Concluintes Deste Enigma:</h4>
                             <div class="live-ranking-mini-list" id="student-waiting-enigma-rank-list">
                                 <!-- Lista de quem já acabou -->
                             </div>

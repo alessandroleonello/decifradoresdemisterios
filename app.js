@@ -3907,7 +3907,6 @@ function renderTeacherLiveLobby(session) {
                 card.innerHTML = `
                     <div class="lobby-agent-avatar">${avatarObj.icone}</div>
                     <div class="lobby-agent-name">${p.codinome}</div>
-                    <div class="lobby-agent-fullname">${p.nomeReal || ''}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -3927,6 +3926,14 @@ function renderTeacherLiveMonitoring(session) {
     document.getElementById('teacher-live-enigma-number').textContent = `ENIGMA #${session.currentActivityIndex + 1} DE ${session.totalEnigmas}`;
     document.getElementById('teacher-live-enigma-name').textContent = atv ? atv.titulo : `Enigma #${session.currentActivityIndex + 1}`;
 
+    // RENDERIZA O ENIGMA NA PROJEÇÃO DO PROFESSOR (Para leitura e explicação da sala)
+    const projectionContainer = document.getElementById('teacher-live-enigma-projection-container');
+    if (projectionContainer && atv) {
+        projectionContainer.innerHTML = '';
+        const enigmaCard = renderActivityCard(atv, session.currentActivityIndex + 1);
+        projectionContainer.appendChild(enigmaCard);
+    }
+
     const participantesList = Object.values(session.participantes || {});
     const totalCount = participantesList.length;
     const solvedCount = participantesList.filter(p => p.status === 'solved').length;
@@ -3942,7 +3949,7 @@ function renderTeacherLiveMonitoring(session) {
         }
     }
 
-    // Grid de Status dos Alunos
+    // Grid de Status dos Alunos (Apenas Codinomes)
     const statusGrid = document.getElementById('teacher-live-agents-status-grid');
     if (statusGrid) {
         statusGrid.innerHTML = '';
@@ -3954,9 +3961,9 @@ function renderTeacherLiveMonitoring(session) {
             card.innerHTML = `
                 <div style="font-size: 1.65rem;">${avatarObj.icone}</div>
                 <div style="flex: 1; min-width: 0;">
-                    <div style="font-family: var(--font-heading); font-size: 0.92rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.codinome}</div>
+                    <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.codinome}</div>
                     <span class="agent-status-tag ${isSolved ? 'solved' : 'answering'}">
-                        ${isSolved ? `✅ Feito em ${p.currentEnigmaTimeSeconds || 0}s` : '🔍 Investigando...'}
+                        ${isSolved ? '✅ Concluiu (+50 XP)' : '🔍 Investigando...'}
                     </span>
                 </div>
             `;
@@ -3964,7 +3971,7 @@ function renderTeacherLiveMonitoring(session) {
         });
     }
 
-    // Ranking de Velocidade Deste Enigma
+    // Ranking / Ordem de Conclusão Deste Enigma (Apenas Codinomes)
     const rankingList = document.getElementById('teacher-live-enigma-ranking-list');
     if (rankingList) {
         rankingList.innerHTML = '';
@@ -3972,7 +3979,7 @@ function renderTeacherLiveMonitoring(session) {
         if (ranking.length === 0) {
             rankingList.innerHTML = `
                 <div style="text-align: center; color: var(--text-muted); font-size: 0.88rem; padding: 1rem;">
-                    Aguardando a primeira resolução...
+                    Aguardando a primeira resolução da turma...
                 </div>
             `;
         } else {
@@ -3986,7 +3993,7 @@ function renderTeacherLiveMonitoring(session) {
                         <span>${avatarObj.icone}</span>
                         <strong style="color: #fff; font-size: 0.95rem;">${item.codinome}</strong>
                     </div>
-                    <span class="live-rank-time">${item.timeSeconds}s (+${item.score} XP)</span>
+                    <span class="live-rank-time" style="color: var(--neon-emerald); font-weight: 700;">+${item.score} XP</span>
                 `;
                 rankingList.appendChild(row);
             });
@@ -3994,7 +4001,7 @@ function renderTeacherLiveMonitoring(session) {
     }
 }
 
-// Renderiza Pódio Final do Professor
+// Renderiza Pódio Final do Professor (Apenas Codinomes Projetados)
 function renderTeacherLivePodium(session) {
     document.getElementById('teacher-live-phase-lobby').style.display = 'none';
     document.getElementById('teacher-live-phase-playing').style.display = 'none';
@@ -4012,8 +4019,6 @@ function renderTeacherLivePodium(session) {
             tr.innerHTML = `
                 <td><strong>${r.posicao}º Lugar</strong></td>
                 <td>${avatarObj.icone} <strong>${r.codinome}</strong></td>
-                <td>${r.nomeReal || 'Não informado'}</td>
-                <td>${r.totalTimeSeconds}s</td>
                 <td><span class="score-counter-pill">${r.totalScore} XP</span></td>
             `;
             tbody.appendChild(tr);
@@ -4041,7 +4046,7 @@ function renderPodiumVisual(ranking, containerId) {
             <div class="podium-step ${rankClass}">
                 <div class="podium-agent-avatar">${avatarObj.icone}</div>
                 <div class="podium-agent-name">${player.codinome}</div>
-                <div class="podium-agent-score">${player.totalScore || player.score || 0} XP • ${player.totalTimeSeconds || player.timeSeconds || 0}s</div>
+                <div class="podium-agent-score">${player.totalScore || player.score || 0} XP</div>
                 <div class="podium-pillar">${rankNum}º</div>
             </div>
         `;
@@ -4105,8 +4110,6 @@ function renderStudentLiveEnigma(session) {
         const card = renderActivityCard(atv, session.currentActivityIndex + 1);
         container.appendChild(card);
     }
-
-    startLiveTimer(session.currentActivityStartTime || Date.now());
 }
 
 // Renderiza Tela de Espera do Aluno (Após submissão ou Encerramento da rodada)
@@ -4116,8 +4119,6 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
     document.getElementById('student-live-phase-waiting').style.display = 'block';
     document.getElementById('student-live-phase-final').style.display = 'none';
 
-    stopLiveTimer();
-
     const myCodename = AppState.activeStudent?.codinome;
     const myHistory = session.participantes?.[myCodename]?.history?.[session.currentActivityIndex];
 
@@ -4126,7 +4127,7 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
 
     if (myHistory && myHistory.solved) {
         headline.textContent = '✅ Enigma Solucionado com Sucesso!';
-        subtext.innerHTML = `Você decifrou a pista em <strong>${myHistory.timeSeconds} segundos (+50 XP)</strong>. Aguarde o Professor autorizar o próximo caso!`;
+        subtext.innerHTML = `Você decifrou o enigma com sucesso e conquistou <strong>+50 XP</strong>! Aguarde o Professor autorizar o próximo caso!`;
     } else {
         headline.textContent = '⏳ Rodada Finalizada!';
         subtext.innerHTML = `O tempo desta pista foi encerrado. Prepare-se para o próximo enigma!`;
@@ -4137,7 +4138,7 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
         rankList.innerHTML = '';
         const ranking = session.activeEnigmaRanking || [];
         if (ranking.length === 0) {
-            rankList.innerHTML = `<div style="color: var(--text-muted); font-size: 0.88rem;">Calculando posições da rodada...</div>`;
+            rankList.innerHTML = `<div style="color: var(--text-muted); font-size: 0.88rem;">Aguardando conclusões da turma...</div>`;
         } else {
             ranking.forEach(r => {
                 const avatarObj = AVATARES_DISPONIVEIS.find(a => a.id === r.avatar) || AVATARES_DISPONIVEIS[0];
@@ -4154,7 +4155,7 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
                         <span>${avatarObj.icone}</span>
                         <strong style="color: #fff;">${r.codinome} ${isMe ? ' (Você)' : ''}</strong>
                     </div>
-                    <span class="live-rank-time">${r.timeSeconds}s (+${r.score} XP)</span>
+                    <span class="live-rank-time" style="color: var(--neon-emerald); font-weight: 700;">✅ Concluído (+${r.score} XP)</span>
                 `;
                 rankList.appendChild(row);
             });
@@ -4169,8 +4170,6 @@ function renderStudentLivePodium(session) {
     document.getElementById('student-live-phase-waiting').style.display = 'none';
     document.getElementById('student-live-phase-final').style.display = 'block';
 
-    stopLiveTimer();
-
     const ranking = session.finalRanking || [];
     renderPodiumVisual(ranking, 'student-live-podium-container');
 
@@ -4183,7 +4182,7 @@ function renderStudentLivePodium(session) {
             <div style="background: rgba(15, 23, 42, 0.85); border: 1.5px solid var(--neon-cyan); border-radius: var(--radius-lg); padding: 1.5rem; max-width: 500px; margin: 1.5rem auto; text-align: center;">
                 <h3 style="font-family: var(--font-heading); color: #fff; margin-bottom: 0.5rem;">Sua Classificação Pericial</h3>
                 <div style="font-size: 2.2rem; font-weight: 900; color: var(--neon-amber); margin: 0.5rem 0;">${myRank.posicao}º LUGAR</div>
-                <p style="color: var(--text-secondary); margin-bottom: 0;">Pontuação Total: <strong>${myRank.totalScore} XP</strong> • Tempo Total: <strong>${myRank.totalTimeSeconds}s</strong></p>
+                <p style="color: var(--text-secondary); margin-bottom: 0;">Pontuação Total: <strong>${myRank.totalScore} XP</strong></p>
             </div>
         `;
     }
