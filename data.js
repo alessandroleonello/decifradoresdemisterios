@@ -365,7 +365,120 @@ const CURRICULO_INVESTIGACAO = {
         corTemaSecundaria: '#d97706',
         corGlow: 'rgba(245, 158, 11, 0.4)',
         descricao: 'Analise depoimentos com lupa, descubra mensagens cifradas, pontuações ambíguas e contradições nos testemunhos.',
-        aulas: []
+        aulas: [
+            {
+                id: 'port_aula_1',
+                numero: 1,
+                titulo: 'O Segredo das Letras e Sílabas',
+                descricao: 'Desenvolva suas habilidades periciais de alfabetização: restaure o alfabeto secreto, descubra as letras vizinhas, decifre palavras com pistas visuais, organize sílabas embaralhadas e separe as sílabas dos códigos!',
+                dificuldade: 'Iniciante',
+                tempoEstimado: '15 min',
+                xpRecompensa: 100,
+                atividades: [
+                    {
+                        id: 'port_1_atv_1',
+                        tipo: 'alfabeto_lacunado',
+                        titulo: 'Enigma do Alfabeto Pericial',
+                        instrucoes: 'Os peritos encontraram a fita do alfabeto confidencial de A a Z com algumas letras apagadas pelo suspeito! Digite as letras que estão faltando nos espaços em destaque para restaurar todo o alfabeto.',
+                        totalLetras: 26,
+                        alfabeto: [
+                            { letra: 'A', oculto: false },
+                            { letra: 'B', oculto: false },
+                            { letra: 'C', oculto: true },
+                            { letra: 'D', oculto: false },
+                            { letra: 'E', oculto: false },
+                            { letra: 'F', oculto: true },
+                            { letra: 'G', oculto: false },
+                            { letra: 'H', oculto: false },
+                            { letra: 'I', oculto: true },
+                            { letra: 'J', oculto: false },
+                            { letra: 'K', oculto: false },
+                            { letra: 'L', oculto: true },
+                            { letra: 'M', oculto: false },
+                            { letra: 'N', oculto: false },
+                            { letra: 'O', oculto: true },
+                            { letra: 'P', oculto: false },
+                            { letra: 'Q', oculto: false },
+                            { letra: 'R', oculto: true },
+                            { letra: 'S', oculto: false },
+                            { letra: 'T', oculto: false },
+                            { letra: 'U', oculto: true },
+                            { letra: 'V', oculto: false },
+                            { letra: 'W', oculto: false },
+                            { letra: 'X', oculto: true },
+                            { letra: 'Y', oculto: false },
+                            { letra: 'Z', oculto: true }
+                        ],
+                        dica: 'Dica Forense: Recite o alfabeto em ordem: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z!',
+                        explicacao: 'Excelente restauração! Você completou todas as letras do alfabeto com precisão pericial.'
+                    },
+                    {
+                        id: 'port_1_atv_2',
+                        tipo: 'vizinhos_alfabeto',
+                        titulo: 'Enigma dos Vizinhos do Alfabeto (Antes e Depois)',
+                        instrucoes: 'Para decodificar os carimbos secretos, os peritos precisam das letras vizinhas imediatas! Digite a letra que vem ANTES (à esquerda) e a letra que vem DEPOIS (à direita) de cada letra central.',
+                        itens: [
+                            { letra: 'B', antes: 'A', depois: 'C' },
+                            { letra: 'E', antes: 'D', depois: 'F' },
+                            { letra: 'J', antes: 'I', depois: 'K' },
+                            { letra: 'M', antes: 'L', depois: 'N' },
+                            { letra: 'P', antes: 'O', depois: 'Q' },
+                            { letra: 'T', antes: 'S', depois: 'U' }
+                        ],
+                        dica: 'Dica Forense: Pense na ordem alfabética! Qual letra vem logo antes e qual vem logo em seguida?',
+                        explicacao: 'Incrível dedução! Você identificou corretamente todos os vizinhos alfabéticos dos códigos.'
+                    },
+                    {
+                        id: 'port_1_atv_3',
+                        tipo: 'completar_palavras_desenho',
+                        titulo: 'Enigma das Palavras com Pistas Visuais',
+                        instrucoes: 'O laboratório forense fotografou várias pistas deixadas no local do crime! Observe o desenho (emoji) de cada pista e preencha as letras que faltam para completar o nome de cada evidência.',
+                        itens: [
+                            { id: 'item_1', emoji: '🐱', nomeCompleto: 'GATO', lacunas: ['G', null, 'T', null], respostasEsperadas: { '1': 'A', '3': 'O' } },
+                            { id: 'item_2', emoji: '🏠', nomeCompleto: 'CASA', lacunas: ['C', null, 'S', null], respostasEsperadas: { '1': 'A', '3': 'A' } },
+                            { id: 'item_3', emoji: '🍌', nomeCompleto: 'BANANA', lacunas: ['B', null, 'N', null, 'N', null], respostasEsperadas: { '1': 'A', '3': 'A', '5': 'A' } },
+                            { id: 'item_4', emoji: '🍿', nomeCompleto: 'PIPOCA', lacunas: ['P', null, 'P', null, 'C', null], respostasEsperadas: { '1': 'I', '3': 'O', '5': 'A' } },
+                            { id: 'item_5', emoji: '⚽', nomeCompleto: 'BOLA', lacunas: [null, 'O', null, 'A'], respostasEsperadas: { '0': 'B', '2': 'L' } },
+                            { id: 'item_6', emoji: '🐵', nomeCompleto: 'MACACO', lacunas: ['M', null, 'C', null, 'C', null], respostasEsperadas: { '1': 'A', '3': 'A', '5': 'O' } }
+                        ],
+                        dica: 'Dica Forense: Fale o nome do desenho em voz alta e preste atenção no som das vogais e consoantes que faltam!',
+                        explicacao: 'Sensacional, Agente! Todas as palavras foram decifradas e completadas com base nas evidências visuais!'
+                    },
+                    {
+                        id: 'port_1_atv_4',
+                        tipo: 'juntar_silabas_palavra',
+                        titulo: 'Enigma da Montagem de Sílabas (Junte e Forme)',
+                        instrucoes: 'As sílabas das palavras foram cortadas e desordenadas pelo criminoso! Clique nas sílabas na ordem correta para reconstruir cada palavra misteriosa.',
+                        itens: [
+                            { id: 'syl_1', palavra: 'CASA', emoji: '🏠', silabasDesordenadas: ['SA', 'CA'], ordemCorreta: ['CA', 'SA'] },
+                            { id: 'syl_2', palavra: 'BONECA', emoji: '🪆', silabasDesordenadas: ['CA', 'BO', 'NE'], ordemCorreta: ['BO', 'NE', 'CA'] },
+                            { id: 'syl_3', palavra: 'SAPATO', emoji: '👞', silabasDesordenadas: ['TO', 'SA', 'PA'], ordemCorreta: ['SA', 'PA', 'TO'] },
+                            { id: 'syl_4', palavra: 'TAPETE', emoji: '🧶', silabasDesordenadas: ['TE', 'TA', 'PE'], ordemCorreta: ['TA', 'PE', 'TE'] },
+                            { id: 'syl_5', palavra: 'CORUJA', emoji: '🦉', silabasDesordenadas: ['JA', 'RU', 'CO'], ordemCorreta: ['CO', 'RU', 'JA'] },
+                            { id: 'syl_6', palavra: 'DETETIVE', emoji: '🕵️', silabasDesordenadas: ['VE', 'DE', 'TI', 'TE'], ordemCorreta: ['DE', 'TE', 'TI', 'VE'] }
+                        ],
+                        dica: 'Dica Forense: Fale a palavra pausadamente e encontre o primeiro pedacinho (primeira sílaba), depois o segundo e assim por diante!',
+                        explicacao: 'Excelente trabalho tático! Você reuniu e ordenou todas as sílabas, reconstruindo os depoimentos!'
+                    },
+                    {
+                        id: 'port_1_atv_5',
+                        tipo: 'separar_silabas',
+                        titulo: 'Enigma da Separação Silábica',
+                        instrucoes: 'A perícia precisa catalogar cada pedacinho sonoro das palavras! Digite cada sílaba no seu respectivo campo na frente de cada palavra.',
+                        itens: [
+                            { palavra: 'BONECA', emoji: '🪆', silabasEsperadas: ['BO', 'NE', 'CA'], totalSilabas: 3 },
+                            { palavra: 'PIPOCA', emoji: '🍿', silabasEsperadas: ['PI', 'PO', 'CA'], totalSilabas: 3 },
+                            { palavra: 'MACACO', emoji: '🐵', silabasEsperadas: ['MA', 'CA', 'CO'], totalSilabas: 3 },
+                            { palavra: 'SAPATO', emoji: '👞', silabasEsperadas: ['SA', 'PA', 'TO'], totalSilabas: 3 },
+                            { palavra: 'CADERNO', emoji: '📓', silabasEsperadas: ['CA', 'DER', 'NO'], totalSilabas: 3 },
+                            { palavra: 'GATO', emoji: '🐱', silabasEsperadas: ['GA', 'TO'], totalSilabas: 2 }
+                        ],
+                        dica: 'Dica Forense: Bata palmas ou conte nos dedos quantas vezes você abre a boca para falar cada palavra. Cada batida é uma sílaba!',
+                        explicacao: 'PARABÉNS, DETETIVE MESTRE DA LÍNGUA PORTUGUESA! Você completou com perfeição todos os 5 enigmas de Sílabas com nota máxima!'
+                    }
+                ]
+            }
+        ]
     }
 };
 

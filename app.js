@@ -1987,6 +1987,281 @@ function renderActivityCard(atv, num) {
         `;
     }
 
+    // TIPO 13 (PORTUGUÊS 1): ALFABETO LACUNADO (ALFABETO PERICIAL)
+    if (atv.tipo === 'alfabeto_lacunado' && atv.alfabeto) {
+        let cellsHtml = '';
+        atv.alfabeto.forEach((item, idx) => {
+            if (item.oculto) {
+                cellsHtml += `
+                    <div class="alphabet-cell input-cell">
+                        <input type="text" 
+                               maxlength="1" 
+                               class="alphabet-cell-input ${isAlreadySolved ? 'correct' : ''}" 
+                               data-cell-idx="${idx}" 
+                               data-expected="${item.letra}" 
+                               id="alphabet-input-${atv.id}-${idx}"
+                               value="${isAlreadySolved ? item.letra : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''} 
+                               placeholder="?" 
+                               autocomplete="off" 
+                               autocapitalize="characters"
+                               aria-label="Letra ${item.letra}">
+                    </div>
+                `;
+            } else {
+                cellsHtml += `
+                    <div class="alphabet-cell fixed">${item.letra}</div>
+                `;
+            }
+        });
+
+        inputSectionHtml = `
+            <div class="alphabet-activity-container">
+                <div class="hundred-chart-legend">
+                    <span><i class="fa-solid fa-pen-to-square" style="color: var(--neon-amber);"></i> Complete as letras destacadas em âmbar</span>
+                    <span><i class="fa-solid fa-font" style="color: var(--neon-cyan);"></i> Ordem alfabética de A a Z</span>
+                </div>
+                <div class="alphabet-grid">
+                    ${cellsHtml}
+                </div>
+                <div class="hundred-chart-actions">
+                    <button type="button" class="btn-decode-action btn-verify-alphabet-grid" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-spell-check"></i> ${isAlreadySolved ? 'Alfabeto Verificado com Sucesso ✅' : 'Verificar Alfabeto Completo'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 14 (PORTUGUÊS 2): VIZINHOS DO ALFABETO (ANTES E DEPOIS)
+    if (atv.tipo === 'vizinhos_alfabeto' && atv.itens) {
+        let rowsHtml = '';
+        atv.itens.forEach((item, idx) => {
+            rowsHtml += `
+                <div class="neighbor-row-card letter-neighbor-card" id="letter-neighbor-row-${atv.id}-${idx}">
+                    <div class="neighbor-col neighbor-left">
+                        <label class="neighbor-col-label"><i class="fa-solid fa-arrow-left"></i> Vem Antes</label>
+                        <input type="text" 
+                               maxlength="1" 
+                               class="neighbor-input letter-neighbor-input antecessor-input" 
+                               data-row-idx="${idx}" 
+                               data-type="antes" 
+                               data-expected="${item.antes}" 
+                               placeholder="?" 
+                               autocomplete="off" 
+                               autocapitalize="characters"
+                               value="${isAlreadySolved ? item.antes : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               aria-label="Letra que vem antes de ${item.letra}">
+                    </div>
+
+                    <div class="neighbor-col neighbor-center">
+                        <span class="neighbor-badge-tag">Letra Pista</span>
+                        <div class="neighbor-number-display letter-display">${item.letra}</div>
+                    </div>
+
+                    <div class="neighbor-col neighbor-right">
+                        <label class="neighbor-col-label">Vem Depois <i class="fa-solid fa-arrow-right"></i></label>
+                        <input type="text" 
+                               maxlength="1" 
+                               class="neighbor-input letter-neighbor-input sucessor-input" 
+                               data-row-idx="${idx}" 
+                               data-type="depois" 
+                               data-expected="${item.depois}" 
+                               placeholder="?" 
+                               autocomplete="off" 
+                               autocapitalize="characters"
+                               value="${isAlreadySolved ? item.depois : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               aria-label="Letra que vem depois de ${item.letra}">
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="neighbors-container letter-neighbors-container">
+                <div class="neighbors-list">
+                    ${rowsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.35rem;">
+                    <button type="button" class="btn-decode-action btn-verify-letter-neighbors" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-arrows-left-right"></i> ${isAlreadySolved ? 'Vizinhos Verificados com Sucesso ✅' : 'Verificar Letras Vizinhas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 15 (PORTUGUÊS 3): COMPLETAR PALAVRAS COM DESENHO / EMOJI
+    if (atv.tipo === 'completar_palavras_desenho' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((item, itemIdx) => {
+            let slotsHtml = '';
+            item.lacunas.forEach((char, charIdx) => {
+                if (char === null) {
+                    const expectedChar = item.respostasEsperadas[String(charIdx)];
+                    slotsHtml += `
+                        <div class="word-char-slot input-slot">
+                            <input type="text" 
+                                   maxlength="1" 
+                                   class="word-char-input ${isAlreadySolved ? 'correct' : ''}" 
+                                   data-item-idx="${itemIdx}" 
+                                   data-slot-idx="${charIdx}" 
+                                   data-expected="${expectedChar}" 
+                                   value="${isAlreadySolved ? expectedChar : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''} 
+                                   placeholder="_" 
+                                   autocomplete="off" 
+                                   autocapitalize="characters"
+                                   aria-label="Letra da posição ${charIdx + 1}">
+                        </div>
+                    `;
+                } else {
+                    slotsHtml += `
+                        <div class="word-char-slot fixed-slot">${char}</div>
+                    `;
+                }
+            });
+
+            cardsHtml += `
+                <div class="word-completion-card" id="word-comp-card-${atv.id}-${itemIdx}">
+                    <div class="word-visual-header">
+                        <div class="word-emoji-badge">${item.emoji}</div>
+                        <div class="word-clue-label">Evidência #${itemIdx + 1}</div>
+                    </div>
+                    <div class="word-slots-container">
+                        ${slotsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="word-completion-container">
+                <div class="word-completion-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-complete-words" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-spell-check"></i> ${isAlreadySolved ? 'Palavras Decifradas com Sucesso ✅' : 'Verificar Todas as Palavras'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 16 (PORTUGUÊS 4): JUNTAR SÍLABAS PARA FORMAR PALAVRAS
+    if (atv.tipo === 'juntar_silabas_palavra' && atv.itens) {
+        let itemsHtml = '';
+        atv.itens.forEach((item, itemIdx) => {
+            let chipsHtml = '';
+            item.silabasDesordenadas.forEach((syl, sylIdx) => {
+                chipsHtml += `
+                    <button type="button" 
+                            class="syllable-chip-btn ${isAlreadySolved ? 'used' : ''}" 
+                            data-item-idx="${itemIdx}" 
+                            data-syl-idx="${sylIdx}" 
+                            data-syl="${syl}" 
+                            ${isAlreadySolved ? 'disabled' : ''}>
+                        ${syl}
+                    </button>
+                `;
+            });
+
+            const solvedText = isAlreadySolved ? item.ordemCorreta.join('') : '';
+
+            itemsHtml += `
+                <div class="syllable-builder-card" id="syl-builder-card-${atv.id}-${itemIdx}" data-item-idx="${itemIdx}" data-expected="${item.ordemCorreta.join('-')}">
+                    <div class="syllable-builder-header">
+                        <span class="syllable-builder-emoji">${item.emoji}</span>
+                        <div class="syllable-builder-title-box">
+                            <strong>Pista #${itemIdx + 1}</strong>
+                            <small>Clique nos blocos na ordem certa para montar a palavra</small>
+                        </div>
+                        <button type="button" class="btn-clear-syllables" data-item-idx="${itemIdx}" ${isAlreadySolved ? 'disabled' : ''} title="Limpar montagem">
+                            <i class="fa-solid fa-rotate-left"></i> Limpar
+                        </button>
+                    </div>
+
+                    <div class="syllable-target-display" id="syl-target-display-${atv.id}-${itemIdx}">
+                        <span class="syl-assembled-text">${solvedText || '<em class="syl-placeholder">Clique nas sílabas abaixo...</em>'}</span>
+                    </div>
+
+                    <div class="syllable-chips-grid" id="syl-chips-${atv.id}-${itemIdx}">
+                        ${chipsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="syllable-builder-container">
+                <div class="syllable-builder-list">
+                    ${itemsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-join-syllables" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-puzzle-piece"></i> ${isAlreadySolved ? 'Palavras Montadas com Sucesso ✅' : 'Verificar Palavras Formadas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 17 (PORTUGUÊS 5): SEPARAR AS SÍLABAS
+    if (atv.tipo === 'separar_silabas' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((item, itemIdx) => {
+            let fieldsHtml = '';
+            item.silabasEsperadas.forEach((syl, sylIdx) => {
+                fieldsHtml += `
+                    <div class="syllable-split-slot">
+                        <input type="text" 
+                               class="syllable-split-input ${isAlreadySolved ? 'correct' : ''}" 
+                               data-item-idx="${itemIdx}" 
+                               data-slot-idx="${sylIdx}" 
+                               data-expected="${syl}" 
+                               value="${isAlreadySolved ? syl : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''} 
+                               placeholder="Sílaba ${sylIdx + 1}" 
+                               autocomplete="off" 
+                               autocapitalize="characters"
+                               aria-label="Sílaba ${sylIdx + 1} de ${item.palavra}">
+                    </div>
+                    ${sylIdx < item.silabasEsperadas.length - 1 ? '<span class="syllable-separator-hyphen">-</span>' : ''}
+                `;
+            });
+
+            cardsHtml += `
+                <div class="syllable-splitter-card" id="syl-splitter-card-${atv.id}-${itemIdx}">
+                    <div class="syllable-splitter-left">
+                        <span class="syllable-splitter-emoji">${item.emoji}</span>
+                        <span class="syllable-splitter-word">${item.palavra}</span>
+                        <span class="syllable-count-tag">${item.silabasEsperadas.length} Sílabas</span>
+                    </div>
+                    <div class="syllable-splitter-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="syllable-splitter-fields">
+                        ${fieldsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="syllable-splitter-container">
+                <div class="syllable-splitter-list">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-separate-syllables" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-scissors"></i> ${isAlreadySolved ? 'Separações Silábicas Verificadas com Sucesso ✅' : 'Verificar Separação Silábica'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
     card.innerHTML = `
         <div class="activity-card-header">
             <span class="activity-badge">ENIGMA #${num}</span>
@@ -2319,6 +2594,189 @@ function renderActivityCard(atv, num) {
                     }
                 }
             });
+        });
+    }
+
+    // Eventos de Alfabeto Lacunado (Língua Portuguesa)
+    if (atv.tipo === 'alfabeto_lacunado') {
+        const btnVerify = card.querySelector('.btn-verify-alphabet-grid');
+        const inputs = card.querySelectorAll('.alphabet-cell-input');
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                input.value = input.value.toUpperCase();
+                if (input.value.length === 1 && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlphabetGridAnswerSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Vizinhos do Alfabeto (Língua Portuguesa)
+    if (atv.tipo === 'vizinhos_alfabeto') {
+        const btnVerify = card.querySelector('.btn-verify-letter-neighbors');
+        const inputs = card.querySelectorAll('.letter-neighbor-input');
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                input.value = input.value.toUpperCase();
+                if (input.value.length === 1 && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlphabetNeighborsAnswerSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Completar Palavras com Desenho (Língua Portuguesa)
+    if (atv.tipo === 'completar_palavras_desenho') {
+        const btnVerify = card.querySelector('.btn-verify-complete-words');
+        const inputs = card.querySelectorAll('.word-char-input');
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                input.value = input.value.toUpperCase();
+                if (input.value.length === 1 && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleCompleteWordsAnswerSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Juntar Sílabas para Formar Palavras (Língua Portuguesa)
+    if (atv.tipo === 'juntar_silabas_palavra') {
+        const btnVerify = card.querySelector('.btn-verify-join-syllables');
+        const builderCards = card.querySelectorAll('.syllable-builder-card');
+
+        builderCards.forEach(bCard => {
+            const itemIdx = parseInt(bCard.dataset.itemIdx, 10);
+            const itemData = atv.itens[itemIdx];
+            const chips = bCard.querySelectorAll('.syllable-chip-btn');
+            const targetDisplay = bCard.querySelector('.syllable-target-display .syl-assembled-text');
+            const btnClear = bCard.querySelector('.btn-clear-syllables');
+
+            bCard._pickedSyllables = isAlreadySolved && itemData ? [...itemData.ordemCorreta] : [];
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    if (isAlreadySolved || chip.classList.contains('used')) return;
+                    soundManager.playClick();
+                    chip.classList.add('used');
+                    const syl = chip.dataset.syl;
+                    bCard._pickedSyllables.push(syl);
+
+                    if (targetDisplay) {
+                        targetDisplay.innerHTML = bCard._pickedSyllables.map(s => `<span class="assembled-syl-badge">${s}</span>`).join('');
+                    }
+                });
+            });
+
+            btnClear?.addEventListener('click', () => {
+                if (isAlreadySolved) return;
+                soundManager.playClick();
+                bCard._pickedSyllables = [];
+                chips.forEach(c => c.classList.remove('used'));
+                if (targetDisplay) {
+                    targetDisplay.innerHTML = '<em class="syl-placeholder">Clique nas sílabas abaixo...</em>';
+                }
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleJoinSyllablesAnswerSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Separar Sílabas (Língua Portuguesa)
+    if (atv.tipo === 'separar_silabas') {
+        const btnVerify = card.querySelector('.btn-verify-separate-syllables');
+        const inputs = card.querySelectorAll('.syllable-split-input');
+        const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        inputs.forEach((input, idx) => {
+            const checkMatch = () => {
+                input.value = input.value.toUpperCase();
+                const val = normalize(input.value);
+                const expected = normalize(input.dataset.expected);
+
+                // Feedback em tempo real: contorno verde se a sílaba estiver correta
+                if (val === expected && val.length > 0) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                } else {
+                    input.classList.remove('correct');
+                }
+            };
+
+            input.addEventListener('input', checkMatch);
+            input.addEventListener('change', checkMatch);
+            input.addEventListener('keyup', (e) => {
+                checkMatch();
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+
+            if (input.value) {
+                checkMatch();
+            }
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleSeparateSyllablesAnswerSubmit(atv, card);
         });
     }
 
@@ -3117,6 +3575,456 @@ function handleForensicQuizAnswerSubmit(atv, cardElement) {
             <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
             <div>
                 <strong>Cofre Trancado!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// ============================================================================
+// VALIDAÇÕES DAS ATIVIDADES DE LÍNGUA PORTUGUESA
+// ============================================================================
+
+// 1. Validação do Alfabeto Lacunado
+function handleAlphabetGridAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.alphabet-cell-input');
+    const normalize = (str) => String(str || '').toUpperCase().trim();
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = normalize(input.value);
+        const expected = normalize(input.dataset.expected);
+
+        input.classList.remove('correct', 'incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('incorrect');
+        } else if (val === expected) {
+            input.classList.add('correct');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('incorrect');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-alphabet-grid');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Alfabeto Restaurado com Sucesso!';
+        }
+
+        const dotBtns = document.querySelectorAll('.wizard-dot-btn');
+        if (dotBtns && dotBtns[AppState.currentActivityIndex]) {
+            dotBtns[AppState.currentActivityIndex].classList.add('solved');
+            dotBtns[AppState.currentActivityIndex].innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Enigma #${AppState.currentActivityIndex + 1}</span>`;
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Excelente restauração, Detetive! O alfabeto confidencial de A a Z está 100% completo!</strong><br>
+                ${atv.explicacao || 'Todas as 26 letras foram organizadas em ordem alfabética perfeita.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as letras destacadas em vermelho no quadro.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Ainda faltam ${emptyCount} letra(s) para serem preenchidas no alfabeto.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} letra(s) fora da ordem alfabética correta. Recite o alfabeto de A a Z para conferir!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção ao Alfabeto!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// 2. Validação dos Vizinhos do Alfabeto
+function handleAlphabetNeighborsAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const rows = cardElement.querySelectorAll('.letter-neighbor-card');
+    const normalize = (str) => String(str || '').toUpperCase().trim();
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('.letter-neighbor-input');
+        let rowCorrect = true;
+
+        inputs.forEach(input => {
+            const val = normalize(input.value);
+            const expected = normalize(input.dataset.expected);
+
+            input.classList.remove('correct', 'incorrect');
+
+            if (!val) {
+                allCorrect = false;
+                rowCorrect = false;
+                emptyCount++;
+                input.classList.add('incorrect');
+            } else if (val === expected) {
+                input.classList.add('correct');
+            } else {
+                allCorrect = false;
+                rowCorrect = false;
+                wrongCount++;
+                input.classList.add('incorrect');
+            }
+        });
+
+        if (rowCorrect) {
+            row.classList.add('choice-correct');
+            row.classList.remove('choice-wrong');
+        } else {
+            row.classList.add('choice-wrong');
+            row.classList.remove('choice-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        cardElement.querySelectorAll('.letter-neighbor-input').forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-letter-neighbors');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Vizinhos Verificados com Sucesso!';
+        }
+
+        const dotBtns = document.querySelectorAll('.wizard-dot-btn');
+        if (dotBtns && dotBtns[AppState.currentActivityIndex]) {
+            dotBtns[AppState.currentActivityIndex].classList.add('solved');
+            dotBtns[AppState.currentActivityIndex].innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Enigma #${AppState.currentActivityIndex + 1}</span>`;
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Fantástico! Você decifrou todas as letras que vêm antes e depois com perfeição!</strong><br>
+                ${atv.explicacao || 'Ordem alfabética imediata validada com sucesso!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha os ${emptyCount} vizinho(s) ainda vazios.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} letra(s) incorreta(s). Lembre-se: Antes (à esquerda) e Depois (à direita)!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção aos Vizinhos!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// 3. Validação de Completar Palavras com Desenho
+function handleCompleteWordsAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.word-completion-card');
+    const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(wCard => {
+        const inputs = wCard.querySelectorAll('.word-char-input');
+        let cardCorrect = true;
+
+        inputs.forEach(input => {
+            const val = normalize(input.value);
+            const expected = normalize(input.dataset.expected);
+
+            input.classList.remove('correct', 'incorrect');
+
+            if (!val) {
+                allCorrect = false;
+                cardCorrect = false;
+                emptyCount++;
+                input.classList.add('incorrect');
+            } else if (val === expected) {
+                input.classList.add('correct');
+            } else {
+                allCorrect = false;
+                cardCorrect = false;
+                wrongCount++;
+                input.classList.add('incorrect');
+            }
+        });
+
+        if (cardCorrect) {
+            wCard.classList.add('card-correct');
+            wCard.classList.remove('card-wrong');
+        } else {
+            wCard.classList.add('card-wrong');
+            wCard.classList.remove('card-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        cardElement.querySelectorAll('.word-char-input').forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-complete-words');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Palavras Decifradas com Sucesso!';
+        }
+
+        const dotBtns = document.querySelectorAll('.wizard-dot-btn');
+        if (dotBtns && dotBtns[AppState.currentActivityIndex]) {
+            dotBtns[AppState.currentActivityIndex].classList.add('solved');
+            dotBtns[AppState.currentActivityIndex].innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Enigma #${AppState.currentActivityIndex + 1}</span>`;
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Extraordinário, Agente! Todas as 6 palavras misteriosas foram completadas com sucesso!</strong><br>
+                ${atv.explicacao || 'Evidências visuais decifradas com precisão!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as letras destacadas em vermelho nas palavras.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Ainda faltam ${emptyCount} letra(s) para serem preenchidas nas palavras.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} letra(s) incorreta(s). Pronuncie o nome do desenho em voz alta para conferir o som!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção às Palavras!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// 4. Validação de Juntar Sílabas para Formar Palavras
+function handleJoinSyllablesAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const builderCards = cardElement.querySelectorAll('.syllable-builder-card');
+    let allCorrect = true;
+    let incompleteCount = 0;
+    let wrongCount = 0;
+
+    builderCards.forEach((bCard, idx) => {
+        const item = atv.itens[idx];
+        const picked = bCard._pickedSyllables || [];
+        const expectedJoined = item.ordemCorreta.join('');
+        const actualJoined = picked.join('');
+
+        bCard.classList.remove('builder-correct', 'builder-wrong');
+
+        if (picked.length === 0) {
+            allCorrect = false;
+            incompleteCount++;
+            bCard.classList.add('builder-wrong');
+        } else if (actualJoined === expectedJoined) {
+            bCard.classList.add('builder-correct');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            bCard.classList.add('builder-wrong');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        cardElement.querySelectorAll('.syllable-chip-btn').forEach(btn => {
+            btn.disabled = true;
+        });
+
+        cardElement.querySelectorAll('.btn-clear-syllables').forEach(btn => {
+            btn.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-join-syllables');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as Palavras Formadas com Sucesso!';
+        }
+
+        const dotBtns = document.querySelectorAll('.wizard-dot-btn');
+        if (dotBtns && dotBtns[AppState.currentActivityIndex]) {
+            dotBtns[AppState.currentActivityIndex].classList.add('solved');
+            dotBtns[AppState.currentActivityIndex].innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Enigma #${AppState.currentActivityIndex + 1}</span>`;
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Brilhante, Detetive! Você ordenou e juntou todas as sílabas perfeitamente!</strong><br>
+                ${atv.explicacao || 'Todas as palavras foram reconstruídas na ordem silábica exata!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os cartões destacados em vermelho.';
+        if (incompleteCount > 0 && wrongCount === 0) {
+            msg = `Você ainda não montou todas as palavras da lista. Clique nas sílabas para formá-las!`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} palavra(s) com sílabas fora de ordem. Clique em "Limpar" no cartão para tentar montar novamente!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção à Montagem!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// 5. Validação de Separar Sílabas
+function handleSeparateSyllablesAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.syllable-splitter-card');
+    const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach((sCard, cIdx) => {
+        const item = atv.itens[cIdx];
+        const inputs = sCard.querySelectorAll('.syllable-split-input');
+        let cardCorrect = true;
+
+        inputs.forEach((input, slotIdx) => {
+            const val = normalize(input.value);
+            const expected = normalize(item.silabasEsperadas[slotIdx]);
+
+            input.classList.remove('correct', 'incorrect');
+
+            if (!val) {
+                allCorrect = false;
+                cardCorrect = false;
+                emptyCount++;
+                input.classList.add('incorrect');
+            } else if (val === expected) {
+                input.classList.add('correct');
+            } else {
+                allCorrect = false;
+                cardCorrect = false;
+                wrongCount++;
+                input.classList.add('incorrect');
+            }
+        });
+
+        if (cardCorrect) {
+            sCard.classList.add('splitter-correct');
+            sCard.classList.remove('splitter-wrong');
+        } else {
+            sCard.classList.add('splitter-wrong');
+            sCard.classList.remove('splitter-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        cardElement.querySelectorAll('.syllable-split-input').forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-separate-syllables');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Sílabas Separadas com Sucesso!';
+        }
+
+        const dotBtns = document.querySelectorAll('.wizard-dot-btn');
+        if (dotBtns && dotBtns[AppState.currentActivityIndex]) {
+            dotBtns[AppState.currentActivityIndex].classList.add('solved');
+            dotBtns[AppState.currentActivityIndex].innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Enigma #${AppState.currentActivityIndex + 1}</span>`;
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>PARABÉNS, DETETIVE MESTRE DA LÍNGUA PORTUGUESA!</strong><br>
+                ${atv.explicacao || 'Você separou todas as sílabas com 100% de exatidão!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho nas separações.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha as ${emptyCount} sílaba(s) ainda vazias nos campos.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} sílaba(s) incorreta(s). Dica: fale a palavra pausadamente batendo palmas a cada pedaço!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção à Separação!</strong> ${msg}
             </div>
         `;
         feedbackBox.style.display = 'flex';
