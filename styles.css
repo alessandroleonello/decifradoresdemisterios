@@ -1140,6 +1140,19 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 80px;
+}
+
+/* Prevenção de auto-zoom e saltos de rolagem no iOS/iPadOS e Android Tablets */
+input, textarea, select, button {
+    touch-action: manipulation;
+}
+
+input, textarea, select {
+    font-size: 16px;
+    scroll-margin-top: 85px;
 }
 
 body {
@@ -2856,7 +2869,7 @@ body {
     border: 2px solid var(--neon-amber);
     color: #fef08a;
     font-family: var(--font-heading);
-    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
     font-weight: 800;
     text-align: center;
     outline: none;
@@ -5688,7 +5701,7 @@ body {
     }
 
     .num-cell-input {
-        font-size: 0.88rem;
+        font-size: 1rem;
         border-width: 1.5px;
         border-radius: 4px;
     }
@@ -6745,6 +6758,1795 @@ body {
     border-color: #cbd5e1;
 }
 
+/* ==========================================================================
+   6. BANCO DE SÍLABAS E PALAVRAS LACUNADAS
+   ========================================================================== */
+.syl-bank-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.syl-bank-tray {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+    border: 1.5px solid rgba(245, 158, 11, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.35rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.syl-bank-header {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.syl-bank-chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.syl-bank-chip-btn {
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--neon-amber);
+    color: #fef08a;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 0.5rem 1.15rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+}
+
+.syl-bank-chip-btn:hover:not(:disabled):not(.used) {
+    background: var(--neon-amber);
+    color: #0f172a;
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 6px 16px var(--neon-amber-glow);
+}
+
+.syl-bank-chip-btn.used {
+    opacity: 0.35;
+    pointer-events: none;
+    border-style: dashed !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    color: var(--text-muted) !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+:root[data-theme="light"] .syl-bank-chip-btn.used {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+}
+
+.syl-bank-words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.syl-bank-word-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-normal);
+}
+
+.syl-bank-word-card:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.syl-bank-word-card.active-target-word {
+    border-color: var(--neon-cyan) !important;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.16), rgba(15, 23, 42, 0.95)) !important;
+    box-shadow: 0 0 20px var(--neon-cyan-glow), 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+    transform: translateY(-3px) scale(1.02);
+}
+
+.syl-bank-word-card.active-target-word .syl-bank-word-input:not(.correct):not(.incorrect) {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+    background: rgba(14, 165, 233, 0.2);
+}
+
+.syl-bank-word-card.just-filled {
+    animation: sylFilledPop 0.3s ease;
+}
+
+@keyframes sylFilledPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1.02); }
+}
+
+:root[data-theme="light"] .syl-bank-word-card.active-target-word {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25) !important;
+}
+
+.syl-bank-word-card.card-correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.12) !important;
+}
+
+.syl-bank-word-card.card-wrong {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.12) !important;
+}
+
+.syl-bank-word-emoji {
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+.syl-bank-word-body {
+    flex: 1;
+}
+
+.syl-bank-slots-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 1px;
+}
+
+.syl-fixed-segment {
+    color: #f8fafc;
+}
+
+.syl-input-slot-box {
+    width: 68px;
+}
+
+.syl-bank-word-input {
+    width: 100%;
+    height: 44px;
+    background: rgba(5, 8, 17, 0.85);
+    border: 2px dashed var(--neon-amber);
+    border-radius: var(--radius-sm);
+    color: #fef08a;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.syl-bank-word-input:focus {
+    border-style: solid;
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 14px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.syl-bank-word-input.correct {
+    border-style: solid !important;
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #34d399 !important;
+}
+
+.syl-bank-word-input.incorrect {
+    border-style: solid !important;
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.2) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.35s ease;
+}
+
+/* ==========================================================================
+   7. SÍLABA FIXA (RADAR SILÁBICO)
+   ========================================================================== */
+.fixed-syl-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.fixed-syl-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.fixed-syl-card {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(9, 14, 29, 0.95));
+    border: 1.5px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem 1.5rem;
+    transition: var(--transition-normal);
+}
+
+.fixed-syl-card:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.fixed-syl-card.fixed-card-correct {
+    border-color: var(--neon-emerald) !important;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(15, 23, 42, 0.95));
+}
+
+.fixed-syl-card.fixed-card-wrong {
+    border-color: var(--neon-rose) !important;
+}
+
+.fixed-syl-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    margin-bottom: 1.15rem;
+    flex-wrap: wrap;
+}
+
+.fixed-syl-badge-main {
+    background: rgba(14, 165, 233, 0.15);
+    border: 2px solid var(--neon-cyan);
+    border-radius: var(--radius-md);
+    padding: 0.4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 14px var(--neon-cyan-glow);
+}
+
+.fixed-tag-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--neon-cyan);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.fixed-syl-root {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.fixed-syl-header-info strong {
+    display: block;
+    font-size: 1.1rem;
+    color: #f8fafc;
+}
+
+.fixed-syl-header-info small {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.fixed-syl-options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.btn-fixed-syl-option {
+    min-height: 48px;
+    min-width: 68px;
+    padding: 0.5rem 1rem;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-md);
+    color: #e2e8f0;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: var(--transition-fast);
+}
+
+.btn-fixed-syl-option:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-fixed-syl-option.selected {
+    background: rgba(14, 165, 233, 0.3) !important;
+    border-color: var(--neon-cyan) !important;
+    color: var(--neon-cyan) !important;
+    box-shadow: 0 0 14px var(--neon-cyan-glow) !important;
+}
+
+.btn-fixed-syl-option.selected-correct {
+    background: rgba(16, 185, 129, 0.3) !important;
+    border-color: var(--neon-emerald) !important;
+    color: #6ee7b7 !important;
+}
+
+.btn-fixed-syl-option.selected-wrong {
+    background: rgba(244, 63, 94, 0.3) !important;
+    border-color: var(--neon-rose) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.35s ease;
+}
+
+.fixed-opt-plus {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.fixed-syl-preview-tray {
+    background: rgba(5, 8, 17, 0.6);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.preview-tray-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.preview-tray-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.formed-word-pill {
+    background: rgba(14, 165, 233, 0.18);
+    border: 1px solid var(--neon-cyan);
+    color: #38bdf8;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* ==========================================================================
+   8. CLASSIFICAÇÃO DE SÍLABAS (ARQUIVO SILÁBICO)
+   ========================================================================== */
+.classifier-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.classifier-bank-tray {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+}
+
+.classifier-bank-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: #e2e8f0;
+}
+
+.btn-reset-classifier {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-reset-classifier:hover:not(:disabled) {
+    color: #fff;
+    border-color: var(--neon-rose);
+    background: rgba(244, 63, 94, 0.2);
+}
+
+.classifier-bank-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    min-height: 48px;
+}
+
+.classifier-word-chip {
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid rgba(56, 189, 248, 0.5);
+    color: #f8fafc;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 0.5rem 1.15rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.classifier-word-chip:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--neon-cyan-glow);
+}
+
+.classifier-word-chip.selected-word {
+    background: var(--neon-cyan) !important;
+    color: #0f172a !important;
+    border-color: #fff !important;
+    box-shadow: 0 0 18px var(--neon-cyan-glow) !important;
+    transform: scale(1.08);
+}
+
+.classifier-drawers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.classifier-drawer {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    min-height: 150px;
+}
+
+.classifier-drawer:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.classifier-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.drawer-header-icon {
+    font-size: 1.5rem;
+}
+
+.drawer-header-text {
+    flex: 1;
+}
+
+.drawer-header-text strong {
+    display: block;
+    font-size: 1.05rem;
+    color: #f8fafc;
+}
+
+.drawer-header-text small {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.drawer-count-badge {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--neon-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.classifier-drawer-dropzone {
+    background: rgba(5, 8, 17, 0.6);
+    border: 1.5px dashed rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    min-height: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.dropzone-empty-hint {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin: auto;
+}
+
+.placed-word-pill {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #f8fafc;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.placed-word-pill:hover:not(:disabled) {
+    border-color: var(--neon-rose);
+    color: #fca5a5;
+    background: rgba(244, 63, 94, 0.2);
+}
+
+.placed-word-pill.correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+/* ==========================================================================
+   9. CAÇA-PALAVRAS INTERATIVO
+   ========================================================================== */
+.wordsearch-activity-container {
+    margin-bottom: 1.5rem;
+}
+
+.wordsearch-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+}
+
+.wordsearch-ledger-col {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ws-ledger-header {
+    font-family: var(--font-heading);
+    font-size: 0.98rem;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ws-ledger-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.ws-target-word-pill {
+    background: rgba(30, 41, 59, 0.75);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    transition: var(--transition-fast);
+}
+
+.ws-word-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--word-color, #38bdf8);
+    box-shadow: 0 0 8px var(--word-color, #38bdf8);
+}
+
+.ws-word-name {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: #f8fafc;
+    flex: 1;
+    letter-spacing: 1px;
+}
+
+.ws-check-icon {
+    display: none;
+    color: var(--neon-emerald);
+    font-size: 1.1rem;
+}
+
+.ws-target-word-pill.found {
+    border-color: var(--word-color) !important;
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.ws-target-word-pill.found .ws-word-name {
+    text-decoration: line-through;
+    color: var(--word-color);
+}
+
+.ws-target-word-pill.found .ws-check-icon {
+    display: inline-block;
+}
+
+.ws-selection-status-box {
+    background: rgba(5, 8, 17, 0.6);
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ws-status-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ws-current-selection-display {
+    min-height: 28px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.active-letters-badge {
+    color: var(--neon-cyan);
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+}
+
+.btn-clear-ws-selection {
+    background: rgba(30, 41, 59, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.35rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-clear-ws-selection:hover:not(:disabled) {
+    color: #fff;
+    border-color: var(--neon-rose);
+}
+
+.wordsearch-grid-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wordsearch-grid {
+    background: rgba(5, 8, 17, 0.85);
+    border: 2px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.ws-grid-row {
+    display: flex;
+    gap: 6px;
+}
+
+.ws-grid-cell {
+    width: 44px;
+    height: 44px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    color: #e2e8f0;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.ws-grid-cell:hover:not(:disabled):not(.found-cell) {
+    border-color: var(--neon-cyan);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.ws-grid-cell.selected-active {
+    background: rgba(245, 158, 11, 0.35) !important;
+    border-color: var(--neon-amber) !important;
+    color: #fef08a !important;
+    box-shadow: 0 0 12px var(--neon-amber-glow) !important;
+    transform: scale(1.08);
+}
+
+.ws-grid-cell.found-cell {
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    transform: none !important;
+}
+
+/* ==========================================================================
+   10. TEXTO LACUNADO DO BILHETE + COMPREENSÃO
+   ========================================================================== */
+.note-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.detective-intro-banner {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.5rem;
+}
+
+.detective-note-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+    border: 2px solid rgba(245, 158, 11, 0.4);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.note-stamp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.note-stamp-badge {
+    color: var(--neon-amber);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.note-stamp-date {
+    background: rgba(244, 63, 94, 0.2);
+    border: 1px solid var(--neon-rose);
+    color: #f472b6;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+}
+
+.note-paper-sheet {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(245, 158, 11, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.note-text-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.note-sheet-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    row-gap: 0.75rem;
+}
+
+.note-word-unit {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #fef08a;
+    letter-spacing: 0.5px;
+}
+
+.note-word-part {
+    color: #f8fafc;
+}
+
+.note-plain-word {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 4px;
+    letter-spacing: 0.5px;
+}
+
+.note-char-input {
+    width: 36px;
+    height: 42px;
+    background: rgba(5, 8, 17, 0.95);
+    border: 2px dashed var(--neon-amber);
+    border-radius: var(--radius-sm);
+    color: #38bdf8;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    margin: 0 2px;
+    transition: var(--transition-fast);
+}
+
+.note-char-input:focus {
+    border-style: solid;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+    background: rgba(14, 165, 233, 0.15);
+}
+
+.note-char-input.correct {
+    border-style: solid !important;
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #34d399 !important;
+}
+
+.note-char-input.incorrect {
+    border-style: solid !important;
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.note-letter-bank-bar {
+    margin-top: 0.5rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.note-bank-label {
+    font-size: 0.88rem;
+    color: #e2e8f0;
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.note-bank-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.note-bank-chip {
+    width: 36px;
+    height: 36px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1.5px solid rgba(245, 158, 11, 0.4);
+    color: #fef08a;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.note-bank-chip:hover:not(:disabled):not(.used) {
+    border-color: var(--neon-amber);
+    background: var(--neon-amber);
+    color: #0f172a;
+    transform: scale(1.1);
+}
+
+.note-bank-chip.used {
+    opacity: 0.35;
+    pointer-events: none;
+    border-style: dashed !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+    color: var(--text-muted) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.note-questions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.note-section-heading {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.note-questions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.note-question-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition: var(--transition-normal);
+}
+
+.note-question-card:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.note-question-card.q-correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.1) !important;
+}
+
+.note-question-card.q-wrong {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.1) !important;
+}
+
+.note-question-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #f8fafc;
+    line-height: 1.35;
+}
+
+.note-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btn-note-choice {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #e2e8f0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-fast);
+}
+
+.btn-note-choice:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    background: rgba(30, 41, 59, 0.95);
+}
+
+.choice-checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: transparent;
+    transition: var(--transition-fast);
+}
+
+.btn-note-choice.selected {
+    border-color: var(--neon-cyan) !important;
+    background: rgba(14, 165, 233, 0.2) !important;
+    color: #fff !important;
+}
+
+.btn-note-choice.selected .choice-checkbox-box {
+    background: var(--neon-cyan);
+    border-color: var(--neon-cyan);
+    color: #0f172a;
+}
+
+/* ==========================================================================
+   11. CRUZADINHA SIMPLES / ADIVINHAS
+   ========================================================================== */
+.crossword-activity-container {
+    margin-bottom: 1.5rem;
+}
+
+.crossword-rows-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.crossword-row-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    transition: var(--transition-normal);
+}
+
+.crossword-row-card:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.crossword-row-card.row-correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.12) !important;
+}
+
+.crossword-row-card.row-wrong {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.12) !important;
+}
+
+.crossword-clue-side {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 1;
+    min-width: 260px;
+}
+
+.crossword-num-pill {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: var(--neon-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+}
+
+.crossword-emoji {
+    font-size: 1.8rem;
+}
+
+.crossword-clue-text-box strong {
+    display: block;
+    color: #f8fafc;
+    font-size: 1.02rem;
+}
+
+.crossword-len-indicator {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.crossword-slots-side {
+    display: flex;
+    align-items: center;
+}
+
+.crossword-slots-row {
+    display: flex;
+    gap: 6px;
+}
+
+.crossword-slot-box {
+    width: 44px;
+    height: 48px;
+}
+
+.crossword-cell-input {
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 17, 0.9);
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    border-radius: var(--radius-sm);
+    color: #f8fafc;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.crossword-cell-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+    background: rgba(14, 165, 233, 0.2);
+}
+
+.crossword-cell-input.correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+}
+
+.crossword-cell-input.incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* ==========================================================================
+   12. CRIPTOGRAMA NUMÉRICO (LETRAS POR NÚMEROS)
+   ========================================================================== */
+.cryptogram-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.crypto-key-tray {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+    border: 1.5px solid rgba(245, 158, 11, 0.4);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.crypto-key-tray-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    color: #f8fafc;
+    font-family: var(--font-heading);
+    font-size: 0.98rem;
+}
+
+.crypto-key-tray-header small {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.crypto-key-badges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.crypto-key-item {
+    background: rgba(5, 8, 17, 0.8);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-radius: var(--radius-md);
+    padding: 0.35rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+}
+
+.crypto-key-num {
+    color: var(--neon-amber);
+    font-weight: 900;
+}
+
+.crypto-key-eq {
+    color: var(--text-muted);
+}
+
+.crypto-key-letter {
+    color: #38bdf8;
+    font-weight: 800;
+}
+
+.crypto-message-board {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1.5px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+
+.crypto-message-header {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--neon-cyan);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.crypto-words-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.crypto-word-card {
+    display: inline-flex;
+    gap: 4px;
+    align-items: flex-end;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 0.45rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.crypto-char-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.crypto-char-unit.fixed-unit {
+    justify-content: flex-end;
+    min-width: 28px;
+}
+
+.crypto-fixed-char {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #f8fafc;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crypto-fixed-spacer {
+    height: 18px;
+}
+
+.crypto-char-input {
+    width: 38px;
+    height: 44px;
+    background: rgba(5, 8, 17, 0.95);
+    border: 2px solid var(--neon-cyan);
+    border-radius: var(--radius-sm);
+    color: #38bdf8;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.crypto-char-input:focus {
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 12px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.2);
+}
+
+.crypto-char-input.correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+}
+
+.crypto-char-input.incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.crypto-num-tag {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: var(--neon-amber);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   TEMA CLARO (LIGHT MODE) PARA AS ATIVIDADES 6 A 12
+   ========================================================================== */
+/* Cartões e Painéis Principais */
+:root[data-theme="light"] .syl-bank-tray,
+:root[data-theme="light"] .classifier-bank-tray,
+:root[data-theme="light"] .crypto-key-tray,
+:root[data-theme="light"] .wordsearch-ledger-col {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme="light"] .syl-bank-header,
+:root[data-theme="light"] .classifier-bank-header,
+:root[data-theme="light"] .crypto-key-tray-header,
+:root[data-theme="light"] .ws-ledger-header,
+:root[data-theme="light"] .note-section-heading {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .syl-bank-chip-btn {
+    background: #ffffff !important;
+    color: #b45309 !important;
+    border-color: #f59e0b !important;
+}
+
+:root[data-theme="light"] .syl-bank-word-card,
+:root[data-theme="light"] .classifier-drawer,
+:root[data-theme="light"] .note-question-card,
+:root[data-theme="light"] .crossword-row-card,
+:root[data-theme="light"] .crypto-message-board {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* ATIVIDADE 7 (RADAR SILÁBICO - SÍLABA FIXA) NO TEMA CLARO */
+:root[data-theme="light"] .fixed-syl-card {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme="light"] .fixed-syl-badge-main {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.2) !important;
+}
+
+:root[data-theme="light"] .fixed-tag-label {
+    color: #0284c7 !important;
+}
+
+:root[data-theme="light"] .fixed-syl-root {
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .fixed-syl-header-info strong {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .fixed-syl-header-info small {
+    color: #64748b !important;
+}
+
+:root[data-theme="light"] .btn-fixed-syl-option {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+:root[data-theme="light"] .btn-fixed-syl-option:hover:not(:disabled) {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .btn-fixed-syl-option.selected {
+    background: #0284c7 !important;
+    border-color: #0369a1 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.35) !important;
+}
+
+:root[data-theme="light"] .fixed-syl-preview-tray {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+}
+
+:root[data-theme="light"] .preview-tray-label {
+    color: #64748b !important;
+}
+
+:root[data-theme="light"] .formed-word-pill {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .empty-tray-msg {
+    color: #94a3b8 !important;
+}
+
+/* ATIVIDADE 8 (ARQUIVO SILÁBICO / CLASSIFICAÇÃO) NO TEMA CLARO */
+:root[data-theme="light"] .classifier-bank-tray {
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+:root[data-theme="light"] .classifier-bank-header {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .classifier-bank-header strong {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .classifier-word-chip {
+    background: #ffffff !important;
+    border: 2px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme="light"] .classifier-word-chip:hover:not(:disabled):not(.placed) {
+    border-color: #0284c7 !important;
+    color: #0284c7 !important;
+    background: #f0f9ff !important;
+}
+
+:root[data-theme="light"] .classifier-word-chip.selected-word {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0369a1 !important;
+    box-shadow: 0 0 14px rgba(2, 132, 199, 0.35) !important;
+}
+
+:root[data-theme="light"] .classifier-word-chip.placed {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    opacity: 0.45 !important;
+}
+
+:root[data-theme="light"] .classifier-drawer {
+    background: #ffffff !important;
+    border: 2px solid #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+:root[data-theme="light"] .classifier-drawer:hover {
+    border-color: #0284c7 !important;
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.15) !important;
+}
+
+:root[data-theme="light"] .drawer-header-text strong {
+    color: #0f172a !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .drawer-header-text small {
+    color: #334155 !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+}
+
+:root[data-theme="light"] .drawer-count-badge {
+    background: #e0f2fe !important;
+    color: #0369a1 !important;
+    border: 1.5px solid #bae6fd !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .classifier-drawer-dropzone {
+    background: #f8fafc !important;
+    border: 2px dashed #cbd5e1 !important;
+}
+
+:root[data-theme="light"] .dropzone-empty-hint {
+    color: #64748b !important;
+    font-weight: 600 !important;
+}
+
+:root[data-theme="light"] .placed-word-pill {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #0284c7 !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .placed-word-pill.correct {
+    background: #ecfdf5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+}
+
+:root[data-theme="light"] .btn-reset-classifier {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+}
+
+/* ATIVIDADE 9 (CAÇA-PALAVRAS) NO TEMA CLARO */
+:root[data-theme="light"] .ws-target-word-pill {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme="light"] .ws-word-name {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    font-size: 1.08rem !important;
+}
+
+:root[data-theme="light"] .ws-target-word-pill.found {
+    background: #f8fafc !important;
+    border-color: var(--word-color) !important;
+}
+
+:root[data-theme="light"] .ws-target-word-pill.found .ws-word-name {
+    color: var(--word-color) !important;
+    opacity: 0.85;
+}
+
+:root[data-theme="light"] .ws-selection-status-box {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+}
+
+:root[data-theme="light"] .ws-status-label {
+    color: #475569 !important;
+    font-weight: 700 !important;
+}
+
+:root[data-theme="light"] .active-letters-badge {
+    color: #0284c7 !important;
+    font-weight: 900 !important;
+}
+
+:root[data-theme="light"] .ws-current-selection-display {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .btn-clear-ws-selection {
+    background: #e2e8f0 !important;
+    color: #334155 !important;
+    border-color: #cbd5e1 !important;
+    font-weight: 700 !important;
+}
+
+:root[data-theme="light"] .wordsearch-grid {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme="light"] .ws-grid-cell {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+}
+
+:root[data-theme="light"] .ws-grid-cell.selected-active {
+    background: #fef08a !important;
+    color: #854d0e !important;
+    border-color: #f59e0b !important;
+}
+
+:root[data-theme="light"] .ws-grid-cell.found-cell {
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ATIVIDADE 10 (BILHETE SECRETO) NO TEMA CLARO */
+:root[data-theme="light"] .detective-intro-banner {
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .detective-note-card {
+    background: #fffdf5 !important;
+    border-color: #f59e0b !important;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15) !important;
+}
+
+:root[data-theme="light"] .note-stamp-badge {
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .note-paper-sheet {
+    background: #ffffff !important;
+    border-color: #fde68a !important;
+    box-shadow: inset 0 2px 6px rgba(245, 158, 11, 0.1) !important;
+}
+
+:root[data-theme="light"] .note-word-unit,
+:root[data-theme="light"] .note-word-part,
+:root[data-theme="light"] .note-plain-word {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .note-char-input {
+    background: #fffbeb !important;
+    color: #0f172a !important;
+    border-color: #f59e0b !important;
+    font-weight: 900 !important;
+}
+
+:root[data-theme="light"] .note-bank-chip {
+    background: #ffffff !important;
+    border-color: #f59e0b !important;
+    color: #b45309 !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .note-bank-chip.used {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+}
+
+:root[data-theme="light"] .note-bank-label {
+    color: #475569 !important;
+}
+
+:root[data-theme="light"] .note-question-title {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+:root[data-theme="light"] .btn-note-choice {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+}
+
+:root[data-theme="light"] .btn-note-choice.selected {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .choice-checkbox-box {
+    border-color: #cbd5e1 !important;
+}
+
+/* ATIVIDADE 11 (CRUZADINHA) */
+:root[data-theme="light"] .crossword-num-pill {
+    background: #e0f2fe !important;
+    border-color: #7dd3fc !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .crossword-clue-text-box strong {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .crossword-len-indicator {
+    color: #64748b !important;
+}
+
+/* ATIVIDADE 12 (CRIPTOGRAMA) */
+:root[data-theme="light"] .crypto-key-item {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+}
+
+:root[data-theme="light"] .crypto-key-num {
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .crypto-key-letter {
+    color: #0284c7 !important;
+}
+
+:root[data-theme="light"] .crypto-message-header {
+    color: #0284c7 !important;
+}
+
+:root[data-theme="light"] .crypto-word-card {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+:root[data-theme="light"] .crypto-fixed-char {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .crypto-num-tag {
+    background: #fef3c7 !important;
+    border-color: #fde68a !important;
+    color: #b45309 !important;
+}
+
+/* Inputs de Texto no Modo Claro */
+:root[data-theme="light"] .syl-bank-word-input,
+:root[data-theme="light"] .note-char-input,
+:root[data-theme="light"] .crossword-cell-input,
+:root[data-theme="light"] .crypto-char-input {
+    background: #fffbeb !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
 /* Responsividade Mobile para as Atividades de Português */
 @media (max-width: 768px) {
     .alphabet-grid {
@@ -6790,5 +8592,28 @@ body {
 
     .syllable-split-slot {
         min-width: 70px;
+    }
+
+    .classifier-drawers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wordsearch-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-grid-cell {
+        width: 34px;
+        height: 34px;
+        font-size: 1.05rem;
+    }
+
+    .note-questions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crossword-row-card {
+        flex-direction: column;
+        align-items: stretch;
     }
 }

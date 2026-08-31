@@ -370,9 +370,9 @@ const CURRICULO_INVESTIGACAO = {
                 id: 'port_aula_1',
                 numero: 1,
                 titulo: 'O Segredo das Letras e Sílabas',
-                descricao: 'Desenvolva suas habilidades periciais de alfabetização: restaure o alfabeto secreto, descubra as letras vizinhas, decifre palavras com pistas visuais, organize sílabas embaralhadas e separe as sílabas dos códigos!',
+                descricao: 'Desenvolva suas habilidades periciais: restaure o alfabeto secreto, descubra letras vizinhas, monte e separe sílabas, use bancos de sílabas, calibre o radar silábico, classifique palavras, encontre pistas no caça-palavras, interprete bilhetes e decifre o grande criptograma!',
                 dificuldade: 'Iniciante',
-                tempoEstimado: '15 min',
+                tempoEstimado: '25 min',
                 xpRecompensa: 100,
                 atividades: [
                     {
@@ -474,7 +474,321 @@ const CURRICULO_INVESTIGACAO = {
                             { palavra: 'GATO', emoji: '🐱', silabasEsperadas: ['GA', 'TO'], totalSilabas: 2 }
                         ],
                         dica: 'Dica Forense: Bata palmas ou conte nos dedos quantas vezes você abre a boca para falar cada palavra. Cada batida é uma sílaba!',
-                        explicacao: 'PARABÉNS, DETETIVE MESTRE DA LÍNGUA PORTUGUESA! Você completou com perfeição todos os 5 enigmas de Sílabas com nota máxima!'
+                        explicacao: 'Excelente separação silábica! Todos os blocos sonoros foram catalogados perfeitamente.'
+                    },
+                    {
+                        id: 'port_1_atv_6',
+                        tipo: 'completar_silabas_banco',
+                        titulo: 'Enigma do Banco de Sílabas Pericial',
+                        instrucoes: 'Várias evidências estão com sílabas faltando! Observe o banco de sílabas disponíveis e selecione ou digite a sílaba correta para completar cada palavra.',
+                        bancoSilabas: ['LU', 'SA', 'PO', 'BO', 'PA', 'JA', 'TO', 'MA'],
+                        itens: [
+                            { id: 'sb_1', emoji: '🔍', palavraCompleta: 'LUPA', prefixo: '', sufixo: 'PA', respostaEsperada: 'LU' },
+                            { id: 'sb_2', emoji: '🏠', palavraCompleta: 'CASA', prefixo: 'CA', sufixo: '', respostaEsperada: 'SA' },
+                            { id: 'sb_3', emoji: '🍿', palavraCompleta: 'PIPOCA', prefixo: 'PI', sufixo: 'CA', respostaEsperada: 'PO' },
+                            { id: 'sb_4', emoji: '🪆', palavraCompleta: 'BONECA', prefixo: '', sufixo: 'NECA', respostaEsperada: 'BO' },
+                            { id: 'sb_5', emoji: '👞', palavraCompleta: 'SAPATO', prefixo: 'SA', sufixo: 'TO', respostaEsperada: 'PA' },
+                            { id: 'sb_6', emoji: '🦉', palavraCompleta: 'CORUJA', prefixo: 'CORU', sufixo: '', respostaEsperada: 'JA' },
+                            { id: 'sb_7', emoji: '🐱', palavraCompleta: 'GATO', prefixo: 'GA', sufixo: '', respostaEsperada: 'TO' },
+                            { id: 'sb_8', emoji: '🐵', palavraCompleta: 'MACACO', prefixo: '', sufixo: 'CACO', respostaEsperada: 'MA' }
+                        ],
+                        dica: 'Dica Forense: Veja qual sílaba do banco se encaixa no espaço vazio para formar o nome correto do desenho!',
+                        explicacao: 'Excelente dedução! Todas as 8 palavras foram restauradas com as sílabas do banco pericial.'
+                    },
+                    {
+                        id: 'port_1_atv_7',
+                        tipo: 'formar_com_silaba_fixa',
+                        titulo: 'Enigma do Radar Silábico (Sílaba Fixa)',
+                        instrucoes: 'Os peritos encontraram uma sílaba base em cada caso! Observe a SÍLABA FIXA em destaque e selecione TODAS as outras sílabas que, combinadas com ela, formam palavras reais.',
+                        itens: [
+                            {
+                                id: 'fix_1',
+                                silabaFixa: 'CA',
+                                opcoes: [
+                                    { silaba: 'SA', formaPalavra: true, palavraFormada: 'CASA' },
+                                    { silaba: 'BO', formaPalavra: true, palavraFormada: 'CABO' },
+                                    { silaba: 'MA', formaPalavra: true, palavraFormada: 'CAMA' },
+                                    { silaba: 'RO', formaPalavra: true, palavraFormada: 'CARO' },
+                                    { silaba: 'LHA', formaPalavra: false },
+                                    { silaba: 'OI', formaPalavra: false },
+                                    { silaba: 'XU', formaPalavra: false }
+                                ]
+                            },
+                            {
+                                id: 'fix_2',
+                                silabaFixa: 'BO',
+                                opcoes: [
+                                    { silaba: 'LA', formaPalavra: true, palavraFormada: 'BOLA' },
+                                    { silaba: 'CA', formaPalavra: true, palavraFormada: 'BOCA' },
+                                    { silaba: 'LO', formaPalavra: true, palavraFormada: 'BOLO' },
+                                    { silaba: 'TO', formaPalavra: true, palavraFormada: 'BOTO' },
+                                    { silaba: 'FI', formaPalavra: false },
+                                    { silaba: 'JE', formaPalavra: false },
+                                    { silaba: 'LU', formaPalavra: false }
+                                ]
+                            },
+                            {
+                                id: 'fix_3',
+                                silabaFixa: 'PA',
+                                opcoes: [
+                                    { silaba: 'TO', formaPalavra: true, palavraFormada: 'PATO' },
+                                    { silaba: 'PO', formaPalavra: true, palavraFormada: 'PAPO' },
+                                    { silaba: 'NO', formaPalavra: true, palavraFormada: 'PANO' },
+                                    { silaba: 'PA', formaPalavra: true, palavraFormada: 'PAPA' },
+                                    { silaba: 'QI', formaPalavra: false },
+                                    { silaba: 'VO', formaPalavra: false },
+                                    { silaba: 'LE', formaPalavra: false }
+                                ]
+                            },
+                            {
+                                id: 'fix_4',
+                                silabaFixa: 'SA',
+                                opcoes: [
+                                    { silaba: 'PO', formaPalavra: true, palavraFormada: 'SAPO' },
+                                    { silaba: 'CO', formaPalavra: true, palavraFormada: 'SACO' },
+                                    { silaba: 'LA', formaPalavra: true, palavraFormada: 'SALA' },
+                                    { silaba: 'IA', formaPalavra: true, palavraFormada: 'SAIA' },
+                                    { silaba: 'FE', formaPalavra: false },
+                                    { silaba: 'BO', formaPalavra: false },
+                                    { silaba: 'TU', formaPalavra: false }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Junte a sílaba fixa com cada opção e fale em voz alta. Se for uma palavra de verdade, clique para selecioná-la!',
+                        explicacao: 'Radar calibrado com sucesso! Você identificou todas as combinações válidas da língua portuguesa.'
+                    },
+                    {
+                        id: 'port_1_atv_8',
+                        tipo: 'classificar_contagem_silabas',
+                        titulo: 'Enigma do Arquivo Silábico (Classificação por Sílabas)',
+                        instrucoes: 'Classifique as evidências pelo número de sílabas! Clique em uma palavra do banco e, em seguida, clique na gaveta pericial correspondente para arquivá-la (ou clique nela dentro da gaveta para devolvê-la ao banco).',
+                        categorias: [
+                            { id: 'monossilaba', titulo: 'Monossílabas', subtitulo: '1 Sílaba', icone: '1️⃣', cor: '#38bdf8' },
+                            { id: 'dissilaba', titulo: 'Dissílabas', subtitulo: '2 Sílabas', icone: '2️⃣', cor: '#10b981' },
+                            { id: 'trissilaba', titulo: 'Trissílabas', subtitulo: '3 Sílabas', icone: '3️⃣', cor: '#f59e0b' },
+                            { id: 'polissilaba', titulo: 'Polissílabas', subtitulo: '4 ou mais Sílabas', icone: '4️⃣', cor: '#ec4899' }
+                        ],
+                        palavras: [
+                            { id: 'w1', palavra: 'SOL', categoriaCorreta: 'monossilaba', silabas: 'SOL (1)' },
+                            { id: 'w2', palavra: 'PÉ', categoriaCorreta: 'monossilaba', silabas: 'PÉ (1)' },
+                            { id: 'w3', palavra: 'MÃO', categoriaCorreta: 'monossilaba', silabas: 'MÃO (1)' },
+                            { id: 'w4', palavra: 'LUPA', categoriaCorreta: 'dissilaba', silabas: 'LU-PA (2)' },
+                            { id: 'w5', palavra: 'GATO', categoriaCorreta: 'dissilaba', silabas: 'GA-TO (2)' },
+                            { id: 'w6', palavra: 'CASA', categoriaCorreta: 'dissilaba', silabas: 'CA-SA (2)' },
+                            { id: 'w7', palavra: 'PIPOCA', categoriaCorreta: 'trissilaba', silabas: 'PI-PO-CA (3)' },
+                            { id: 'w8', palavra: 'CORUJA', categoriaCorreta: 'trissilaba', silabas: 'CO-RU-JA (3)' },
+                            { id: 'w9', palavra: 'CADERNO', categoriaCorreta: 'trissilaba', silabas: 'CA-DER-NO (3)' },
+                            { id: 'w10', palavra: 'DETETIVE', categoriaCorreta: 'polissilaba', silabas: 'DE-TE-TI-VE (4)' },
+                            { id: 'w11', palavra: 'BORBOLETA', categoriaCorreta: 'polissilaba', silabas: 'BOR-BO-LE-TA (4)' },
+                            { id: 'w12', palavra: 'INVESTIGADOR', categoriaCorreta: 'polissilaba', silabas: 'IN-VES-TI-GA-DOR (5)' }
+                        ],
+                        dica: 'Dica Forense: Monossílaba = 1 sílaba; Dissílaba = 2 sílabas; Trissílaba = 3 sílabas; Polissílaba = 4 ou mais sílabas!',
+                        explicacao: 'Arquivo forense 100% organizado! Todas as 12 palavras foram classificadas com precisão pericial.'
+                    },
+                    {
+                        id: 'port_1_atv_9',
+                        tipo: 'caca_palavras',
+                        titulo: 'Enigma do Caça-Palavras Pericial',
+                        instrucoes: 'Palavras secretas da investigação foram escondidas na grade! Encontre todas as 6 palavras clicando nas suas letras em sequência. Cada palavra encontrada receberá um destaque de cor especial!',
+                        palavras: [
+                            { id: 'cp_1', palavra: 'LUPA', cor: '#38bdf8', nomeCor: 'Ciano' },
+                            { id: 'cp_2', palavra: 'PISTA', cor: '#10b981', nomeCor: 'Esmeralda' },
+                            { id: 'cp_3', palavra: 'COFRE', cor: '#f59e0b', nomeCor: 'Âmbar' },
+                            { id: 'cp_4', palavra: 'MAPA', cor: '#ec4899', nomeCor: 'Rosa' },
+                            { id: 'cp_5', palavra: 'CRIME', cor: '#a855f7', nomeCor: 'Roxo' },
+                            { id: 'cp_6', palavra: 'LIVRO', cor: '#f97316', nomeCor: 'Laranja' }
+                        ],
+                        grid: [
+                            ['L', 'U', 'P', 'A', 'X', 'M', 'A', 'P', 'A'],
+                            ['I', 'K', 'T', 'W', 'Z', 'B', 'V', 'Q', 'C'],
+                            ['V', 'P', 'I', 'S', 'T', 'A', 'R', 'H', 'R'],
+                            ['R', 'F', 'C', 'O', 'F', 'R', 'E', 'J', 'I'],
+                            ['O', 'M', 'D', 'E', 'T', 'E', 'C', 'L', 'M'],
+                            ['S', 'B', 'N', 'Y', 'G', 'A', 'T', 'O', 'E'],
+                            ['A', 'C', 'A', 'S', 'A', 'F', 'O', 'R', 'K'],
+                            ['L', 'I', 'V', 'E', 'N', 'I', 'G', 'M', 'A']
+                        ],
+                        posicoesPalavras: {
+                            'LUPA': [[0,0], [0,1], [0,2], [0,3]],
+                            'MAPA': [[0,5], [0,6], [0,7], [0,8]],
+                            'PISTA': [[2,1], [2,2], [2,3], [2,4], [2,5]],
+                            'COFRE': [[3,2], [3,3], [3,4], [3,5], [3,6]],
+                            'CRIME': [[1,8], [2,8], [3,8], [4,8], [5,8]],
+                            'LIVRO': [[0,0], [1,0], [2,0], [3,0], [4,0]]
+                        },
+                        dica: 'Dica Forense: Procure as palavras na horizontal (da esquerda para a direita) e na vertical (de cima para baixo)!',
+                        explicacao: 'Visão de falcão, Detetive! Você encontrou todas as 6 palavras secretas no caça-palavras pericial.'
+                    },
+                    {
+                        id: 'port_1_atv_10',
+                        tipo: 'texto_lacunado_compreensao',
+                        titulo: 'Enigma do Bilhete Secreto e Compreensão',
+                        instrucoes: 'Os peritos encontraram um bilhete confidencial com letras apagadas! Complete as letras do texto e, em seguida, responda às 3 perguntas periciais de interpretação.',
+                        bancoLetras: ['A', 'T', 'L', 'R', 'T', 'S'],
+                        introTexto: 'O DETETIVE ENCONTROU UM BILHETE:',
+                        linhasBilhete: [
+                            {
+                                id: 'linha_1',
+                                palavras: [
+                                    { prefixo: '“A CH', lacuna: true, expected: 'A', id: 'tl_1', sufixo: 'VE' },
+                                    { prefixo: 'ES', lacuna: true, expected: 'T', id: 'tl_2', sufixo: 'Á' },
+                                    { textoFixo: 'NA' },
+                                    { prefixo: 'SA', lacuna: true, expected: 'L', id: 'tl_3', sufixo: 'A.' }
+                                ]
+                            },
+                            {
+                                id: 'linha_2',
+                                palavras: [
+                                    { prefixo: 'PROCU', lacuna: true, expected: 'R', id: 'tl_4', sufixo: 'E' },
+                                    { prefixo: 'PER', lacuna: true, expected: 'T', id: 'tl_5', sufixo: 'O' },
+                                    { textoFixo: 'DA' },
+                                    { prefixo: 'ME', lacuna: true, expected: 'S', id: 'tl_6', sufixo: 'A.”' }
+                                ]
+                            }
+                        ],
+                        perguntas: [
+                            {
+                                id: 'p1',
+                                enunciado: '1. O que o detetive encontrou?',
+                                opcoes: [
+                                    { id: 'chave', texto: 'Uma chave' },
+                                    { id: 'bola', texto: 'Uma bola' },
+                                    { id: 'livro', texto: 'Um livro' }
+                                ],
+                                respostaCorreta: 'chave'
+                            },
+                            {
+                                id: 'p2',
+                                enunciado: '2. Onde está a chave?',
+                                opcoes: [
+                                    { id: 'sala', texto: 'Na sala' },
+                                    { id: 'quarto', texto: 'No quarto' },
+                                    { id: 'jardim', texto: 'No jardim' }
+                                ],
+                                respostaCorreta: 'sala'
+                            },
+                            {
+                                id: 'p3',
+                                enunciado: '3. Perto de que objeto ela está?',
+                                opcoes: [
+                                    { id: 'porta', texto: 'Da porta' },
+                                    { id: 'mesa', texto: 'Da mesa' },
+                                    { id: 'janela', texto: 'Da janela' }
+                                ],
+                                respostaCorreta: 'mesa'
+                            }
+                        ],
+                        dica: 'Dica Forense: Leia com atenção o bilhete restaurado para responder às 3 perguntas da investigação!',
+                        explicacao: 'Excelente compreensão de texto! O bilhete foi restaurado e todas as perguntas foram respondidas com precisão.'
+                    },
+                    {
+                        id: 'port_1_atv_11',
+                        tipo: 'cruzadinha_simples',
+                        titulo: 'Enigma da Cruzadinha Pericial',
+                        instrucoes: 'Analise as pistas dos peritos e descubra a palavra misteriosa. Preencha as letras nas caixas na frente de cada pista (o número de tracinhos mostra o tamanho da palavra!).',
+                        itens: [
+                            { id: 'cz_1', numero: 1, pista: 'Animal de estimação que mia', palavraEsperada: 'GATO', tamanho: 4 },
+                            { id: 'cz_2', numero: 2, pista: 'Lente de aumento usada para achar pistas', palavraEsperada: 'LUPA', tamanho: 4 },
+                            { id: 'cz_3', numero: 3, pista: 'Lugar onde moramos com nossa família', palavraEsperada: 'CASA', tamanho: 4 },
+                            { id: 'cz_4', numero: 4, pista: 'Alimento de milho que estoura na panela', palavraEsperada: 'PIPOCA', tamanho: 6 },
+                            { id: 'cz_5', numero: 5, pista: 'Objeto de metal usado para abrir portas e cofres', palavraEsperada: 'CHAVE', tamanho: 5 },
+                            { id: 'cz_6', numero: 6, pista: 'Móvel onde colocamos cadernos e livros na sala', palavraEsperada: 'MESA', tamanho: 4 }
+                        ],
+                        dica: 'Dica Forense: Conte o número de caixas de cada linha para ter certeza de que a palavra tem o tamanho exato!',
+                        explicacao: 'Cruzadinha pericial desvendada! Todas as 6 adivinhas foram resolvidas com louvor.'
+                    },
+                    {
+                        id: 'port_1_atv_12',
+                        tipo: 'criptograma_numerico',
+                        titulo: 'O Criptograma do Mestre Decifrador (Código Secreto)',
+                        instrucoes: 'O relatório confidencial final está criptografado com números! Cada número abaixo das lacunas representa uma letra específica. Digite as letras correspondentes aos números e decifre todo o texto secreto!',
+                        tabelaCodigos: [
+                            { numero: 1, letra: 'A' },
+                            { numero: 2, letra: 'E' },
+                            { numero: 3, letra: 'I' },
+                            { numero: 4, letra: 'O' },
+                            { numero: 5, letra: 'U' },
+                            { numero: 6, letra: 'D' },
+                            { numero: 7, letra: 'T' },
+                            { numero: 8, letra: 'V' },
+                            { numero: 9, letra: 'P' },
+                            { numero: 10, letra: 'S' },
+                            { numero: 11, letra: 'R' }
+                        ],
+                        palavrasTexto: [
+                            {
+                                chars: [
+                                    { char: 'O', lacuna: false }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'D', lacuna: false },
+                                    { char: 'E', lacuna: true, codigo: 2 },
+                                    { char: 'T', lacuna: true, codigo: 7 },
+                                    { char: 'E', lacuna: true, codigo: 2 },
+                                    { char: 'T', lacuna: false },
+                                    { char: 'I', lacuna: true, codigo: 3 },
+                                    { char: 'V', lacuna: true, codigo: 8 },
+                                    { char: 'E', lacuna: true, codigo: 2 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'D', lacuna: false },
+                                    { char: 'E', lacuna: true, codigo: 2 },
+                                    { char: 'S', lacuna: true, codigo: 10 },
+                                    { char: 'C', lacuna: false },
+                                    { char: 'O', lacuna: true, codigo: 4 },
+                                    { char: 'B', lacuna: false },
+                                    { char: 'R', lacuna: true, codigo: 11 },
+                                    { char: 'I', lacuna: true, codigo: 3 },
+                                    { char: 'U', lacuna: true, codigo: 5 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'T', lacuna: true, codigo: 7 },
+                                    { char: 'O', lacuna: true, codigo: 4 },
+                                    { char: 'D', lacuna: false },
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'S', lacuna: true, codigo: 10 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'S', lacuna: true, codigo: 10 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'P', lacuna: true, codigo: 9 },
+                                    { char: 'I', lacuna: true, codigo: 3 },
+                                    { char: 'S', lacuna: true, codigo: 10 },
+                                    { char: 'T', lacuna: true, codigo: 7 },
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'S', lacuna: true, codigo: 10 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'D', lacuna: false },
+                                    { char: 'O', lacuna: true, codigo: 4 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'C', lacuna: false },
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'S', lacuna: true, codigo: 10 },
+                                    { char: 'O', lacuna: true, codigo: 4 },
+                                    { char: '!', lacuna: false }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Olhe a Tabela de Códigos no topo! Se o número 1 é A, todo quadradinho com o número 1 abaixo deve receber a letra A!',
+                        explicacao: 'PARABÉNS, DETETIVE SUPREMO DE LÍNGUA PORTUGUESA! Você decifrou todos os 12 enigmas da Aula 1 com 100% de precisão e honras periciais!'
                     }
                 ]
             }
