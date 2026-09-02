@@ -8058,6 +8058,13 @@ body {
     padding: 0.45rem;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.crypto-word-card.word-solved {
+    border-color: rgba(16, 185, 129, 0.6) !important;
+    background: rgba(16, 185, 129, 0.14) !important;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.25) !important;
 }
 
 .crypto-char-unit {
@@ -8111,8 +8118,9 @@ body {
 
 .crypto-char-input.correct {
     border-color: var(--neon-emerald) !important;
-    background: rgba(16, 185, 129, 0.25) !important;
+    background: rgba(16, 185, 129, 0.28) !important;
     color: #34d399 !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.45) !important;
 }
 
 .crypto-char-input.incorrect {
@@ -8541,10 +8549,121 @@ body {
 :root[data-theme="light"] .syl-bank-word-input,
 :root[data-theme="light"] .note-char-input,
 :root[data-theme="light"] .crossword-cell-input,
-:root[data-theme="light"] .crypto-char-input {
+:root[data-theme="light"] .crypto-char-input,
+:root[data-theme="light"] .anagram-char-input {
     background: #fffbeb !important;
     color: #0f172a !important;
     border-color: #cbd5e1 !important;
+}
+
+/* CARDS E CONTAINERS NO TEMA CLARO */
+:root[data-theme="light"] .crossword-row-card,
+:root[data-theme="light"] .word-completion-card,
+:root[data-theme="light"] .syllable-builder-card,
+:root[data-theme="light"] .syllable-splitter-card,
+:root[data-theme="light"] .syl-bank-item-card,
+:root[data-theme="light"] .fixed-syllable-card,
+:root[data-theme="light"] .classifier-drawer,
+:root[data-theme="light"] .crypto-key-tray,
+:root[data-theme="light"] .crypto-message-board,
+:root[data-theme="light"] .mutation-card,
+:root[data-theme="light"] .digraph-word-card,
+:root[data-theme="light"] .intruso-group-card,
+:root[data-theme="light"] .rhyme-clue-card,
+:root[data-theme="light"] .anagram-card,
+:root[data-theme="light"] .orthography-audit-card {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme="light"] .mutation-formula,
+:root[data-theme="light"] .digraph-word-display,
+:root[data-theme="light"] .rhyme-lead-box,
+:root[data-theme="light"] .anagram-scrambled-tray {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+:root[data-theme="light"] .mutation-formula {
+    border-left: 4px solid #0284c7 !important;
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .mutation-base-word {
+    color: #0284c7 !important;
+}
+
+:root[data-theme="light"] .mutation-badge-h,
+:root[data-theme="light"] .anagram-letter-chip {
+    background: #fef3c7 !important;
+    border-color: #f59e0b !important;
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .mutation-opt-btn,
+:root[data-theme="light"] .digraph-pill-btn,
+:root[data-theme="light"] .rhyme-opt-btn,
+:root[data-theme="light"] .ortho-choice-btn,
+:root[data-theme="light"] .intruso-word-chip {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+:root[data-theme="light"] .mutation-opt-btn:hover,
+:root[data-theme="light"] .digraph-pill-btn:hover,
+:root[data-theme="light"] .rhyme-opt-btn:hover,
+:root[data-theme="light"] .ortho-choice-btn:hover,
+:root[data-theme="light"] .intruso-word-chip:hover {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .digraph-slot-box {
+    background: #fffbeb !important;
+    border-color: #f59e0b !important;
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .digraph-word-display {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .rhyme-lead-box {
+    border-left: 4px solid #f59e0b !important;
+}
+
+:root[data-theme="light"] .rhyme-lead-word {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .rhyme-sound-badge {
+    background: #e0f2fe !important;
+    border-color: #7dd3fc !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .rhyme-prompt-msg {
+    color: #475569 !important;
+}
+
+:root[data-theme="light"] .ortho-header-text strong,
+:root[data-theme="light"] .intruso-group-header strong {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .ortho-header-text small {
+    color: #64748b !important;
+}
+
+:root[data-theme="light"] .intruso-group-rule {
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .anagram-clue-text {
+    color: #0f172a !important;
 }
 
 /* Responsividade Mobile para as Atividades de Português */
@@ -8617,3 +8736,496 @@ body {
         align-items: stretch;
     }
 }
+
+/* ==========================================================================
+   NOVOS COMPONENTES: SÍLABAS COMPLEXAS E DÍGRAFOS (PORTUGUÊS)
+   ========================================================================== */
+
+/* 1. Mutação do H Mágico */
+.mutation-activity-container,
+.digraph-completion-container,
+.intruso-activity-container,
+.rhyme-activity-container,
+.anagram-activity-container,
+.ortho-activity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.mutation-cards-grid,
+.digraph-words-grid,
+.anagram-cards-grid,
+.ortho-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.1rem;
+}
+
+.mutation-card,
+.digraph-word-card,
+.intruso-group-card,
+.rhyme-clue-card,
+.anagram-card,
+.orthography-audit-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all var(--transition-normal);
+}
+
+.mutation-card:hover,
+.digraph-word-card:hover,
+.intruso-group-card:hover,
+.rhyme-clue-card:hover,
+.anagram-card:hover,
+.orthography-audit-card:hover {
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.15);
+}
+
+.mutation-formula {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    flex-wrap: wrap;
+    background: rgba(5, 8, 17, 0.6);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--neon-cyan);
+}
+
+.mutation-base-word {
+    color: #38bdf8;
+}
+
+.mutation-plus, .mutation-arrow {
+    color: var(--text-muted);
+}
+
+.mutation-badge-h {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1.5px solid var(--neon-amber);
+    color: var(--neon-amber);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+}
+
+.mutation-target-slot {
+    color: var(--neon-emerald);
+    font-weight: 900;
+}
+
+.mutation-options-row,
+.digraph-pills-row,
+.rhyme-options-grid,
+.intruso-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+}
+
+.rhyme-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.mutation-opt-btn,
+.digraph-pill-btn,
+.rhyme-opt-btn,
+.ortho-choice-btn,
+.intruso-word-chip {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+    padding: 0.65rem 1.1rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mutation-opt-btn span,
+.digraph-pill-btn span,
+.rhyme-opt-btn span,
+.ortho-choice-btn span,
+.intruso-word-chip span {
+    pointer-events: none;
+}
+
+.mutation-opt-btn:hover:not(:disabled),
+.digraph-pill-btn:hover:not(:disabled),
+.rhyme-opt-btn:hover:not(:disabled),
+.ortho-choice-btn:hover:not(:disabled),
+.intruso-word-chip:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.mutation-opt-btn.selected,
+.digraph-pill-btn.selected,
+.rhyme-opt-btn.selected,
+.ortho-choice-btn.selected,
+.intruso-word-chip.selected {
+    background: rgba(56, 189, 248, 0.28) !important;
+    border-color: var(--neon-cyan) !important;
+    color: #38bdf8 !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.5) !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+:root[data-theme="light"] .mutation-opt-btn.selected,
+:root[data-theme="light"] .digraph-pill-btn.selected,
+:root[data-theme="light"] .rhyme-opt-btn.selected,
+:root[data-theme="light"] .ortho-choice-btn.selected,
+:root[data-theme="light"] .intruso-word-chip.selected {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.35) !important;
+    font-weight: 800 !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+.mutation-opt-btn.selected-correct,
+.digraph-pill-btn.selected-correct,
+.rhyme-opt-btn.selected-correct,
+.ortho-choice-btn.selected-correct,
+.intruso-word-chip.intruso-caught {
+    background: rgba(16, 185, 129, 0.28) !important;
+    border-color: var(--neon-emerald) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+.mutation-opt-btn.selected-wrong,
+.digraph-pill-btn.selected-wrong,
+.rhyme-opt-btn.selected-wrong,
+.ortho-choice-btn.selected-wrong,
+.intruso-word-chip.selected-wrong {
+    background: rgba(244, 63, 94, 0.25) !important;
+    border-color: var(--neon-rose) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* 2. Dígrafos com Lacunas */
+.digraph-word-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #f8fafc;
+    background: rgba(5, 8, 17, 0.6);
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-md);
+}
+
+.digraph-slot-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 42px;
+    border: 2px dashed var(--neon-amber);
+    border-radius: var(--radius-sm);
+    color: var(--neon-amber);
+    background: rgba(245, 158, 11, 0.1);
+    font-family: var(--font-heading);
+    font-weight: 900;
+    transition: all 0.3s ease;
+}
+
+.digraph-slot-box.filled {
+    border-style: solid;
+    border-color: var(--neon-cyan);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.15);
+}
+
+.digraph-slot-box.correct {
+    border-color: var(--neon-emerald) !important;
+    color: #34d399 !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+}
+
+/* 3. Intruso Silábico */
+.intruso-group-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.intruso-group-rule {
+    color: var(--neon-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.intruso-tag {
+    background: rgba(244, 63, 94, 0.3);
+    color: #fca5a5;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-xs);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+/* 4. Rimas Periciais */
+.rhyme-lead-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(5, 8, 17, 0.65);
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--neon-amber);
+}
+
+.rhyme-emoji {
+    font-size: 1.8rem;
+}
+
+.rhyme-lead-word {
+    font-size: 1.35rem;
+    color: #f8fafc;
+    font-family: var(--font-heading);
+}
+
+.rhyme-sound-badge {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.rhyme-prompt-msg {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* 5. Anagramas Silábicos */
+.anagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.anagram-case-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+}
+
+.btn-anagram-hint-toggle {
+    background: transparent;
+    border: 1px dashed rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+}
+
+.btn-anagram-hint-toggle:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--neon-cyan);
+}
+
+.anagram-hidden-clue {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(5, 8, 17, 0.6);
+    border-left: 3px solid var(--neon-cyan);
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-sm);
+    animation: fadeIn 0.3s ease;
+}
+
+.anagram-hidden-clue.open {
+    display: flex !important;
+}
+
+:root[data-theme="light"] .anagram-case-badge {
+    background: #fef3c7 !important;
+    border-color: #fde68a !important;
+    color: #b45309 !important;
+}
+
+:root[data-theme="light"] .btn-anagram-hint-toggle {
+    border-color: #cbd5e1 !important;
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .btn-anagram-hint-toggle:hover {
+    background: #e0f2fe !important;
+    border-color: #0284c7 !important;
+}
+
+:root[data-theme="light"] .anagram-hidden-clue {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 3px solid #0284c7 !important;
+    color: #0f172a !important;
+}
+
+.anagram-emoji {
+    font-size: 1.5rem;
+}
+
+.anagram-scrambled-tray {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: rgba(5, 8, 17, 0.5);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+}
+
+.anagram-tray-header {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.anagram-chips-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.anagram-letter-chip {
+    width: 38px;
+    height: 42px;
+    min-width: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 158, 11, 0.18);
+    border: 1.5px solid var(--neon-amber);
+    color: var(--neon-amber);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.anagram-slots-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 4px 0;
+}
+
+.anagram-char-input {
+    width: 44px;
+    height: 50px;
+    min-width: 44px;
+    background: rgba(5, 8, 17, 0.95);
+    border: 2px solid var(--neon-cyan);
+    border-radius: var(--radius-sm);
+    color: #38bdf8;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.anagram-char-input:focus {
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 12px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.2);
+}
+
+.anagram-char-input.correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.28) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.45) !important;
+}
+
+.anagram-char-input.incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* 6. Auditoria Ortográfica */
+.ortho-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.ortho-emoji {
+    font-size: 1.8rem;
+}
+
+.ortho-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.ortho-header-text strong {
+    color: #f8fafc;
+    font-size: 1.05rem;
+}
+
+.ortho-header-text small {
+    color: var(--text-muted);
+}
+

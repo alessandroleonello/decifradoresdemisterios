@@ -394,6 +394,34 @@ const liveSessionService = {
         }
     },
 
+    // Helper para calcular ranking do enigma de forma dinâmica e confiável
+    computeEnigmaRanking(participantes, enigmaIndex) {
+        if (!participantes) return [];
+        return Object.values(participantes)
+            .filter(player => (player.history && player.history[enigmaIndex] && player.history[enigmaIndex].solved) || (player.status === 'solved' && ((player.currentEnigmaTimeSeconds || 0) > 0 || (player.currentEnigmaScore || 0) > 0)))
+            .sort((a, b) => {
+                const timeA = (a.history && a.history[enigmaIndex] && typeof a.history[enigmaIndex].timeSeconds === 'number')
+                    ? a.history[enigmaIndex].timeSeconds
+                    : (a.currentEnigmaTimeSeconds || 999);
+                const timeB = (b.history && b.history[enigmaIndex] && typeof b.history[enigmaIndex].timeSeconds === 'number')
+                    ? b.history[enigmaIndex].timeSeconds
+                    : (b.currentEnigmaTimeSeconds || 999);
+                return timeA - timeB;
+            })
+            .map((player, idx) => ({
+                posicao: idx + 1,
+                codinome: player.codinome,
+                nomeReal: player.nomeReal,
+                avatar: player.avatar,
+                timeSeconds: (player.history && player.history[enigmaIndex] && typeof player.history[enigmaIndex].timeSeconds === 'number')
+                    ? player.history[enigmaIndex].timeSeconds
+                    : (player.currentEnigmaTimeSeconds || 0),
+                score: (player.history && player.history[enigmaIndex] && typeof player.history[enigmaIndex].score === 'number')
+                    ? player.history[enigmaIndex].score
+                    : (player.currentEnigmaScore || 50)
+            }));
+    },
+
     // Escutar sessões ativas (para Alunos e Professor)
     listenToActiveSession(callback) {
         if (this.activeUnsubscribe) {
@@ -409,6 +437,30 @@ const liveSessionService = {
                 } catch(e) {}
                 callback(null);
             } else {
+                // Mescla segura de participantes para evitar que snapshots concorrentes revertam status de 'solved'
+                if (this.localSession && this.localSession.id === session.id && this.localSession.participantes && session.participantes) {
+                    const localParticipants = this.localSession.participantes;
+                    const incomingParticipants = session.participantes;
+                    
+                    Object.keys(localParticipants).forEach(cd => {
+                        const localP = localParticipants[cd];
+                        const incomingP = incomingParticipants[cd];
+                        if (localP && incomingP && localP.status === 'solved' && this.localSession.currentActivityIndex === session.currentActivityIndex) {
+                            if (incomingP.status !== 'solved') {
+                                incomingP.status = 'solved';
+                                incomingP.currentEnigmaTimeSeconds = localP.currentEnigmaTimeSeconds || incomingP.currentEnigmaTimeSeconds;
+                                incomingP.currentEnigmaScore = localP.currentEnigmaScore || incomingP.currentEnigmaScore;
+                                incomingP.history = { ...(incomingP.history || {}), ...(localP.history || {}) };
+                            }
+                        }
+                    });
+                }
+                
+                // Recalcula ranking dinamicamente para o enigma atual
+                if (session.participantes && typeof session.currentActivityIndex === 'number') {
+                    session.activeEnigmaRanking = this.computeEnigmaRanking(session.participantes, session.currentActivityIndex);
+                }
+
                 this.localSession = session;
                 try {
                     localStorage.setItem('decifradores_active_live_session', JSON.stringify(session));
@@ -588,28 +640,46 @@ const liveSessionService = {
     async joinSession(student) {
         if (!this.localSession || !student) return null;
         const codename = student.codinome;
-        const participantes = { ...(this.localSession.participantes || {}) };
+        const currentP = this.localSession.participantes?.[codename];
 
-        if (!participantes[codename]) {
-            participantes[codename] = {
-                codinome: student.codinome,
-                nomeReal: student.nomeReal || student.nome || '',
-                avatar: student.avatar || 'detetive_classico',
-                status: 'idle',
-                currentEnigmaTimeSeconds: 0,
-                currentEnigmaScore: 0,
-                totalScore: 0,
-                totalTimeSeconds: 0,
-                history: {},
-                joinedAt: new Date().toISOString()
-            };
-        } else {
-            participantes[codename].status = 'idle';
-            participantes[codename].currentEnigmaTimeSeconds = 0;
-            participantes[codename].currentEnigmaScore = 0;
+        const participantData = {
+            codinome: student.codinome,
+            nomeReal: student.nomeReal || student.nome || '',
+            avatar: student.avatar || 'detetive_classico',
+            status: 'idle',
+            currentEnigmaTimeSeconds: 0,
+            currentEnigmaScore: 0,
+            totalScore: currentP?.totalScore || 0,
+            totalTimeSeconds: currentP?.totalTimeSeconds || 0,
+            history: currentP?.history || {},
+            joinedAt: currentP?.joinedAt || new Date().toISOString()
+        };
+
+        if (!this.localSession.participantes) this.localSession.participantes = {};
+        this.localSession.participantes[codename] = participantData;
+        this.localSession.updatedAt = new Date().toISOString();
+
+        localStorage.setItem('decifradores_active_live_session', JSON.stringify(this.localSession));
+        this.broadcast('SESSION_UPDATE', this.localSession);
+
+        if (isFirebaseReady && firestoreDb) {
+            try {
+                const updatePayload = {};
+                updatePayload[`participantes.${codename}`] = participantData;
+                updatePayload.updatedAt = new Date().toISOString();
+                await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').update(updatePayload);
+            } catch (err) {
+                try {
+                    await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set({
+                        participantes: { [codename]: participantData },
+                        updatedAt: new Date().toISOString()
+                    }, { merge: true });
+                } catch(e) {
+                    console.error("Erro ao registrar entrada no Firestore:", e);
+                }
+            }
         }
-
-        return this.updateSession({ participantes });
+        return this.localSession;
     },
 
     // Aluno sai da sessão
@@ -644,19 +714,30 @@ const liveSessionService = {
         return updated;
     },
 
-    // Aluno submete resposta correta do enigma (Atualiza sessão e salva progresso individual do aluno)
+    // Aluno submete resposta correta do enigma (Atualiza sessão atômica por aluno e salva progresso individual)
     async submitEnigmaAnswer(codename, enigmaIndex, timeSeconds, scoreEarned = 50) {
-        if (!this.localSession || !this.localSession.participantes || !this.localSession.participantes[codename]) return null;
+        if (!this.localSession) return null;
+        if (!this.localSession.participantes) this.localSession.participantes = {};
 
-        const participantes = { ...this.localSession.participantes };
-        const p = { ...participantes[codename] };
+        const existingP = this.localSession.participantes[codename] || {
+            codinome: codename,
+            nomeReal: codename,
+            avatar: 'detetive_classico',
+            status: 'answering',
+            currentEnigmaTimeSeconds: 0,
+            currentEnigmaScore: 0,
+            totalScore: 0,
+            totalTimeSeconds: 0,
+            history: {}
+        };
 
+        const p = { ...existingP };
         p.status = 'solved';
         p.currentEnigmaTimeSeconds = timeSeconds;
         p.currentEnigmaScore = scoreEarned;
         p.totalScore = (p.totalScore || 0) + scoreEarned;
         p.totalTimeSeconds = (p.totalTimeSeconds || 0) + timeSeconds;
-        if (!p.history) p.history = {};
+        p.history = { ...(p.history || {}) };
         p.history[enigmaIndex] = {
             solved: true,
             timeSeconds,
@@ -664,7 +745,8 @@ const liveSessionService = {
             answeredAt: new Date().toISOString()
         };
 
-        participantes[codename] = p;
+        this.localSession.participantes[codename] = p;
+        this.localSession.updatedAt = new Date().toISOString();
 
         // Salva progresso individual do aluno no banco
         const isLastEnigma = (enigmaIndex >= (this.localSession.totalEnigmas - 1));
@@ -685,30 +767,48 @@ const liveSessionService = {
             console.warn("Erro ao sincronizar progresso individual do aluno:", e);
         }
 
-        // Calcula ranking do enigma atual (ordenado por tempo crescente de quem acabou)
-        const ranking = Object.values(participantes)
-            .filter(player => player.history && player.history[enigmaIndex] && player.history[enigmaIndex].solved)
-            .sort((a, b) => a.history[enigmaIndex].timeSeconds - b.history[enigmaIndex].timeSeconds)
-            .map((player, idx) => ({
-                posicao: idx + 1,
-                codinome: player.codinome,
-                nomeReal: player.nomeReal,
-                avatar: player.avatar,
-                timeSeconds: player.history[enigmaIndex].timeSeconds,
-                score: player.history[enigmaIndex].score
-            }));
+        // Calcula ranking dinamicamente para o enigma atual
+        const ranking = this.computeEnigmaRanking(this.localSession.participantes, enigmaIndex);
+        this.localSession.activeEnigmaRanking = ranking;
 
-        const allSolved = Object.values(participantes).every(player => player.status === 'solved');
+        const allSolved = Object.values(this.localSession.participantes).length > 0 &&
+            Object.values(this.localSession.participantes).every(player => player.status === 'solved');
 
-        const updated = await this.updateSession({
-            participantes,
-            activeEnigmaRanking: ranking,
-            status: allSolved ? 'enigma_ranking' : this.localSession.status
-        });
+        if (allSolved && this.localSession.status === 'playing') {
+            this.localSession.status = 'enigma_ranking';
+        }
+
+        localStorage.setItem('decifradores_active_live_session', JSON.stringify(this.localSession));
+        this.broadcast('SESSION_UPDATE', this.localSession);
+
+        if (isFirebaseReady && firestoreDb) {
+            try {
+                const updatePayload = {};
+                updatePayload[`participantes.${codename}`] = p;
+                updatePayload.updatedAt = new Date().toISOString();
+                if (allSolved) {
+                    updatePayload.status = 'enigma_ranking';
+                }
+                await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').update(updatePayload);
+            } catch (err) {
+                try {
+                    await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set({
+                        participantes: { [codename]: p },
+                        updatedAt: new Date().toISOString(),
+                        ...(allSolved ? { status: 'enigma_ranking' } : {})
+                    }, { merge: true });
+                } catch(e) {
+                    console.error("Erro ao sincronizar resposta no Firestore:", e);
+                }
+            }
+        }
 
         // Salva checkpoint atualizado
-        await this.saveCheckpoint(this.localSession.subjectKey, this.localSession.lessonId, updated);
-        return updated;
+        try {
+            await this.saveCheckpoint(this.localSession.subjectKey, this.localSession.lessonId, this.localSession);
+        } catch(e) {}
+
+        return this.localSession;
     },
 
     // Professor avança para o próximo enigma

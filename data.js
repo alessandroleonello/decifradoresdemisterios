@@ -370,10 +370,10 @@ const CURRICULO_INVESTIGACAO = {
                 id: 'port_aula_1',
                 numero: 1,
                 titulo: 'O Segredo das Letras e Sílabas',
-                descricao: 'Desenvolva suas habilidades periciais: restaure o alfabeto secreto, descubra letras vizinhas, monte e separe sílabas, use bancos de sílabas, calibre o radar silábico, classifique palavras, encontre pistas no caça-palavras, interprete bilhetes e decifre o grande criptograma!',
+                descricao: 'Desenvolva suas habilidades periciais completas: restaure o alfabeto secreto, descubra letras vizinhas, monte e separe sílabas, domine dígrafos e sílabas complexas (LH, NH, CH, RR, SS), desmascare intrusos, decifre rimas, monte anagramas, audite ortografias e resolva o grande criptograma final!',
                 dificuldade: 'Iniciante',
-                tempoEstimado: '25 min',
-                xpRecompensa: 100,
+                tempoEstimado: '35 min',
+                xpRecompensa: 150,
                 atividades: [
                     {
                         id: 'port_1_atv_1',
@@ -788,7 +788,411 @@ const CURRICULO_INVESTIGACAO = {
                             }
                         ],
                         dica: 'Dica Forense: Olhe a Tabela de Códigos no topo! Se o número 1 é A, todo quadradinho com o número 1 abaixo deve receber a letra A!',
-                        explicacao: 'PARABÉNS, DETETIVE SUPREMO DE LÍNGUA PORTUGUESA! Você decifrou todos os 12 enigmas da Aula 1 com 100% de precisão e honras periciais!'
+                        explicacao: 'Excelente dedução! Você decifrou o primeiro criptograma pericial da investigação com honras periciais!'
+                    },
+                    {
+                        id: 'port_1_atv_13',
+                        tipo: 'criptograma_numerico',
+                        titulo: 'O Criptograma Secreto do Investigador Desaparecido',
+                        instrucoes: '🕵️ Detetives, atenção!\nUm crime misterioso aconteceu e, antes de desaparecer, o investigador responsável pelo caso deixou uma última mensagem para a equipe. Porém, parece que alguém descobriu que os detetives estão se aproximando da verdade...\n\nA mensagem foi cuidadosamente escondida em um código secreto formado apenas por números. Para descobrir o que está acontecendo, vocês precisarão decifrar cada sequência e revelar o aviso deixado pelo investigador.\n\nMas cuidado, detetives! Nem tudo é o que parece, e talvez vocês não estejam sozinhos nessa investigação. Alguém pode estar observando cada movimento de vocês...\n\nSerá que vocês são capazes de decifrar a mensagem antes que seja tarde? 🔎🕵️‍♀️\n\n🔎 Desafio:\nCada número representa uma letra do alfabeto. Use a chave A = 1, B = 2, C = 3... Z = 26 e transforme os números em letras.\nTrabalhem como verdadeiros detetives: observem cada detalhe, organizem as pistas e não revelem a descoberta antes de solucionar completamente o mistério!\n\nAtenção, detetive! O código esconde uma mensagem misteriosa. Observe cada sequência de números, transforme-a em letras e descubra o que o bilhete quer dizer.\nSerá que você conseguirá decifrar a mensagem antes que seja tarde demais? 🕵️‍♂️🔐',
+                        tabelaCodigos: [
+                            { numero: 1, letra: 'A' },
+                            { numero: 2, letra: 'B' },
+                            { numero: 3, letra: 'C' },
+                            { numero: 4, letra: 'D' },
+                            { numero: 5, letra: 'E' },
+                            { numero: 6, letra: 'F' },
+                            { numero: 7, letra: 'G' },
+                            { numero: 8, letra: 'H' },
+                            { numero: 9, letra: 'I' },
+                            { numero: 10, letra: 'J' },
+                            { numero: 11, letra: 'K' },
+                            { numero: 12, letra: 'L' },
+                            { numero: 13, letra: 'M' },
+                            { numero: 14, letra: 'N' },
+                            { numero: 15, letra: 'O' },
+                            { numero: 16, letra: 'P' },
+                            { numero: 17, letra: 'Q' },
+                            { numero: 18, letra: 'R' },
+                            { numero: 19, letra: 'S' },
+                            { numero: 20, letra: 'T' },
+                            { numero: 21, letra: 'U' },
+                            { numero: 22, letra: 'V' },
+                            { numero: 23, letra: 'W' },
+                            { numero: 24, letra: 'X' },
+                            { numero: 25, letra: 'Y' },
+                            { numero: 26, letra: 'Z' }
+                        ],
+                        palavrasTexto: [
+                            {
+                                chars: [
+                                    { char: 'C', lacuna: true, codigo: 3 },
+                                    { char: 'U', lacuna: true, codigo: 21 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'D', lacuna: true, codigo: 4 },
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'D', lacuna: true, codigo: 4 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: ',', lacuna: false }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'D', lacuna: true, codigo: 4 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'V', lacuna: true, codigo: 22 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: '!', lacuna: false }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'V', lacuna: true, codigo: 22 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: 'C', lacuna: true, codigo: 3 },
+                                    { char: 'Ê', lacuna: true, codigo: 5 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'M', lacuna: true, codigo: 13 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'N', lacuna: true, codigo: 14 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'M', lacuna: true, codigo: 13 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'G', lacuna: true, codigo: 7 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: 'S', lacuna: true, codigo: 19 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'P', lacuna: true, codigo: 16 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: 'R', lacuna: true, codigo: 18 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: 'D', lacuna: true, codigo: 4 },
+                                    { char: 'A', lacuna: true, codigo: 1 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'P', lacuna: true, codigo: 16 },
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'R', lacuna: true, codigo: 18 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: '.', lacuna: false }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'S', lacuna: true, codigo: 19 },
+                                    { char: 'U', lacuna: true, codigo: 21 },
+                                    { char: 'A', lacuna: true, codigo: 1 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'V', lacuna: true, codigo: 22 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'D', lacuna: true, codigo: 4 },
+                                    { char: 'A', lacuna: true, codigo: 1 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'S', lacuna: true, codigo: 19 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'Á', lacuna: true, codigo: 1 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'M', lacuna: true, codigo: 13 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'P', lacuna: true, codigo: 16 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'R', lacuna: true, codigo: 18 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'G', lacuna: true, codigo: 7 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: '.', lacuna: false }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'F', lacuna: true, codigo: 6 },
+                                    { char: 'I', lacuna: true, codigo: 9 },
+                                    { char: 'Q', lacuna: true, codigo: 17 },
+                                    { char: 'U', lacuna: true, codigo: 21 },
+                                    { char: 'E', lacuna: true, codigo: 5 }
+                                ]
+                            },
+                            {
+                                chars: [
+                                    { char: 'A', lacuna: true, codigo: 1 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'E', lacuna: true, codigo: 5 },
+                                    { char: 'N', lacuna: true, codigo: 14 },
+                                    { char: 'T', lacuna: true, codigo: 20 },
+                                    { char: 'O', lacuna: true, codigo: 15 },
+                                    { char: '!', lacuna: false }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Consulte a Tabela de Decodificação (A=1, B=2, C=3... Z=26)! Substitua cada número pela letra correspondente para desvendar o aviso secreto deixado pelo investigador.',
+                        explicacao: 'PARABÉNS, DETETIVE SUPREMO DE LÍNGUA PORTUGUESA! Você decifrou a mensagem confidencial final do investigador com 100% de precisão e salvou a equipe pericial!'
+                    },
+                    {
+                        id: 'port_1_atv_14',
+                        tipo: 'mutacao_h_magico',
+                        titulo: 'Enigma da Transformação do H Mágico (Dígrafos LH, NH, CH)',
+                        instrucoes: 'Os peritos descobriram uma fórmula secreta: ao adicionar a letra H mágica em certas palavras, surge um novo som pericial com LH, NH ou CH! Analise a palavra base e escolha qual nova evidência se forma ao juntar o H.',
+                        itens: [
+                            { id: 'mut_1', palavraBase: 'VELA', emoji: '👵', palavraCorreta: 'VELHA', opcoes: ['VELHA', 'VELIA', 'VELAÇO'] },
+                            { id: 'mut_2', palavraBase: 'BOLA', emoji: '🫧', palavraCorreta: 'BOLHA', opcoes: ['BOLIA', 'BOLHA', 'BOLÃO'] },
+                            { id: 'mut_3', palavraBase: 'BICO', emoji: '🐛', palavraCorreta: 'BICHO', opcoes: ['BICOTE', 'BICOA', 'BICHO'] },
+                            { id: 'mut_4', palavraBase: 'SONO', emoji: '💭', palavraCorreta: 'SONHO', opcoes: ['SONINHO', 'SONHO', 'SONIO'] },
+                            { id: 'mut_5', palavraBase: 'CAVE', emoji: '🗝️', palavraCorreta: 'CHAVE', opcoes: ['CHAVE', 'CAVIA', 'CHUVA'] },
+                            { id: 'mut_6', palavraBase: 'FILA', emoji: '👧', palavraCorreta: 'FILHA', opcoes: ['FILIA', 'FILHA', 'FILINHA'] }
+                        ],
+                        dica: 'Dica Forense: Veja como o H altera o som! C + H vira som de CH; L + H vira LH; N + H vira NH!',
+                        explicacao: 'Incrível dedução pericial! Você dominou o poder do H e a formação dos dígrafos LH, NH e CH.'
+                    },
+                    {
+                        id: 'port_1_atv_15',
+                        tipo: 'completar_digrafos_banco',
+                        titulo: 'Enigma do Laboratório de Dígrafos (LH, NH, CH, RR, SS, GU, QU)',
+                        instrucoes: 'Várias evidências do caso perderam seus dígrafos e sílabas complexas! Observe cada pista e selecione o dígrafo correto (LH, NH, CH, RR, SS, GU ou QU) para restaurar as palavras.',
+                        itens: [
+                            { id: 'dig_1', emoji: '🎫', prefixo: 'BI', sufixo: 'ETE', digrafoEsperado: 'LH', palavraCompleta: 'BILHETE', opcoesDigrafos: ['LH', 'NH', 'CH', 'RR'] },
+                            { id: 'dig_2', emoji: '🪺', prefixo: 'NI', sufixo: 'O', digrafoEsperado: 'NH', palavraCompleta: 'NINHO', opcoesDigrafos: ['LH', 'NH', 'CH', 'SS'] },
+                            { id: 'dig_3', emoji: '🗝️', prefixo: '', sufixo: 'AVE', digrafoEsperado: 'CH', palavraCompleta: 'CHAVE', opcoesDigrafos: ['CH', 'LH', 'NH', 'QU'] },
+                            { id: 'dig_4', emoji: '🐕', prefixo: 'CA', sufixo: 'ORRO', digrafoEsperado: 'CH', palavraCompleta: 'CACHORRO', opcoesDigrafos: ['CH', 'RR', 'SS', 'GU'] },
+                            { id: 'dig_5', emoji: '🐦', prefixo: 'PÁ', sufixo: 'ARO', digrafoEsperado: 'SS', palavraCompleta: 'PÁSSARO', opcoesDigrafos: ['SS', 'RR', 'CH', 'NH'] },
+                            { id: 'dig_6', emoji: '🚀', prefixo: 'FO', sufixo: 'ETE', digrafoEsperado: 'GU', palavraCompleta: 'FOGUETE', opcoesDigrafos: ['GU', 'QU', 'LH', 'NH'] },
+                            { id: 'dig_7', emoji: '🧀', prefixo: '', sufixo: 'EIJO', digrafoEsperado: 'QU', palavraCompleta: 'QUEIJO', opcoesDigrafos: ['QU', 'GU', 'CH', 'LH'] },
+                            { id: 'dig_8', emoji: '🐇', prefixo: 'COE', sufixo: 'O', digrafoEsperado: 'LH', palavraCompleta: 'COELHO', opcoesDigrafos: ['LH', 'NH', 'SS', 'RR'] }
+                        ],
+                        dica: 'Dica Forense: Fale a palavra com cada opção e ouça qual dígrafo produz a pronúncia exata do item!',
+                        explicacao: 'Excelente calibragem! Todos os dígrafos e sons complexos foram restaurados com sucesso.'
+                    },
+                    {
+                        id: 'port_1_atv_16',
+                        tipo: 'classificar_contagem_silabas',
+                        titulo: 'Enigma do Arquivo de Dígrafos (Classificação em Gavetas)',
+                        instrucoes: 'Organize o fichário criminal separando as palavras de acordo com o dígrafo que elas contêm! Clique na palavra do banco e, em seguida, na gaveta pericial correspondente (CH, LH, NH ou RR/SS).',
+                        categorias: [
+                            { id: 'cat_ch', titulo: 'Dígrafo CH', subtitulo: 'Som de X', icone: '🗝️', cor: '#38bdf8' },
+                            { id: 'cat_lh', titulo: 'Dígrafo LH', subtitulo: 'Som de Lhado', icone: '🐇', cor: '#10b981' },
+                            { id: 'cat_nh', titulo: 'Dígrafo NH', subtitulo: 'Som de Nhado', icone: '🪺', cor: '#f59e0b' },
+                            { id: 'cat_rr_ss', titulo: 'Dígrafos RR / SS', subtitulo: 'Sons Fortes', icone: '🐕', cor: '#ec4899' }
+                        ],
+                        palavras: [
+                            { id: 'pw1', palavra: 'CHAVE', categoriaCorreta: 'cat_ch' },
+                            { id: 'pw2', palavra: 'CHUVA', categoriaCorreta: 'cat_ch' },
+                            { id: 'pw3', palavra: 'CHINELO', categoriaCorreta: 'cat_ch' },
+                            { id: 'pw4', palavra: 'COELHO', categoriaCorreta: 'cat_lh' },
+                            { id: 'pw5', palavra: 'BILHETE', categoriaCorreta: 'cat_lh' },
+                            { id: 'pw6', palavra: 'ESPELHO', categoriaCorreta: 'cat_lh' },
+                            { id: 'pw7', palavra: 'NINHO', categoriaCorreta: 'cat_nh' },
+                            { id: 'pw8', palavra: 'RAINHA', categoriaCorreta: 'cat_nh' },
+                            { id: 'pw9', palavra: 'LINHA', categoriaCorreta: 'cat_nh' },
+                            { id: 'pw10', palavra: 'CARRO', categoriaCorreta: 'cat_rr_ss' },
+                            { id: 'pw11', palavra: 'PÁSSARO', categoriaCorreta: 'cat_rr_ss' },
+                            { id: 'pw12', palavra: 'CACHORRO', categoriaCorreta: 'cat_rr_ss' }
+                        ],
+                        dica: 'Dica Forense: Olhe as letras destacadas: se tiver CH vai na 1ª gaveta; LH na 2ª; NH na 3ª; RR ou SS na 4ª!',
+                        explicacao: 'Arquivo de dígrafos 100% catalogado! Todas as 12 evidências foram arquivadas em suas gavetas corretas.'
+                    },
+                    {
+                        id: 'port_1_atv_17',
+                        tipo: 'identificar_intruso_silabico',
+                        titulo: 'Enigma do Intruso Silábico (Suspeito Disfarçado)',
+                        instrucoes: 'Em cada grupo pericial, 3 palavras seguem uma regra secreta de sílaba complexa e 1 palavra é um INTRUSO disfarçado! Clique no termo intruso de cada grupo para desmascará-lo.',
+                        grupos: [
+                            {
+                                id: 'grp_1',
+                                titulo: 'Caso 1: Dossiê das Palavras com LH',
+                                regra: 'Todas possuem LH, exceto o intruso!',
+                                palavras: [
+                                    { palavra: 'COELHO', isIntruso: false },
+                                    { palavra: 'TOALHA', isIntruso: false },
+                                    { palavra: 'SAPATO', isIntruso: true },
+                                    { palavra: 'BILHETE', isIntruso: false }
+                                ]
+                            },
+                            {
+                                id: 'grp_2',
+                                titulo: 'Caso 2: Dossiê das Palavras com NH',
+                                regra: 'Todas possuem NH, exceto o intruso!',
+                                palavras: [
+                                    { palavra: 'NINHO', isIntruso: false },
+                                    { palavra: 'PIPOCA', isIntruso: true },
+                                    { palavra: 'GALINHA', isIntruso: false },
+                                    { palavra: 'LINHA', isIntruso: false }
+                                ]
+                            },
+                            {
+                                id: 'grp_3',
+                                titulo: 'Caso 3: Dossiê das Palavras com CH',
+                                regra: 'Todas possuem CH, exceto o intruso!',
+                                palavras: [
+                                    { palavra: 'CHAVE', isIntruso: false },
+                                    { palavra: 'CHUVA', isIntruso: false },
+                                    { palavra: 'CADERNO', isIntruso: true },
+                                    { palavra: 'MOCHILA', isIntruso: false }
+                                ]
+                            },
+                            {
+                                id: 'grp_4',
+                                titulo: 'Caso 4: Dossiê dos Encontros com R (BR, CR, DR, PR)',
+                                regra: 'Todas possuem Encontro Consonantal com R, exceto o intruso!',
+                                palavras: [
+                                    { palavra: 'PRATO', isIntruso: false },
+                                    { palavra: 'COFRE', isIntruso: false },
+                                    { palavra: 'PEDRA', isIntruso: false },
+                                    { palavra: 'BONECA', isIntruso: true }
+                                ]
+                            },
+                            {
+                                id: 'grp_5',
+                                titulo: 'Caso 5: Dossiê dos Encontros com L (BL, CL, FL, PL)',
+                                regra: 'Todas possuem Encontro Consonantal com L, exceto o intruso!',
+                                palavras: [
+                                    { palavra: 'PLANTA', isIntruso: false },
+                                    { palavra: 'GATO', isIntruso: true },
+                                    { palavra: 'CLUBE', isIntruso: false },
+                                    { palavra: 'FLOR', isIntruso: false }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Procure qual palavra NÃO TEM a sílaba complexa (LH, NH, CH ou encontros consonantais) que as outras 3 têm!',
+                        explicacao: 'Percepção forense impecável! Todos os 5 intrusos foram desmascarados e removidos da investigação.'
+                    },
+                    {
+                        id: 'port_1_atv_18',
+                        tipo: 'enigma_rimas_periciais',
+                        titulo: 'Enigma das Rimas Secretas da Cena do Crime',
+                        instrucoes: 'O suspeito deixou bilhetes com pistas poéticas em rimas! Para cada evidência em destaque, descubra qual das opções termina com o mesmo som e forma a rima pericial.',
+                        itens: [
+                            {
+                                id: 'rhy_1',
+                                emoji: '🪞',
+                                palavraGuia: 'ESPELHO',
+                                somFinal: '-ELHO',
+                                opcoes: [
+                                    { emoji: '🐇', palavra: 'COELHO', correta: true },
+                                    { emoji: '🏰', palavra: 'CASTELO', correta: false },
+                                    { emoji: '🪆', palavra: 'BONECA', correta: false },
+                                    { emoji: '👞', palavra: 'SAPATO', correta: false }
+                                ]
+                            },
+                            {
+                                id: 'rhy_2',
+                                emoji: '🪺',
+                                palavraGuia: 'NINHO',
+                                somFinal: '-INHO',
+                                opcoes: [
+                                    { emoji: '🌧️', palavra: 'CHUVA', correta: false },
+                                    { emoji: '🐦', palavra: 'PASSARINHO', correta: true },
+                                    { emoji: '🦉', palavra: 'CORUJA', correta: false },
+                                    { emoji: '🗝️', palavra: 'CHAVE', correta: false }
+                                ]
+                            },
+                            {
+                                id: 'rhy_3',
+                                emoji: '🚪',
+                                palavraGuia: 'PORTÃO',
+                                somFinal: '-ÃO',
+                                opcoes: [
+                                    { emoji: '🚪', palavra: 'PORTA', correta: false },
+                                    { emoji: '🎫', palavra: 'BILHETE', correta: false },
+                                    { emoji: '🔘', palavra: 'BOTÃO', correta: true },
+                                    { emoji: '🪟', palavra: 'JANELA', correta: false }
+                                ]
+                            },
+                            {
+                                id: 'rhy_4',
+                                emoji: '👑',
+                                palavraGuia: 'RAINHA',
+                                somFinal: '-INHA',
+                                opcoes: [
+                                    { emoji: '👑', palavra: 'COROA', correta: false },
+                                    { emoji: '🐔', palavra: 'GALINHA', correta: true },
+                                    { emoji: '🏰', palavra: 'CASTELO', correta: false },
+                                    { emoji: '🤴', palavra: 'PRÍNCIPE', correta: false }
+                                ]
+                            },
+                            {
+                                id: 'rhy_5',
+                                emoji: '🚀',
+                                palavraGuia: 'FOGUETE',
+                                somFinal: '-ETE',
+                                opcoes: [
+                                    { emoji: '🧶', palavra: 'TAPETE', correta: true },
+                                    { emoji: '⚽', palavra: 'BOLA', correta: false },
+                                    { emoji: '🍿', palavra: 'PIPOCA', correta: false },
+                                    { emoji: '👞', palavra: 'SAPATO', correta: false }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Fale a palavra-guia e teste o som final com cada opção para encontrar o par rimado!',
+                        explicacao: 'Ouvido afiado, Detetive! Todas as rimas periciais foram decifradas com precisão sonora.'
+                    },
+                    {
+                        id: 'port_1_atv_19',
+                        tipo: 'anagramas_silabicos',
+                        titulo: 'Decodificador de Anagramas com Sílabas Complexas',
+                        instrucoes: 'As letras das palavras periciais foram desordenadas pelo criminoso! Reorganize as letras da bandeja e digite a palavra correta contendo sílabas complexas (CH, LH, NH, PL, FR).',
+                        itens: [
+                            { id: 'an_1', emoji: '🗝️', dica: 'Objeto de metal que abre cofres e trancas', letrasDesordenadas: ['E', 'C', 'H', 'A', 'V'], palavraEsperada: 'CHAVE' },
+                            { id: 'an_2', emoji: '🐇', dica: 'Animal de orelhas longas com dígrafo LH', letrasDesordenadas: ['O', 'C', 'E', 'L', 'H', 'O'], palavraEsperada: 'COELHO' },
+                            { id: 'an_3', emoji: '🪺', dica: 'Casa feita por passarinhos nas árvores', letrasDesordenadas: ['O', 'N', 'I', 'H', 'N'], palavraEsperada: 'NINHO' },
+                            { id: 'an_4', emoji: '🪴', dica: 'Vegetal com encontro consonantal PL', letrasDesordenadas: ['A', 'P', 'L', 'A', 'N', 'T'], palavraEsperada: 'PLANTA' },
+                            { id: 'an_5', emoji: '🔐', dica: 'Caixa de segurança com encontro consonantal FR', letrasDesordenadas: ['E', 'C', 'O', 'F', 'R'], palavraEsperada: 'COFRE' },
+                            { id: 'an_6', emoji: '🌧️', dica: 'Água que cai do céu com dígrafo CH', letrasDesordenadas: ['A', 'C', 'H', 'U', 'V'], palavraEsperada: 'CHUVA' }
+                        ],
+                        dica: 'Dica Forense: Observe a pista e use todas as letras da bandeja na ordem certa para reconstruir o termo pericial!',
+                        explicacao: 'Decodificação espetacular! Todos os 6 anagramas com sílabas complexas foram reconstruídos com louvor.'
+                    },
+                    {
+                        id: 'port_1_atv_20',
+                        tipo: 'ortografia_pericial_digrafos',
+                        titulo: 'A Grande Auditoria Ortográfica (Dígrafos e Sons Complexos)',
+                        instrucoes: 'Conclua a investigação como um verdadeiro Auditor Pericial! Analise cada evidência e selecione a grafia ortograficamente correta (evitando armadilhas e falsificações).',
+                        itens: [
+                            { id: 'ort_1', numero: 1, emoji: '🗝️', descricao: 'Instrumento para abrir o cofre', opcoes: [{ palavra: 'CHAVE', correta: true }, { palavra: 'XAVE', correta: false }] },
+                            { id: 'ort_2', numero: 2, emoji: '🐇', descricao: 'Animal veloz com dígrafo LH', opcoes: [{ palavra: 'COELIO', correta: false }, { palavra: 'COELHO', correta: true }] },
+                            { id: 'ort_3', numero: 3, emoji: '🐔', descricao: 'Ave do sítio com dígrafo NH', opcoes: [{ palavra: 'GALINHA', correta: true }, { palavra: 'GALINIA', correta: false }] },
+                            { id: 'ort_4', numero: 4, emoji: '🐕', descricao: 'Mascote pericial com dígrafo RR', opcoes: [{ palavra: 'CACHORRO', correta: true }, { palavra: 'CAXORRO', correta: false }] },
+                            { id: 'ort_5', numero: 5, emoji: '🐦', descricao: 'Pássaro cantor com dígrafo SS', opcoes: [{ palavra: 'PÁSSARO', correta: true }, { palavra: 'PÁÇARO', correta: false }] },
+                            { id: 'ort_6', numero: 6, emoji: '🎸', descricao: 'Instrumento de cordas com GU e RR', opcoes: [{ palavra: 'GITARRA', correta: false }, { palavra: 'GUITARRA', correta: true }] }
+                        ],
+                        dica: 'Dica Forense: Lembre-se: som de CH se escreve com CH; LH e NH mantêm a consoante com H; RR e SS dobram entre vogais!',
+                        explicacao: 'HONRAS MÁXIMAS, DETETIVE MESTRE! Você desvendou todos os 20 enigmas da Aula 1 de Língua Portuguesa com maestria pericial absoluta!'
                     }
                 ]
             }

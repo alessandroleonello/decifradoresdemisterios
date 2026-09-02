@@ -2824,6 +2824,299 @@ function renderActivityCard(atv, num) {
         `;
     }
 
+    // TIPO 25: MUTAÇÃO DO H MÁGICO (DÍGRAFOS LH, NH, CH)
+    if (atv.tipo === 'mutacao_h_magico' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it) => {
+            let optionsHtml = it.opcoes.map(opt => `
+                <button type="button" 
+                        class="mutation-opt-btn ${isAlreadySolved && opt === it.palavraCorreta ? 'selected-correct' : ''}" 
+                        data-item-id="${it.id}" 
+                        data-word="${opt}" 
+                        data-correct="${opt === it.palavraCorreta}" 
+                        ${isAlreadySolved ? 'disabled' : ''}>
+                    ${opt}
+                </button>
+            `).join('');
+
+            cardsHtml += `
+                <div class="mutation-card" id="mutation-card-${atv.id}-${it.id}">
+                    <div class="mutation-formula">
+                        <span class="mutation-base-word">${it.palavraBase}</span>
+                        <span class="mutation-plus">+</span>
+                        <span class="mutation-badge-h">[ H ]</span>
+                        <span class="mutation-arrow">➔</span>
+                        <span class="mutation-target-slot" id="target-slot-${atv.id}-${it.id}">
+                            ${isAlreadySolved ? `<strong class="solved-word">${it.emoji} ${it.palavraCorreta}</strong>` : '?'}
+                        </span>
+                    </div>
+                    <div class="mutation-options-row">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="mutation-activity-container">
+                <div class="mutation-cards-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-mutation" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> ${isAlreadySolved ? 'Mutações Verificadas com Sucesso ✅' : 'Verificar Transformações do H'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 26: COMPLETAR DÍGRAFOS COM BANCO (LH, NH, CH, RR, SS, GU, QU)
+    if (atv.tipo === 'completar_digrafos_banco' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it) => {
+            let pillsHtml = (it.opcoesDigrafos || ['LH', 'NH', 'CH', 'RR', 'SS', 'GU', 'QU']).map(dig => `
+                <button type="button" 
+                        class="digraph-pill-btn ${isAlreadySolved && dig === it.digrafoEsperado ? 'selected-correct' : ''}" 
+                        data-item-id="${it.id}" 
+                        data-digraph="${dig}" 
+                        data-correct="${dig === it.digrafoEsperado}" 
+                        ${isAlreadySolved ? 'disabled' : ''}>
+                    ${dig}
+                </button>
+            `).join('');
+
+            cardsHtml += `
+                <div class="digraph-word-card" id="digraph-card-${atv.id}-${it.id}">
+                    <div class="digraph-word-display">
+                        <span>${it.emoji}</span>
+                        <span>${it.prefixo}</span>
+                        <span class="digraph-slot-box ${isAlreadySolved ? 'filled correct' : ''}" id="digraph-slot-${atv.id}-${it.id}" data-item-id="${it.id}" data-expected="${it.digrafoEsperado}">
+                            ${isAlreadySolved ? it.digrafoEsperado : '___'}
+                        </span>
+                        <span>${it.sufixo}</span>
+                    </div>
+                    <div class="digraph-pills-row">
+                        ${pillsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="digraph-completion-container">
+                <div class="digraph-words-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-digraphs" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-puzzle-piece"></i> ${isAlreadySolved ? 'Dígrafos Confirmados com Sucesso ✅' : 'Verificar Dígrafos Selecionados'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 27: IDENTIFICAR INTRUSO SILÁBICO
+    if (atv.tipo === 'identificar_intruso_silabico' && atv.grupos) {
+        let groupsHtml = '';
+        atv.grupos.forEach((g) => {
+            let chipsHtml = g.palavras.map(p => `
+                <button type="button" 
+                        class="intruso-word-chip ${isAlreadySolved && p.isIntruso ? 'intruso-caught' : ''}" 
+                        data-group-id="${g.id}" 
+                        data-word="${p.palavra}" 
+                        data-is-intruso="${p.isIntruso}" 
+                        ${isAlreadySolved ? 'disabled' : ''}>
+                    <span class="chip-text">${p.palavra}</span>
+                    ${isAlreadySolved && p.isIntruso ? '<span class="intruso-tag">🚩 INTRUSO</span>' : ''}
+                </button>
+            `).join('');
+
+            groupsHtml += `
+                <div class="intruso-group-card" id="intruso-card-${atv.id}-${g.id}">
+                    <div class="intruso-group-header">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-folder-open" style="color: var(--neon-amber);"></i>
+                            <strong>${g.titulo}</strong>
+                        </div>
+                        <small class="intruso-group-rule">Regra da Evidência: ${g.regra}</small>
+                    </div>
+                    <div class="intruso-options-grid">
+                        ${chipsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="intruso-activity-container">
+                ${groupsHtml}
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-intruso" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-user-secret"></i> ${isAlreadySolved ? 'Intrusos Desmascarados ✅' : 'Verificar Intrusos Selecionados'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 28: ENIGMA DAS RIMAS PERICIAIS
+    if (atv.tipo === 'enigma_rimas_periciais' && atv.itens) {
+        let itemsHtml = '';
+        atv.itens.forEach((item) => {
+            let optionsHtml = item.opcoes.map(opt => `
+                <button type="button" 
+                        class="rhyme-opt-btn ${isAlreadySolved && opt.correta ? 'selected-correct' : ''}" 
+                        data-item-id="${item.id}" 
+                        data-is-correct="${opt.correta}" 
+                        ${isAlreadySolved ? 'disabled' : ''}>
+                    <span class="opt-emoji">${opt.emoji}</span>
+                    <span class="opt-word">${opt.palavra}</span>
+                </button>
+            `).join('');
+
+            itemsHtml += `
+                <div class="rhyme-clue-card" id="rhyme-card-${atv.id}-${item.id}">
+                    <div class="rhyme-lead-box">
+                        <span class="rhyme-emoji">${item.emoji}</span>
+                        <div class="rhyme-lead-info">
+                            <span class="rhyme-label" style="font-size: 0.8rem; color: var(--text-muted); display: block;">Evidência Chave:</span>
+                            <strong class="rhyme-lead-word">${item.palavraGuia}</strong>
+                        </div>
+                        <div class="rhyme-sound-badge">Terminação: ${item.somFinal}</div>
+                    </div>
+                    <div class="rhyme-prompt-msg">Qual suspeito RIMA com <strong>${item.palavraGuia}</strong>?</div>
+                    <div class="rhyme-options-grid">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="rhyme-activity-container">
+                <div class="rhyme-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.1rem;">
+                    ${itemsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-rhymes" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-music"></i> ${isAlreadySolved ? 'Rimas Periciais Confirmadas ✅' : 'Verificar Rimas Selecionadas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 29: ANAGRAMAS COM SÍLABAS COMPLEXAS
+    if (atv.tipo === 'anagramas_silabicos' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it, aIdx) => {
+            let chipsHtml = it.letrasDesordenadas.map(l => `<span class="anagram-letter-chip">${l}</span>`).join('');
+            let slotsHtml = it.palavraEsperada.split('').map((ch, cIdx) => `
+                <input type="text" 
+                       class="anagram-char-input ${isAlreadySolved ? 'correct' : ''}" 
+                       data-item-id="${it.id}" 
+                       data-char-idx="${cIdx}" 
+                       data-expected="${ch}" 
+                       maxlength="1" 
+                       value="${isAlreadySolved ? ch : ''}" 
+                       ${isAlreadySolved ? 'disabled' : ''} 
+                       placeholder="_" 
+                       autocomplete="off" 
+                       autocapitalize="characters">
+            `).join('');
+
+            cardsHtml += `
+                <div class="anagram-card" id="anagram-card-${atv.id}-${it.id}">
+                    <div class="anagram-header">
+                        <span class="anagram-case-badge"><i class="fa-solid fa-puzzle-piece"></i> ANAGRAMA #${aIdx + 1}</span>
+                        ${it.dica ? `
+                            <button type="button" class="btn-anagram-hint-toggle" data-target="anagram-hint-${atv.id}-${it.id}">
+                                <i class="fa-regular fa-lightbulb"></i> Pista Secreta
+                            </button>
+                        ` : ''}
+                    </div>
+                    ${it.dica ? `
+                        <div class="anagram-hidden-clue" id="anagram-hint-${atv.id}-${it.id}">
+                            <span class="anagram-emoji">${it.emoji || '🔍'}</span>
+                            <span class="anagram-clue-text"><strong>Dica:</strong> ${it.dica}</span>
+                        </div>
+                    ` : ''}
+                    <div class="anagram-scrambled-tray">
+                        <div class="anagram-tray-header">
+                            <span class="tray-label"><i class="fa-solid fa-shuffle"></i> Letras Embaralhadas:</span>
+                        </div>
+                        <div class="anagram-chips-row">
+                            ${chipsHtml}
+                        </div>
+                    </div>
+                    <div class="anagram-slots-row">
+                        ${slotsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="anagram-activity-container">
+                <div class="anagram-cards-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-anagrams" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-spell-check"></i> ${isAlreadySolved ? 'Anagramas Decifrados ✅' : 'Verificar Anagramas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO 30: AUDITORIA ORTOGRÁFICA (DÍGRAFOS E GRAFIA CORRETA)
+    if (atv.tipo === 'ortografia_pericial_digrafos' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it) => {
+            let choicesHtml = it.opcoes.map(opt => `
+                <button type="button" 
+                        class="ortho-choice-btn ${isAlreadySolved && opt.correta ? 'selected-correct' : ''}" 
+                        data-item-id="${it.id}" 
+                        data-is-correct="${opt.correta}" 
+                        ${isAlreadySolved ? 'disabled' : ''}>
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>${opt.palavra}</span>
+                </button>
+            `).join('');
+
+            cardsHtml += `
+                <div class="orthography-audit-card" id="ortho-card-${atv.id}-${it.id}">
+                    <div class="ortho-card-header">
+                        <span class="ortho-emoji">${it.emoji}</span>
+                        <div class="ortho-header-text">
+                            <strong>Evidência #${it.numero}: ${it.descricao}</strong>
+                            <small>Selecione a grafia ortográfica oficial:</small>
+                        </div>
+                    </div>
+                    <div class="ortho-choices-grid">
+                        ${choicesHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="ortho-activity-container">
+                <div class="ortho-cards-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1rem;">
+                    <button type="button" class="btn-decode-action btn-verify-ortho" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-stamp"></i> ${isAlreadySolved ? 'Auditoria Concluída com Sucesso ✅' : 'Auditar e Confirmar Grafias'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
     card.innerHTML = `
         <div class="activity-card-header">
             <span class="activity-badge">ENIGMA #${num}</span>
@@ -3225,10 +3518,62 @@ function renderActivityCard(atv, num) {
     if (atv.tipo === 'completar_palavras_desenho') {
         const btnVerify = card.querySelector('.btn-verify-complete-words');
         const inputs = card.querySelectorAll('.word-char-input');
+        const wordCards = card.querySelectorAll('.word-completion-card');
+        const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const validateWordCard = (wordCard) => {
+            if (!wordCard) return;
+            const wordInputs = wordCard.querySelectorAll('.word-char-input');
+            if (wordInputs.length === 0) return;
+
+            let allFilled = true;
+            let allCorrect = true;
+
+            wordInputs.forEach(inp => {
+                const val = normalize(inp.value);
+                const exp = normalize(inp.dataset.expected);
+                if (!val) {
+                    allFilled = false;
+                    allCorrect = false;
+                } else if (val !== exp) {
+                    allCorrect = false;
+                }
+            });
+
+            if (allFilled && allCorrect) {
+                wordInputs.forEach(inp => {
+                    inp.classList.remove('incorrect');
+                    inp.classList.add('correct');
+                });
+                wordCard.classList.add('word-solved');
+            } else {
+                wordCard.classList.remove('word-solved');
+                wordInputs.forEach(inp => {
+                    const val = normalize(inp.value);
+                    const exp = normalize(inp.dataset.expected);
+                    if (!val) {
+                        inp.classList.remove('correct', 'incorrect');
+                    } else if (allFilled && !allCorrect) {
+                        if (val === exp) {
+                            inp.classList.add('correct');
+                            inp.classList.remove('incorrect');
+                        } else {
+                            inp.classList.add('incorrect');
+                            inp.classList.remove('correct');
+                        }
+                    } else {
+                        inp.classList.remove('correct', 'incorrect');
+                    }
+                });
+            }
+        };
 
         inputs.forEach((input, idx) => {
             input.addEventListener('input', () => {
                 input.value = input.value.toUpperCase();
+                const wordCard = input.closest('.word-completion-card');
+                validateWordCard(wordCard);
+
                 if (input.value.length === 1 && idx < inputs.length - 1) {
                     inputs[idx + 1].focus();
                 }
@@ -3241,11 +3586,17 @@ function renderActivityCard(atv, num) {
                     } else {
                         btnVerify?.click();
                     }
-                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
-                    inputs[idx - 1].focus();
+                } else if (e.key === 'Backspace') {
+                    const wordCard = input.closest('.word-completion-card');
+                    validateWordCard(wordCard);
+                    if (input.value === '' && idx > 0) {
+                        inputs[idx - 1].focus();
+                    }
                 }
             });
         });
+
+        wordCards.forEach(wc => validateWordCard(wc));
 
         btnVerify?.addEventListener('click', () => {
             handleCompleteWordsAnswerSubmit(atv, card);
@@ -3913,12 +4264,62 @@ function renderActivityCard(atv, num) {
         const btnVerify = card.querySelector('.btn-verify-simple-crossword');
         const rows = card.querySelectorAll('.crossword-row-card');
         const allInputs = card.querySelectorAll('.crossword-cell-input');
+        const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const validateCrosswordRow = (row) => {
+            if (!row) return;
+            const inputs = row.querySelectorAll('.crossword-cell-input');
+            if (inputs.length === 0) return;
+
+            let allFilled = true;
+            let allCorrect = true;
+
+            inputs.forEach(inp => {
+                const val = normalize(inp.value);
+                const exp = normalize(inp.dataset.expected);
+                if (!val) {
+                    allFilled = false;
+                    allCorrect = false;
+                } else if (val !== exp) {
+                    allCorrect = false;
+                }
+            });
+
+            if (allFilled && allCorrect) {
+                inputs.forEach(inp => {
+                    inp.classList.remove('incorrect');
+                    inp.classList.add('correct');
+                });
+                row.classList.add('row-solved');
+            } else {
+                row.classList.remove('row-solved');
+                inputs.forEach(inp => {
+                    const val = normalize(inp.value);
+                    const exp = normalize(inp.dataset.expected);
+                    if (!val) {
+                        inp.classList.remove('correct', 'incorrect');
+                    } else if (allFilled && !allCorrect) {
+                        if (val === exp) {
+                            inp.classList.add('correct');
+                            inp.classList.remove('incorrect');
+                        } else {
+                            inp.classList.add('incorrect');
+                            inp.classList.remove('correct');
+                        }
+                    } else {
+                        inp.classList.remove('correct', 'incorrect');
+                    }
+                });
+            }
+        };
 
         rows.forEach(row => {
             const inputs = row.querySelectorAll('.crossword-cell-input');
             inputs.forEach((input, idx) => {
                 input.addEventListener('input', () => {
                     input.value = input.value.toUpperCase();
+                    validateCrosswordRow(row);
+
                     if (input.value.length === 1 && idx < inputs.length - 1) {
                         inputs[idx + 1].focus();
                     }
@@ -3932,11 +4333,16 @@ function renderActivityCard(atv, num) {
                         } else {
                             btnVerify?.click();
                         }
-                    } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
-                        inputs[idx - 1].focus();
+                    } else if (e.key === 'Backspace') {
+                        validateCrosswordRow(row);
+                        if (input.value === '' && idx > 0) {
+                            inputs[idx - 1].focus();
+                        }
                     }
                 });
             });
+
+            validateCrosswordRow(row);
         });
 
         btnVerify?.addEventListener('click', () => {
@@ -3944,15 +4350,65 @@ function renderActivityCard(atv, num) {
         });
     }
 
-    // Eventos de Criptograma Numérico (Português 12)
+    // Eventos de Criptograma Numérico (Português 12 e 13)
     if (atv.tipo === 'criptograma_numerico') {
         const btnVerify = card.querySelector('.btn-verify-cryptogram');
         const inputs = card.querySelectorAll('.crypto-char-input');
+        const wordCards = card.querySelectorAll('.crypto-word-card');
+        const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const validateCryptoWord = (wordCard) => {
+            if (!wordCard) return;
+            const wordInputs = wordCard.querySelectorAll('.crypto-char-input');
+            if (wordInputs.length === 0) return;
+
+            let allFilled = true;
+            let allCorrect = true;
+
+            wordInputs.forEach(inp => {
+                const val = normalize(inp.value);
+                const exp = normalize(inp.dataset.expected);
+                if (!val) {
+                    allFilled = false;
+                    allCorrect = false;
+                } else if (val !== exp) {
+                    allCorrect = false;
+                }
+            });
+
+            if (allFilled && allCorrect) {
+                wordInputs.forEach(inp => {
+                    inp.classList.remove('incorrect');
+                    inp.classList.add('correct');
+                });
+                wordCard.classList.add('word-solved');
+            } else {
+                wordCard.classList.remove('word-solved');
+                wordInputs.forEach(inp => {
+                    const val = normalize(inp.value);
+                    const exp = normalize(inp.dataset.expected);
+                    if (!val) {
+                        inp.classList.remove('correct', 'incorrect');
+                    } else if (allFilled && !allCorrect) {
+                        if (val === exp) {
+                            inp.classList.add('correct');
+                            inp.classList.remove('incorrect');
+                        } else {
+                            inp.classList.add('incorrect');
+                            inp.classList.remove('correct');
+                        }
+                    } else {
+                        inp.classList.remove('correct', 'incorrect');
+                    }
+                });
+            }
+        };
 
         inputs.forEach((input, idx) => {
             input.addEventListener('input', () => {
                 input.value = input.value.toUpperCase();
-                input.classList.remove('correct', 'incorrect');
+                const wordCard = input.closest('.crypto-word-card');
+                validateCryptoWord(wordCard);
 
                 // Avança o foco para o próximo campo
                 if (input.value.length === 1 && idx < inputs.length - 1) {
@@ -3967,14 +4423,245 @@ function renderActivityCard(atv, num) {
                     } else {
                         btnVerify?.click();
                     }
-                } else if (e.key === 'Backspace' && input.value === '' && idx > 0) {
-                    inputs[idx - 1].focus();
+                } else if (e.key === 'Backspace') {
+                    const wordCard = input.closest('.crypto-word-card');
+                    validateCryptoWord(wordCard);
+                    if (input.value === '' && idx > 0) {
+                        inputs[idx - 1].focus();
+                    }
                 }
             });
         });
 
+        wordCards.forEach(wc => validateCryptoWord(wc));
+
         btnVerify?.addEventListener('click', () => {
             handleNumericCryptogramAnswerSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Mutação do H Mágico (Tipo 25)
+    if (atv.tipo === 'mutacao_h_magico') {
+        const btnVerify = card.querySelector('.btn-verify-mutation');
+        const cards = card.querySelectorAll('.mutation-card');
+
+        cards.forEach(mc => {
+            const btns = mc.querySelectorAll('.mutation-opt-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    btns.forEach(b => b.classList.remove('selected', 'selected-correct', 'selected-wrong'));
+                    btn.classList.add('selected');
+                    const targetSlot = mc.querySelector('.mutation-target-slot');
+                    if (targetSlot) {
+                        targetSlot.textContent = btn.dataset.word;
+                    }
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleMutationSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Completar Dígrafos (Tipo 26)
+    if (atv.tipo === 'completar_digrafos_banco') {
+        const btnVerify = card.querySelector('.btn-verify-digraphs');
+        const cards = card.querySelectorAll('.digraph-word-card');
+
+        cards.forEach(dc => {
+            const slot = dc.querySelector('.digraph-slot-box');
+            const btns = dc.querySelectorAll('.digraph-pill-btn');
+
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    btns.forEach(b => b.classList.remove('selected', 'selected-correct', 'selected-wrong'));
+                    btn.classList.add('selected');
+                    const dig = btn.dataset.digraph;
+                    if (slot) {
+                        slot.textContent = dig;
+                        slot.classList.add('filled');
+                        slot.dataset.filledVal = dig;
+                        if (dig === slot.dataset.expected) {
+                            slot.classList.add('correct');
+                            slot.classList.remove('incorrect');
+                            btn.classList.add('selected-correct');
+                        } else {
+                            slot.classList.remove('correct');
+                        }
+                    }
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleDigraphCompletionSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Identificar Intruso Silábico (Tipo 27)
+    if (atv.tipo === 'identificar_intruso_silabico') {
+        const btnVerify = card.querySelector('.btn-verify-intruso');
+        const cards = card.querySelectorAll('.intruso-group-card');
+
+        cards.forEach(gc => {
+            const chips = gc.querySelectorAll('.intruso-word-chip');
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    soundManager.playClick();
+                    chips.forEach(c => c.classList.remove('selected', 'intruso-caught', 'selected-wrong'));
+                    chip.classList.add('selected');
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleIntrusoSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Rimas Periciais (Tipo 28)
+    if (atv.tipo === 'enigma_rimas_periciais') {
+        const btnVerify = card.querySelector('.btn-verify-rhymes');
+        const cards = card.querySelectorAll('.rhyme-clue-card');
+
+        cards.forEach(rc => {
+            const btns = rc.querySelectorAll('.rhyme-opt-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    btns.forEach(b => b.classList.remove('selected', 'selected-correct', 'selected-wrong'));
+                    btn.classList.add('selected');
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleRhymesSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Anagramas Silábicos (Tipo 29)
+    if (atv.tipo === 'anagramas_silabicos') {
+        const btnVerify = card.querySelector('.btn-verify-anagrams');
+        const cards = card.querySelectorAll('.anagram-card');
+        const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        const validateAnagramCard = (ac) => {
+            if (!ac) return;
+            const inputs = ac.querySelectorAll('.anagram-char-input');
+            if (inputs.length === 0) return;
+
+            let allFilled = true;
+            let allCorrect = true;
+
+            inputs.forEach(inp => {
+                const val = normalize(inp.value);
+                const exp = normalize(inp.dataset.expected);
+                if (!val) {
+                    allFilled = false;
+                    allCorrect = false;
+                } else if (val !== exp) {
+                    allCorrect = false;
+                }
+            });
+
+            if (allFilled && allCorrect) {
+                inputs.forEach(inp => {
+                    inp.classList.remove('incorrect');
+                    inp.classList.add('correct');
+                });
+                ac.classList.add('anagram-solved');
+            } else {
+                ac.classList.remove('anagram-solved');
+                inputs.forEach(inp => {
+                    const val = normalize(inp.value);
+                    const exp = normalize(inp.dataset.expected);
+                    if (!val) {
+                        inp.classList.remove('correct', 'incorrect');
+                    } else if (allFilled && !allCorrect) {
+                        if (val === exp) {
+                            inp.classList.add('correct');
+                            inp.classList.remove('incorrect');
+                        } else {
+                            inp.classList.add('incorrect');
+                            inp.classList.remove('correct');
+                        }
+                    } else {
+                        inp.classList.remove('correct', 'incorrect');
+                    }
+                });
+            }
+        };
+
+        cards.forEach(ac => {
+            const hintBtn = ac.querySelector('.btn-anagram-hint-toggle');
+            if (hintBtn) {
+                hintBtn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    const targetId = hintBtn.dataset.target;
+                    const clueBox = ac.querySelector(`#${targetId}`);
+                    if (clueBox) {
+                        clueBox.classList.toggle('open');
+                    }
+                });
+            }
+
+            const inputs = ac.querySelectorAll('.anagram-char-input');
+            inputs.forEach((input, idx) => {
+                input.addEventListener('input', () => {
+                    input.value = input.value.toUpperCase();
+                    validateAnagramCard(ac);
+
+                    if (input.value.length === 1 && idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') {
+                        if (idx < inputs.length - 1) {
+                            inputs[idx + 1].focus();
+                        } else {
+                            btnVerify?.click();
+                        }
+                    } else if (e.key === 'Backspace') {
+                        validateAnagramCard(ac);
+                        if (input.value === '' && idx > 0) {
+                            inputs[idx - 1].focus();
+                        }
+                    }
+                });
+            });
+
+            validateAnagramCard(ac);
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleAnagramSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Auditoria Ortográfica (Tipo 30)
+    if (atv.tipo === 'ortografia_pericial_digrafos') {
+        const btnVerify = card.querySelector('.btn-verify-ortho');
+        const cards = card.querySelectorAll('.orthography-audit-card');
+
+        cards.forEach(oc => {
+            const btns = oc.querySelectorAll('.ortho-choice-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    btns.forEach(b => b.classList.remove('selected', 'selected-correct', 'selected-wrong'));
+                    btn.classList.add('selected');
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleOrthoAuditSubmit(atv, card);
         });
     }
 
@@ -3989,6 +4676,386 @@ function renderActivityCard(atv, num) {
     }
 
     return card;
+}
+
+// --------------------------------------------------------------------------
+// HANDLERS DE VALIDAÇÃO: SÍLABAS COMPLEXAS E NOVOS ENIGMAS DE PORTUGUÊS
+// --------------------------------------------------------------------------
+
+// Validação de Mutação do H Mágico
+function handleMutationSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.mutation-card');
+    let allCorrect = true;
+    let unselectedCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(mc => {
+        const selectedBtn = mc.querySelector('.mutation-opt-btn.selected');
+
+        if (!selectedBtn) {
+            allCorrect = false;
+            unselectedCount++;
+        } else if (selectedBtn.dataset.correct === 'true') {
+            selectedBtn.classList.add('selected-correct');
+            selectedBtn.classList.remove('selected-wrong');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            selectedBtn.classList.add('selected-wrong');
+            selectedBtn.classList.remove('selected-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(mc => mc.querySelectorAll('.mutation-opt-btn').forEach(b => b.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-mutation');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Transformações Verificadas com Sucesso!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>MUTAÇÕES DESVENDADAS COM SUCESSO!</strong><br>
+                ${atv.explicacao || 'Você compreendeu perfeitamente o poder do H ao formar dígrafos (LH, NH, CH)!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as opções marcadas em vermelho.';
+        if (unselectedCount > 0) {
+            msg = `Selecione a palavra resultante para todos os ${cards.length} casos.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} resposta(s) incorreta(s). Preste atenção em como a letra H modifica o som das consoantes L, N e C!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Atenção às Mutações:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Completar Dígrafos
+function handleDigraphCompletionSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.digraph-word-card');
+    let allCorrect = true;
+    let unfilledCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(dc => {
+        const slot = dc.querySelector('.digraph-slot-box');
+        const filled = slot?.dataset.filledVal;
+        const expected = slot?.dataset.expected;
+
+        if (!filled) {
+            allCorrect = false;
+            unfilledCount++;
+            slot?.classList.remove('correct', 'incorrect');
+        } else if (filled === expected) {
+            slot?.classList.add('correct');
+            slot?.classList.remove('incorrect');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            slot?.classList.add('incorrect');
+            slot?.classList.remove('correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(dc => dc.querySelectorAll('.digraph-pill-btn').forEach(b => b.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-digraphs');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todos os Dígrafos Confirmados!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>DÍGRAFOS CONFIRMADOS COM PRECISÃO!</strong><br>
+                ${atv.explicacao || 'Todas as palavras foram completadas com os dígrafos adequados.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os dígrafos em destaque.';
+        if (unfilledCount > 0) {
+            msg = `Preencha os dígrafos de todas as ${cards.length} palavras.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} dígrafo(s) incorreto(s). Pronuncie a palavra para testar o som correto!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Dígrafos Incompletos:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Identificar Intruso Silábico
+function handleIntrusoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.intruso-group-card');
+    let allCorrect = true;
+    let unselectedCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(gc => {
+        const selectedChip = gc.querySelector('.intruso-word-chip.selected');
+        if (!selectedChip) {
+            allCorrect = false;
+            unselectedCount++;
+        } else if (selectedChip.dataset.isIntruso === 'true') {
+            selectedChip.classList.add('intruso-caught');
+            selectedChip.classList.remove('selected-wrong');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            selectedChip.classList.add('selected-wrong');
+            selectedChip.classList.remove('intruso-caught');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(gc => gc.querySelectorAll('.intruso-word-chip').forEach(b => b.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-intruso');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todos os Intrusos Foram Desmascarados!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>PERFEITO, DETETIVE!</strong><br>
+                ${atv.explicacao || 'Você identificou com precisão todos os termos que não pertenciam aos grupos silábicos!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Identifique a palavra que não segue a regra em cada grupo.';
+        if (unselectedCount > 0) {
+            msg = `Selecione 1 intruso em cada um dos ${cards.length} grupos.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} intruso(s) apontado(s) incorretamente. Observe atentamente a regra descrita em cada caso!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Análise de Intrusos:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Rimas Periciais
+function handleRhymesSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.rhyme-clue-card');
+    let allCorrect = true;
+    let unselectedCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(rc => {
+        const selectedBtn = rc.querySelector('.rhyme-opt-btn.selected');
+        if (!selectedBtn) {
+            allCorrect = false;
+            unselectedCount++;
+        } else if (selectedBtn.dataset.isCorrect === 'true') {
+            selectedBtn.classList.add('selected-correct');
+            selectedBtn.classList.remove('selected-wrong');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            selectedBtn.classList.add('selected-wrong');
+            selectedBtn.classList.remove('selected-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(rc => rc.querySelectorAll('.rhyme-opt-btn').forEach(b => b.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-rhymes');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as Rimas Confirmadas!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>OUVIDO DE DETETIVE APURADO!</strong><br>
+                ${atv.explicacao || 'Todas as correspondências sonoras e rimas foram confirmadas!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as opções de rima.';
+        if (unselectedCount > 0) {
+            msg = `Escolha uma rima para cada uma das ${cards.length} pistas.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} rima(s) incorreta(s). Pronuncie o final de cada palavra para sentir o mesmo som!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Rimas em Aberto:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Anagramas Silábicos
+function handleAnagramSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.anagram-card');
+    const normalize = (str) => String(str || '').toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(ac => {
+        const inputs = ac.querySelectorAll('.anagram-char-input');
+        let wordCorrect = true;
+        inputs.forEach(inp => {
+            const val = normalize(inp.value);
+            const exp = normalize(inp.dataset.expected);
+            if (!val) {
+                allCorrect = false;
+                wordCorrect = false;
+                emptyCount++;
+                inp.classList.add('incorrect');
+            } else if (val === exp) {
+                inp.classList.add('correct');
+                inp.classList.remove('incorrect');
+            } else {
+                allCorrect = false;
+                wordCorrect = false;
+                wrongCount++;
+                inp.classList.add('incorrect');
+            }
+        });
+        if (wordCorrect) {
+            ac.classList.add('anagram-solved');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(ac => ac.querySelectorAll('.anagram-char-input').forEach(inp => inp.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-anagrams');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todos os Anagramas Decifrados!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>ANAGRAMAS DECIFRADOS COM SUCESSO!</strong><br>
+                ${atv.explicacao || 'Todas as palavras com sílabas complexas foram reconstruídas na ordem perfeita.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os quadradinhos destacados.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha as ${emptyCount} letra(s) ainda vazias nas caixas dos anagramas.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} letra(s) fora da ordem. Use a bandeja de letras e a dica visual para acertar!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Anagramas Bloqueados:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Auditoria Ortográfica
+function handleOrthoAuditSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const cards = cardElement.querySelectorAll('.orthography-audit-card');
+    let allCorrect = true;
+    let unselectedCount = 0;
+    let wrongCount = 0;
+
+    cards.forEach(oc => {
+        const selectedBtn = oc.querySelector('.ortho-choice-btn.selected');
+        if (!selectedBtn) {
+            allCorrect = false;
+            unselectedCount++;
+        } else if (selectedBtn.dataset.isCorrect === 'true') {
+            selectedBtn.classList.add('selected-correct');
+            selectedBtn.classList.remove('selected-wrong');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            selectedBtn.classList.add('selected-wrong');
+            selectedBtn.classList.remove('selected-correct');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        cards.forEach(oc => oc.querySelectorAll('.ortho-choice-btn').forEach(b => b.disabled = true));
+        const btnVerify = cardElement.querySelector('.btn-verify-ortho');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Auditoria Concluída com Honras!';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>AUDITORIA APROVADA COM LOUVOR!</strong><br>
+                ${atv.explicacao || 'Todas as grafias de dígrafos e encontros consonantais foram validadas com 100% de exatidão!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as opções assinaladas.';
+        if (unselectedCount > 0) {
+            msg = `Selecione a grafia oficial em cada um dos ${cards.length} documentos.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} grafia(s) com erro ortográfico. Lembre-se das regras de dígrafos como CH, LH, NH, RR, SS e GU/QU!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div><strong>Auditoria Rejeitada:</strong> ${msg}</div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
 }
 
 // Validação e Feedback de Pares e Ímpares
@@ -5793,8 +6860,8 @@ function handleNumericCryptogramAnswerSubmit(atv, cardElement) {
         feedbackBox.innerHTML = `
             <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
             <div>
-                <strong>PARABÉNS, DETETIVE SUPREMO DA LÍNGUA PORTUGUESA! O CRIPTOGRAMA FINAL FOI DECIFRADO!</strong><br>
-                ${atv.explicacao || 'Todos os 12 enigmas da investigação foram desvendados com 100% de aproveitamento pericial!'}
+                <strong>PARABÉNS, DETETIVE SUPREMO DA LÍNGUA PORTUGUESA! O CRIPTOGRAMA FOI DECIFRADO!</strong><br>
+                ${atv.explicacao || 'Todos os enigmas da investigação foram desvendados com 100% de aproveitamento pericial!'}
             </div>
         `;
         feedbackBox.style.display = 'flex';
@@ -6293,12 +7360,8 @@ function onEnigmaSolvedSuccess(atv, cardElement) {
             50
         );
 
-        // Notifica na tela do aluno e entra em estado de espera
-        setTimeout(() => {
-            if (AppState.isLiveSessionActive && AppState.currentLiveSession) {
-                renderStudentLiveWaiting(AppState.currentLiveSession);
-            }
-        }, 1000);
+        // Notifica imediatamente na tela do aluno e entra no estado de espera/ranking em tempo real
+        renderStudentLiveWaiting(AppState.currentLiveSession);
     }
 }
 
@@ -6584,7 +7647,9 @@ function handleLiveSessionUpdate(session) {
                 renderStudentLiveLobby(session);
             } else if (session.status === 'playing') {
                 showView('view-student-live-session');
-                if (myParticipant.status === 'solved') {
+                const myHistory = myParticipant?.history?.[session.currentActivityIndex];
+                const isSolved = (myParticipant?.status === 'solved') || (myHistory && myHistory.solved);
+                if (isSolved) {
                     renderStudentLiveWaiting(session);
                 } else {
                     renderStudentLiveEnigma(session);
@@ -6696,7 +7761,8 @@ function renderTeacherLiveMonitoring(session) {
 
     const participantesList = Object.values(session.participantes || {});
     const totalCount = participantesList.length;
-    const solvedCount = participantesList.filter(p => p.status === 'solved').length;
+    const isPlayerSolved = (p) => (p.status === 'solved') || (p.history && p.history[session.currentActivityIndex] && p.history[session.currentActivityIndex].solved);
+    const solvedCount = participantesList.filter(isPlayerSolved).length;
 
     document.getElementById('teacher-live-solved-counter').textContent = `${solvedCount} / ${totalCount} Concluíram`;
 
@@ -6715,7 +7781,7 @@ function renderTeacherLiveMonitoring(session) {
         statusGrid.innerHTML = '';
         participantesList.forEach(p => {
             const avatarObj = AVATARES_DISPONIVEIS.find(a => a.id === p.avatar) || AVATARES_DISPONIVEIS[0];
-            const isSolved = (p.status === 'solved');
+            const isSolved = isPlayerSolved(p);
             const card = document.createElement('div');
             card.className = `live-agent-status-card ${isSolved ? 'solved' : 'answering'}`;
             card.innerHTML = `
@@ -6735,7 +7801,9 @@ function renderTeacherLiveMonitoring(session) {
     const rankingList = document.getElementById('teacher-live-enigma-ranking-list');
     if (rankingList) {
         rankingList.innerHTML = '';
-        const ranking = session.activeEnigmaRanking || [];
+        const ranking = (session.activeEnigmaRanking && session.activeEnigmaRanking.length > 0)
+            ? session.activeEnigmaRanking
+            : (liveSessionService.computeEnigmaRanking ? liveSessionService.computeEnigmaRanking(session.participantes, session.currentActivityIndex) : []);
         if (ranking.length === 0) {
             rankingList.innerHTML = `
                 <div style="text-align: center; color: var(--text-muted); font-size: 0.88rem; padding: 1rem;">
@@ -6880,12 +7948,14 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
     document.getElementById('student-live-phase-final').style.display = 'none';
 
     const myCodename = AppState.activeStudent?.codinome;
-    const myHistory = session.participantes?.[myCodename]?.history?.[session.currentActivityIndex];
+    const myParticipant = session.participantes?.[myCodename];
+    const myHistory = myParticipant?.history?.[session.currentActivityIndex];
+    const isSolved = (myParticipant?.status === 'solved') || (myHistory && myHistory.solved);
 
     const headline = document.getElementById('student-waiting-headline');
     const subtext = document.getElementById('student-waiting-subtext');
 
-    if (myHistory && myHistory.solved) {
+    if (isSolved) {
         headline.textContent = '✅ Enigma Solucionado com Sucesso!';
         subtext.innerHTML = `Você decifrou o enigma com sucesso e conquistou <strong>+50 XP</strong>! Aguarde o Professor autorizar o próximo caso!`;
     } else {
@@ -6896,7 +7966,9 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
     const rankList = document.getElementById('student-waiting-enigma-rank-list');
     if (rankList) {
         rankList.innerHTML = '';
-        const ranking = session.activeEnigmaRanking || [];
+        const ranking = (session.activeEnigmaRanking && session.activeEnigmaRanking.length > 0)
+            ? session.activeEnigmaRanking
+            : (liveSessionService.computeEnigmaRanking ? liveSessionService.computeEnigmaRanking(session.participantes, session.currentActivityIndex) : []);
         if (ranking.length === 0) {
             rankList.innerHTML = `<div style="color: var(--text-muted); font-size: 0.88rem;">Aguardando conclusões da turma...</div>`;
         } else {
