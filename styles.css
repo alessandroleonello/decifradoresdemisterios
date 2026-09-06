@@ -896,6 +896,24 @@
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
 }
 
+:root[data-theme="light"] .live-status-pill {
+    background: rgba(236, 72, 153, 0.12);
+    border-color: #db2777;
+    color: #be185d;
+}
+
+:root[data-theme="light"] .btn-teacher-pause {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: #d97706;
+    color: #92400e;
+}
+
+:root[data-theme="light"] .btn-teacher-pause:hover {
+    background: rgba(245, 158, 11, 0.22);
+    border-color: #b45309;
+    color: #78350f;
+}
+
 :root[data-theme="light"] .live-lesson-heading {
     color: #0f172a;
 }
@@ -908,6 +926,22 @@
 
 :root[data-theme="light"] .lobby-header-card h3 {
     color: #0f172a;
+}
+
+:root[data-theme="light"] .lobby-header-card p {
+    color: #475569;
+}
+
+:root[data-theme="light"] .lobby-counter-badge {
+    background: rgba(2, 132, 199, 0.1);
+    border-color: #0284c7;
+    color: #0369a1;
+}
+
+:root[data-theme="light"] #teacher-checkpoint-badge {
+    background: rgba(2, 132, 199, 0.1) !important;
+    border-color: #0284c7 !important;
+    color: #0369a1 !important;
 }
 
 :root[data-theme="light"] .lobby-agent-card {
@@ -926,7 +960,37 @@
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
 }
 
+:root[data-theme="light"] .enigma-number-pill {
+    background: rgba(2, 132, 199, 0.12);
+    border-color: #0284c7;
+    color: #0369a1;
+}
+
 :root[data-theme="light"] .enigma-live-name {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .teacher-projection-wrapper {
+    background: #ffffff;
+    border-color: rgba(14, 165, 233, 0.35);
+    box-shadow: 0 6px 24px rgba(2, 132, 199, 0.08);
+}
+
+:root[data-theme="light"] .projection-banner-tag {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0369a1;
+}
+
+:root[data-theme="light"] .teacher-enigma-projection-box {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .teacher-enigma-projection-box .activity-instruction {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .teacher-enigma-projection-box .activity-prompt-title {
     color: #0f172a;
 }
 
@@ -937,16 +1001,48 @@
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 
+:root[data-theme="light"] .panel-section-title {
+    color: #0369a1;
+}
+
 :root[data-theme="light"] .live-agent-status-card {
     background: #f8fafc;
-    border-color: rgba(15, 23, 42, 0.1);
+    border-color: rgba(15, 23, 42, 0.12);
+}
+
+:root[data-theme="light"] .live-agent-name {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .agent-status-tag.answering {
+    color: #0369a1;
+    background: rgba(2, 132, 199, 0.12);
+}
+
+:root[data-theme="light"] .agent-status-tag.solved {
+    color: #047857;
+    background: rgba(5, 150, 105, 0.14);
 }
 
 :root[data-theme="light"] .live-rank-item {
     background: #f8fafc;
-    border-color: rgba(15, 23, 42, 0.1);
+    border-color: rgba(15, 23, 42, 0.12);
 }
 
+:root[data-theme="light"] .live-rank-name {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .live-rank-pos:not(.top-1):not(.top-2):not(.top-3) {
+    background: rgba(2, 132, 199, 0.15);
+    color: #0369a1;
+}
+
+:root[data-theme="light"] .live-rank-time {
+    color: #047857;
+}
+
+/* Tela do Aluno: Jogar Junto no Modo Claro */
 :root[data-theme="light"] .student-live-header {
     background: #ffffff;
     border-color: rgba(14, 165, 233, 0.3);
@@ -967,6 +1063,85 @@
 :root[data-theme="light"] .student-waiting-card h3,
 :root[data-theme="light"] .student-lobby-card h3 {
     color: #0f172a;
+}
+
+:root[data-theme="light"] .student-waiting-card p,
+:root[data-theme="light"] .student-lobby-card p {
+    color: #475569;
+}
+
+:root[data-theme="light"] .student-waiting-card p strong {
+    color: #0f172a;
+}
+
+/* Card de Progresso / Lista de quem já concluiu no Modo Claro (evita card cinza escuro) */
+:root[data-theme="light"] .student-waiting-progress-panel {
+    background: #f8fafc;
+    border: 1.5px solid rgba(14, 165, 233, 0.25);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+:root[data-theme="light"] .student-waiting-progress-panel h4 {
+    color: #0369a1 !important;
+}
+
+:root[data-theme="light"] .student-final-summary-card {
+    background: #ffffff;
+    border-color: rgba(14, 165, 233, 0.35);
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+:root[data-theme="light"] .student-final-summary-card h3 {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .student-final-summary-card p {
+    color: #475569;
+}
+
+:root[data-theme="light"] .celebration-title {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .celebration-subtitle {
+    color: #475569;
+}
+
+:root[data-theme="light"] .ranking-table-live th {
+    background: #f1f5f9;
+    color: #0369a1;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+:root[data-theme="light"] .ranking-table-live td {
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+:root[data-theme="light"] .ranking-table-live td strong {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .ranking-history-podium-box {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.1);
+}
+
+:root[data-theme="light"] .ranking-history-agent-item {
+    color: #0f172a;
+}
+
+/* Feedbacks de atividades no Modo Claro */
+:root[data-theme="light"] .activity-feedback-box.correct {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: #059669;
+    color: #065f46;
+}
+
+:root[data-theme="light"] .activity-feedback-box.incorrect {
+    background: rgba(225, 29, 72, 0.1);
+    border-color: #e11d48;
+    color: #9f1239;
 }
 
 :root[data-theme="light"] .call-mission-card {
@@ -1039,31 +1214,6 @@
 }
 
 :root[data-theme="light"] .podium-agent-name {
-    color: #0f172a;
-}
-
-:root[data-theme="light"] .ranking-table-live th {
-    background: #f1f5f9;
-    color: #0369a1;
-}
-
-:root[data-theme="light"] .ranking-table-live td {
-    color: #0f172a;
-}
-
-:root[data-theme="light"] .teacher-projection-wrapper {
-    background: #ffffff;
-    border-color: #0284c7;
-    box-shadow: 0 6px 24px rgba(2, 132, 199, 0.12);
-}
-
-:root[data-theme="light"] .projection-banner-tag {
-    background: #e0f2fe;
-    border-color: #0284c7;
-    color: #0369a1;
-}
-
-:root[data-theme="light"] .teacher-enigma-projection-box .activity-instruction {
     color: #0f172a;
 }
 
@@ -4356,6 +4506,12 @@ body {
     letter-spacing: 0.5px;
 }
 
+.btn-teacher-pause {
+    background: rgba(245, 158, 11, 0.18);
+    border-color: var(--neon-amber);
+    color: #fef08a;
+}
+
 .live-pulse-dot {
     width: 8px;
     height: 8px;
@@ -4635,6 +4791,16 @@ body {
     border-color: rgba(56, 189, 248, 0.35);
 }
 
+.live-agent-name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .agent-status-tag {
     font-size: 0.75rem;
     font-weight: 700;
@@ -4667,6 +4833,12 @@ body {
     align-items: center;
     justify-content: space-between;
     transition: var(--transition-fast);
+}
+
+.live-rank-name {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .live-rank-pos {
@@ -4874,6 +5046,22 @@ body {
     text-align: left;
 }
 
+.student-final-summary-card {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1.5px solid var(--neon-cyan);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    max-width: 500px;
+    margin: 1.5rem auto;
+    text-align: center;
+}
+
+.student-final-summary-card h3 {
+    font-family: var(--font-heading);
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
 /* HISTÓRICO DE RANKINGS (PROFESSOR) */
 .teacher-tabs-nav {
     display: flex;
@@ -4939,6 +5127,23 @@ body {
 .ranking-history-meta {
     font-size: 0.82rem;
     color: var(--text-muted);
+}
+
+.ranking-history-podium-box {
+    background: rgba(30, 41, 59, 0.6);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ranking-history-agent-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-right: 1rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -9895,6 +10100,53 @@ body {
 :root[data-theme="light"] .quant-object-card {
     background: #f8fafc;
     border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .quant-object-card.card-subtraendo {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}
+
+:root[data-theme="light"] .quant-operator-badge.operator-plus {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0369a1;
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.2);
+}
+
+:root[data-theme="light"] .quant-operator-badge.operator-minus {
+    background: #ffe4e6;
+    border-color: #e11d48;
+    color: #be123c;
+    box-shadow: 0 0 8px rgba(225, 29, 72, 0.2);
+}
+
+:root[data-theme="light"] .quant-operator-badge.operator-equal {
+    background: #fef3c7;
+    border-color: #d97706;
+    color: #92400e;
+    box-shadow: 0 0 8px rgba(217, 119, 6, 0.2);
+}
+
+:root[data-theme="light"] .quant-result-card {
+    background: #fefce8;
+    border-color: #d97706;
+}
+
+:root[data-theme="light"] .quant-card-count-badge {
+    color: #0369a1;
+    background: rgba(2, 132, 199, 0.12);
+    border-color: rgba(2, 132, 199, 0.3);
+}
+
+:root[data-theme="light"] .quant-card-count-badge.sub-badge {
+    color: #be123c;
+    background: rgba(225, 29, 72, 0.12);
+    border-color: rgba(225, 29, 72, 0.3);
+}
+
+:root[data-theme="light"] .quant-row-label {
+    color: #92400e;
 }
 
 :root[data-theme="light"] .quant-answer-input,

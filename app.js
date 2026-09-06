@@ -9933,7 +9933,7 @@ function renderTeacherLiveMonitoring(session) {
             card.innerHTML = `
                 <div style="font-size: 1.65rem;">${avatarObj.icone}</div>
                 <div style="flex: 1; min-width: 0;">
-                    <div style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.codinome}</div>
+                    <div class="live-agent-name">${p.codinome}</div>
                     <span class="agent-status-tag ${isSolved ? 'solved' : 'answering'}">
                         ${isSolved ? '✅ Concluiu (+50 XP)' : '🔍 Investigando...'}
                     </span>
@@ -9965,7 +9965,7 @@ function renderTeacherLiveMonitoring(session) {
                     <div style="display: flex; align-items: center; gap: 0.65rem;">
                         <span class="live-rank-pos top-${item.posicao}">${item.posicao}º</span>
                         <span>${avatarObj.icone}</span>
-                        <strong style="color: #fff; font-size: 0.95rem;">${item.codinome}</strong>
+                        <strong class="live-rank-name">${item.codinome}</strong>
                     </div>
                     <span class="live-rank-time" style="color: var(--neon-emerald); font-weight: 700;">+${item.score} XP</span>
                 `;
@@ -10131,7 +10131,7 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
                     <div style="display: flex; align-items: center; gap: 0.65rem;">
                         <span class="live-rank-pos top-${r.posicao}">${r.posicao}º</span>
                         <span>${avatarObj.icone}</span>
-                        <strong style="color: #fff;">${r.codinome} ${isMe ? ' (Você)' : ''}</strong>
+                        <strong class="live-rank-name">${r.codinome} ${isMe ? ' (Você)' : ''}</strong>
                     </div>
                     <span class="live-rank-time" style="color: var(--neon-emerald); font-weight: 700;">✅ Concluído (+${r.score} XP)</span>
                 `;
@@ -10157,10 +10157,10 @@ function renderStudentLivePodium(session) {
     const summary = document.getElementById('student-final-score-summary');
     if (summary && myRank) {
         summary.innerHTML = `
-            <div style="background: rgba(15, 23, 42, 0.85); border: 1.5px solid var(--neon-cyan); border-radius: var(--radius-lg); padding: 1.5rem; max-width: 500px; margin: 1.5rem auto; text-align: center;">
-                <h3 style="font-family: var(--font-heading); color: #fff; margin-bottom: 0.5rem;">Sua Classificação Pericial</h3>
+            <div class="student-final-summary-card">
+                <h3>Sua Classificação Pericial</h3>
                 <div style="font-size: 2.2rem; font-weight: 900; color: var(--neon-amber); margin: 0.5rem 0;">${myRank.posicao}º LUGAR</div>
-                <p style="color: var(--text-secondary); margin-bottom: 0;">Pontuação Total: <strong>${myRank.totalScore} XP</strong></p>
+                <p style="margin-bottom: 0;">Pontuação Total: <strong>${myRank.totalScore} XP</strong></p>
             </div>
         `;
     }
@@ -10220,7 +10220,7 @@ async function renderTeacherRankingHistory() {
             const top3 = item.finalRanking.slice(0, 3);
             podiumSnippet = top3.map(r => {
                 const avatarObj = AVATARES_DISPONIVEIS.find(a => a.id === r.avatar) || AVATARES_DISPONIVEIS[0];
-                return `<span style="display: inline-flex; align-items: center; gap: 0.35rem; margin-right: 1rem; font-size: 0.92rem; font-weight: 700; color: #fff;">
+                return `<span class="ranking-history-agent-item">
                     <strong>${r.posicao}º</strong> ${avatarObj.icone} ${r.codinome} (${r.totalScore} XP)
                 </span>`;
             }).join('');
@@ -10236,7 +10236,7 @@ async function renderTeacherRankingHistory() {
                     <i class="fa-regular fa-calendar-days"></i> ${dateStr} • <i class="fa-solid fa-users"></i> ${item.totalParticipants || 0} Detetives
                 </div>
             </div>
-            <div style="background: rgba(30, 41, 59, 0.6); padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="ranking-history-podium-box">
                 <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--neon-amber); font-weight: 800; margin-bottom: 0.35rem;">🏆 Pódio da Partida:</div>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                     ${podiumSnippet || '<span style="color: var(--text-muted);">Sem pódio gravado</span>'}
