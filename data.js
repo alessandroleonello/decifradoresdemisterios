@@ -566,9 +566,9 @@ const CURRICULO_INVESTIGACAO = {
                                 total: 12,
                                 respostaCorreta: '3x4',
                                 opcoes: [
+                                    { id: '3x3', texto: '3 × 3' },
                                     { id: '3x4', texto: '3 × 4' },
                                     { id: '4x4', texto: '4 × 4' },
-                                    { id: '3x3', texto: '3 × 3' },
                                     { id: '2x4', texto: '2 × 4' }
                                 ]
                             },
@@ -580,9 +580,9 @@ const CURRICULO_INVESTIGACAO = {
                                 total: 20,
                                 respostaCorreta: '4x5',
                                 opcoes: [
-                                    { id: '4x5', texto: '4 × 5' },
                                     { id: '5x5', texto: '5 × 5' },
                                     { id: '3x5', texto: '3 × 5' },
+                                    { id: '4x5', texto: '4 × 5' },
                                     { id: '4x4', texto: '4 × 4' }
                                 ]
                             },
@@ -594,10 +594,10 @@ const CURRICULO_INVESTIGACAO = {
                                 total: 12,
                                 respostaCorreta: '6x2',
                                 opcoes: [
-                                    { id: '6x2', texto: '6 × 2' },
                                     { id: '5x2', texto: '5 × 2' },
                                     { id: '2x2', texto: '2 × 2' },
-                                    { id: '6x6', texto: '6 × 6' }
+                                    { id: '6x6', texto: '6 × 6' },
+                                    { id: '6x2', texto: '6 × 2' }
                                 ]
                             },
                             {
@@ -608,8 +608,8 @@ const CURRICULO_INVESTIGACAO = {
                                 total: 14,
                                 respostaCorreta: '2x7',
                                 opcoes: [
-                                    { id: '2x7', texto: '2 × 7' },
                                     { id: '3x7', texto: '3 × 7' },
+                                    { id: '2x7', texto: '2 × 7' },
                                     { id: '7x7', texto: '7 × 7' },
                                     { id: '2x2', texto: '2 × 2' }
                                 ]
@@ -622,9 +622,9 @@ const CURRICULO_INVESTIGACAO = {
                                 total: 18,
                                 respostaCorreta: '3x6',
                                 opcoes: [
-                                    { id: '3x6', texto: '3 × 6' },
                                     { id: '4x6', texto: '4 × 6' },
                                     { id: '3x3', texto: '3 × 3' },
+                                    { id: '3x6', texto: '3 × 6' },
                                     { id: '6x6', texto: '6 × 6' }
                                 ]
                             }

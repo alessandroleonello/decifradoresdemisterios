@@ -9595,12 +9595,16 @@ function setupLiveSessionListeners() {
         await liveSessionService.startSession();
     });
 
-    // Professor Avança para o Próximo Enigma
-    document.getElementById('btn-teacher-next-enigma')?.addEventListener('click', async () => {
+    // Professor Avança para o Próximo Enigma (Botão Superior e Inferior)
+    const handleTeacherAdvanceEnigma = async () => {
         soundManager.playClick();
         if (!AppState.currentLiveSession) return;
         await liveSessionService.advanceToNextEnigma();
-    });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    document.getElementById('btn-teacher-next-enigma')?.addEventListener('click', handleTeacherAdvanceEnigma);
+    document.getElementById('btn-teacher-next-enigma-bottom')?.addEventListener('click', handleTeacherAdvanceEnigma);
 
     // Professor Pausa e Salva a Sessão (Pausa no meio da aula)
     document.getElementById('btn-teacher-pause-session')?.addEventListener('click', async () => {
@@ -9910,16 +9914,20 @@ function renderTeacherLiveMonitoring(session) {
     const isPlayerSolved = (p) => (p.status === 'solved') || (p.history && p.history[session.currentActivityIndex] && p.history[session.currentActivityIndex].solved);
     const solvedCount = participantesList.filter(isPlayerSolved).length;
 
-    document.getElementById('teacher-live-solved-counter').textContent = `${solvedCount} / ${totalCount} Concluíram`;
+    const solvedCountText = `${solvedCount} / ${totalCount} Concluíram`;
+    const counterTop = document.getElementById('teacher-live-solved-counter');
+    const counterBottom = document.getElementById('teacher-live-solved-counter-bottom');
+    if (counterTop) counterTop.textContent = solvedCountText;
+    if (counterBottom) counterBottom.textContent = solvedCountText;
 
-    const btnNext = document.getElementById('btn-teacher-next-enigma');
-    if (btnNext) {
-        if (session.currentActivityIndex >= session.totalEnigmas - 1) {
-            btnNext.innerHTML = '<span>Ver Pódio Final</span> <i class="fa-solid fa-trophy"></i>';
-        } else {
-            btnNext.innerHTML = '<span>Próximo Enigma</span> <i class="fa-solid fa-forward-step"></i>';
-        }
-    }
+    const btnNextTop = document.getElementById('btn-teacher-next-enigma');
+    const btnNextBottom = document.getElementById('btn-teacher-next-enigma-bottom');
+    const nextBtnHtml = (session.currentActivityIndex >= session.totalEnigmas - 1)
+        ? '<span>Ver Pódio Final</span> <i class="fa-solid fa-trophy"></i>'
+        : '<span>Próximo Enigma</span> <i class="fa-solid fa-forward-step"></i>';
+
+    if (btnNextTop) btnNextTop.innerHTML = nextBtnHtml;
+    if (btnNextBottom) btnNextBottom.innerHTML = nextBtnHtml;
 
     // Grid de Status dos Alunos (Apenas Codinomes)
     const statusGrid = document.getElementById('teacher-live-agents-status-grid');
