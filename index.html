@@ -876,42 +876,77 @@
                                 <!-- Lista de quem já acabou -->
                             </div>
                         </div>
+                    </div>
 
-                        <!-- MINI-GAME: CORRIDA DO DETETIVE (ESPERA DA TURMA) -->
-                        <div class="student-runner-game-card" id="student-runner-game-container">
-                            <div class="runner-game-header">
-                                <div class="runner-game-title">
-                                    <i class="fa-solid fa-gamepad" style="color: var(--neon-cyan);"></i>
-                                    <span>Mini-Game: Corrida dos Detetives</span>
-                                </div>
-                                <div class="runner-game-scores">
-                                    <span class="runner-score-badge">DISTÂNCIA: <strong id="runner-score-dist">0000m</strong></span>
-                                    <span class="runner-score-badge high"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> RECORDE: <strong id="runner-score-high">0000m</strong></span>
-                                    <button type="button" class="btn-runner-expand" id="btn-runner-expand" title="Ampliar / Reduzir Tamanho do Jogo">
-                                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i> <span id="runner-expand-text">Ampliar</span>
+                    <!-- 1. CARD DO JOGO (TELA LIVRE E AMPLA) -->
+                    <div class="student-game-screen-card" id="student-runner-game-container">
+                        <div class="runner-screen-header">
+                            <div class="runner-live-tag">
+                                <span class="live-pulse-dot"></span>
+                                <span>PISTA DE TREINAMENTO AO VIVO</span>
+                            </div>
+                            <div class="runner-game-scores">
+                                <span class="runner-score-badge">DISTÂNCIA: <strong id="runner-score-dist">0000m</strong></span>
+                                <span class="runner-score-badge high"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> RECORDE: <strong id="runner-score-high">0000m</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div class="runner-canvas-wrapper" id="runner-canvas-wrapper">
+                            <canvas id="student-runner-canvas" width="800" height="240"></canvas>
+                            <div class="runner-overlay" id="runner-game-overlay">
+                                <div class="runner-overlay-content">
+                                    <div class="runner-overlay-icon" id="runner-overlay-icon">🦖</div>
+                                    <h4 class="runner-overlay-headline" id="runner-overlay-headline">Corrida dos Detetives</h4>
+                                    <p class="runner-overlay-subtext" id="runner-overlay-subtext">Pule os obstáculos enquanto espera a turma terminar!</p>
+                                    <button type="button" class="btn-neon-primary" id="btn-runner-start" style="font-size: 1.1rem; padding: 0.75rem 2rem;">
+                                        <i class="fa-solid fa-play"></i> Iniciar Corrida
                                     </button>
                                 </div>
                             </div>
-                            
-                            <div class="runner-canvas-wrapper" id="runner-canvas-wrapper">
-                                <canvas id="student-runner-canvas" width="800" height="240"></canvas>
-                                <div class="runner-overlay" id="runner-game-overlay">
-                                    <div class="runner-overlay-content">
-                                        <div class="runner-overlay-icon" id="runner-overlay-icon">🦖</div>
-                                        <h4 class="runner-overlay-headline" id="runner-overlay-headline">Corrida dos Detetives</h4>
-                                        <p class="runner-overlay-subtext" id="runner-overlay-subtext">Pule os obstáculos enquanto espera a turma terminar!</p>
-                                        <button type="button" class="btn-neon-primary" id="btn-runner-start" style="font-size: 1.05rem; padding: 0.65rem 1.6rem;">
-                                            <i class="fa-solid fa-play"></i> Iniciar Corrida
-                                        </button>
-                                    </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. BOTÃO PULAR (EMBAIXO DO CARD DO JOGO) -->
+                    <div class="runner-action-jump-bar">
+                        <button type="button" class="btn-runner-jump-main" id="btn-runner-jump-mobile">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            <span>PULAR</span>
+                            <span class="jump-shortcut-badge">Espaço / Toque</span>
+                        </button>
+                    </div>
+
+                    <!-- 3. CARD MINI-GAME (MOSTRA DETALHES E INSTRUÇÕES) -->
+                    <div class="student-minigame-info-card">
+                        <div class="minigame-info-header">
+                            <div class="minigame-info-title">
+                                <i class="fa-solid fa-gamepad" style="color: var(--neon-cyan);"></i>
+                                <span>Mini-Game: Corrida dos Detetives</span>
+                            </div>
+                            <div class="minigame-char-badge" id="runner-char-toggle-badge" title="Clique para alternar entre o Dino e seu Avatar!">
+                                <span>Corredor:</span> <strong id="runner-char-preview">🦖 Dino</strong> <i class="fa-solid fa-repeat" style="font-size: 0.8rem; color: var(--neon-cyan); margin-left: 0.3rem;"></i>
+                            </div>
+                        </div>
+                        <div class="minigame-info-grid">
+                            <div class="minigame-instruction-item">
+                                <div class="instruction-icon"><i class="fa-solid fa-keyboard"></i></div>
+                                <div>
+                                    <strong>No Teclado:</strong>
+                                    <p>Pressione a barra de <strong>Espaço</strong> ou a <strong>Seta Cima</strong> para pular.</p>
                                 </div>
                             </div>
-
-                            <div class="runner-controls-bar">
-                                <div class="runner-hint"><i class="fa-solid fa-keyboard"></i> Use <strong>Espaço</strong>, <strong>Seta Cima</strong> ou <strong>Clique</strong> para pular</div>
-                                <button type="button" class="btn-runner-jump" id="btn-runner-jump-mobile">
-                                    <i class="fa-solid fa-arrow-up"></i> PULAR
-                                </button>
+                            <div class="minigame-instruction-item">
+                                <div class="instruction-icon"><i class="fa-solid fa-hand-pointer"></i></div>
+                                <div>
+                                    <strong>No Mouse ou Toque:</strong>
+                                    <p>Clique direto na tela do jogo ou toque no botão <strong>PULAR</strong> acima.</p>
+                                </div>
+                            </div>
+                            <div class="minigame-instruction-item">
+                                <div class="instruction-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+                                <div>
+                                    <strong>Objetivo:</strong>
+                                    <p>Desvie de cones, barreiras e drones enquanto a turma termina o enigma!</p>
+                                </div>
                             </div>
                         </div>
                     </div>

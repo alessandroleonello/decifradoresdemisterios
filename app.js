@@ -11987,8 +11987,8 @@ class StudentRunnerMiniGame {
         this.overlaySubtext = document.getElementById('runner-overlay-subtext');
         this.startBtn = document.getElementById('btn-runner-start');
         this.jumpBtn = document.getElementById('btn-runner-jump-mobile');
-        this.expandBtn = document.getElementById('btn-runner-expand');
-        this.expandText = document.getElementById('runner-expand-text');
+        this.charToggleBadge = document.getElementById('runner-char-toggle-badge');
+        this.charPreview = document.getElementById('runner-char-preview');
 
         // Dimensões do jogo ampliadas para máxima visibilidade
         this.width = 800;
@@ -12016,7 +12016,6 @@ class StudentRunnerMiniGame {
         this.handleStartClick = this.onStartClick.bind(this);
         this.handleJumpClick = this.onAction.bind(this);
         this.handleIconToggle = this.toggleCharacter.bind(this);
-        this.handleExpandToggle = this.toggleExpand.bind(this);
 
         this.attachListeners();
         this.renderIdleScreen();
@@ -12035,6 +12034,9 @@ class StudentRunnerMiniGame {
             this.overlayIcon.title = 'Clique para alternar entre o Dino e seu Avatar!';
             this.overlayIcon.style.cursor = 'pointer';
         }
+        if (this.charPreview) {
+            this.charPreview.textContent = this.useDino ? '🦖 Dino' : `${this.characterEmoji} Avatar`;
+        }
     }
 
     toggleCharacter() {
@@ -12042,19 +12044,6 @@ class StudentRunnerMiniGame {
         this.updateCharacterEmoji();
         if (!this.isRunning) {
             this.renderIdleScreen();
-        }
-    }
-
-    toggleExpand() {
-        const card = document.getElementById('student-runner-game-container');
-        if (!card) return;
-        const isExp = card.classList.toggle('expanded');
-        if (this.expandText) {
-            this.expandText.textContent = isExp ? 'Reduzir' : 'Ampliar';
-        }
-        const icon = this.expandBtn?.querySelector('i');
-        if (icon) {
-            icon.className = isExp ? 'fa-solid fa-down-left-and-up-right-to-center' : 'fa-solid fa-up-right-and-down-left-from-center';
         }
     }
 
@@ -12102,7 +12091,7 @@ class StudentRunnerMiniGame {
         if (this.startBtn) this.startBtn.addEventListener('click', this.handleStartClick);
         if (this.jumpBtn) this.jumpBtn.addEventListener('click', this.handleJumpClick);
         if (this.overlayIcon) this.overlayIcon.addEventListener('click', this.handleIconToggle);
-        if (this.expandBtn) this.expandBtn.addEventListener('click', this.handleExpandToggle);
+        if (this.charToggleBadge) this.charToggleBadge.addEventListener('click', this.handleIconToggle);
     }
 
     detachListeners() {
@@ -12111,7 +12100,7 @@ class StudentRunnerMiniGame {
         if (this.startBtn) this.startBtn.removeEventListener('click', this.handleStartClick);
         if (this.jumpBtn) this.jumpBtn.removeEventListener('click', this.handleJumpClick);
         if (this.overlayIcon) this.overlayIcon.removeEventListener('click', this.handleIconToggle);
-        if (this.expandBtn) this.expandBtn.removeEventListener('click', this.handleExpandToggle);
+        if (this.charToggleBadge) this.charToggleBadge.removeEventListener('click', this.handleIconToggle);
     }
 
     onKeyDown(e) {
