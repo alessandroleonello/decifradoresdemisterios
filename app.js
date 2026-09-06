@@ -3117,6 +3117,861 @@ function renderActivityCard(atv, num) {
         `;
     }
 
+    // TIPO: SOMA POR QUANTIDADES (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'soma_quantidades' && atv.linhas) {
+        let rowsHtml = '';
+        atv.linhas.forEach((linha, idx) => {
+            let icons1Html = '';
+            for (let i = 0; i < linha.card1.quantidade; i++) {
+                icons1Html += `<span class="quant-item-icon" title="${linha.card1.nome}">${linha.card1.icone}</span>`;
+            }
+            let icons2Html = '';
+            for (let i = 0; i < linha.card2.quantidade; i++) {
+                icons2Html += `<span class="quant-item-icon" title="${linha.card2.nome}">${linha.card2.icone}</span>`;
+            }
+
+            rowsHtml += `
+                <div class="quant-calc-row" id="quant-row-${atv.id}-${linha.id}">
+                    <div class="quant-row-header">
+                        <span class="quant-row-label"><i class="fa-solid fa-magnifying-glass"></i> ${linha.label}</span>
+                    </div>
+                    <div class="quant-calc-equation">
+                        <!-- Card 1 com Quantidade 1 -->
+                        <div class="quant-object-card" id="card1-${atv.id}-${linha.id}">
+                            <div class="quant-icons-cluster">
+                                ${icons1Html}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge">${linha.card1.quantidade} ${linha.card1.nome}</span>
+                            </div>
+                        </div>
+
+                        <!-- Sinal de + -->
+                        <div class="quant-operator-badge operator-plus" title="Somar">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+
+                        <!-- Card 2 com Quantidade 2 -->
+                        <div class="quant-object-card" id="card2-${atv.id}-${linha.id}">
+                            <div class="quant-icons-cluster">
+                                ${icons2Html}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge">${linha.card2.quantidade} ${linha.card2.nome}</span>
+                            </div>
+                        </div>
+
+                        <!-- Sinal de = -->
+                        <div class="quant-operator-badge operator-equal" title="Igual a">
+                            <i class="fa-solid fa-equals"></i>
+                        </div>
+
+                        <!-- Card de Resposta (Apenas Números) -->
+                        <div class="quant-result-card" id="card-result-${atv.id}-${linha.id}">
+                            <label class="quant-result-label">Total:</label>
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="quant-answer-input" 
+                                   data-line-id="${linha.id}" 
+                                   data-expected="${linha.respostaEsperada}" 
+                                   id="input-soma-${atv.id}-${linha.id}"
+                                   placeholder="?" 
+                                   maxlength="3" 
+                                   value="${isAlreadySolved ? linha.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="quant-result-status-icon"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="quant-calc-activity-container">
+                <div class="quant-rows-list">
+                    ${rowsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-soma-quant" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Somas Auditadas com Sucesso ✅' : 'Verificar Somas por Quantidades'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: SUBTRAÇÃO POR QUANTIDADES (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'subtracao_quantidades' && atv.linhas) {
+        let rowsHtml = '';
+        atv.linhas.forEach((linha, idx) => {
+            let icons1Html = '';
+            for (let i = 0; i < linha.card1.quantidade; i++) {
+                icons1Html += `<span class="quant-item-icon" title="${linha.card1.nome}">${linha.card1.icone}</span>`;
+            }
+            let icons2Html = '';
+            for (let i = 0; i < linha.card2.quantidade; i++) {
+                icons2Html += `<span class="quant-item-icon subtrair" title="Retirar ${linha.card2.nome}">${linha.card2.icone}</span>`;
+            }
+
+            rowsHtml += `
+                <div class="quant-calc-row subtracao" id="quant-sub-row-${atv.id}-${linha.id}">
+                    <div class="quant-row-header">
+                        <span class="quant-row-label"><i class="fa-solid fa-file-lines"></i> ${linha.label}</span>
+                    </div>
+                    <div class="quant-calc-equation">
+                        <!-- Card 1 com Quantidade Inicial -->
+                        <div class="quant-object-card" id="card1-sub-${atv.id}-${linha.id}">
+                            <div class="quant-icons-cluster">
+                                ${icons1Html}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge">${linha.card1.quantidade} ${linha.card1.nome}</span>
+                            </div>
+                        </div>
+
+                        <!-- Sinal de - -->
+                        <div class="quant-operator-badge operator-minus" title="Subtrair">
+                            <i class="fa-solid fa-minus"></i>
+                        </div>
+
+                        <!-- Card 2 com Quantidade a Subtrair -->
+                        <div class="quant-object-card card-subtraendo" id="card2-sub-${atv.id}-${linha.id}">
+                            <div class="quant-icons-cluster">
+                                ${icons2Html}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge sub-badge">Retirar ${linha.card2.quantidade}</span>
+                            </div>
+                        </div>
+
+                        <!-- Sinal de = -->
+                        <div class="quant-operator-badge operator-equal" title="Igual a">
+                            <i class="fa-solid fa-equals"></i>
+                        </div>
+
+                        <!-- Card de Resposta (Apenas Números) -->
+                        <div class="quant-result-card" id="card-result-sub-${atv.id}-${linha.id}">
+                            <label class="quant-result-label">Restam:</label>
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="quant-answer-input quant-sub-input" 
+                                   data-line-id="${linha.id}" 
+                                   data-expected="${linha.respostaEsperada}" 
+                                   id="input-sub-${atv.id}-${linha.id}"
+                                   placeholder="?" 
+                                   maxlength="3" 
+                                   value="${isAlreadySolved ? linha.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="quant-result-status-icon"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="quant-calc-activity-container">
+                <div class="quant-rows-list">
+                    ${rowsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-sub-quant" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Subtrações Auditadas com Sucesso ✅' : 'Verificar Subtrações por Quantidades'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: ALGORITMO DA SOMA ("CONTA ARMADA" COM "SOBE 1") (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'algoritmo_soma' && atv.contas) {
+        let boardsHtml = '';
+        atv.contas.forEach((conta, cIdx) => {
+            const ordens = conta.ordens || ['C', 'D', 'U'];
+            
+            // Cabeçalho de Ordens (C, D, U)
+            let headerColsHtml = `<div class="alg-col-sign"></div>`;
+            ordens.forEach(o => {
+                const labelFull = o === 'C' ? 'Centena' : (o === 'D' ? 'Dezena' : 'Unidade');
+                headerColsHtml += `<div class="alg-col-header" title="${labelFull}">${o}</div>`;
+            });
+
+            // Linha do "Sobe 1" (Transporte)
+            let carryRowHtml = `<div class="alg-col-sign alg-carry-tag"><i class="fa-solid fa-arrow-up"></i> Sobe</div>`;
+            ordens.forEach(o => {
+                const expectedCarry = conta.vaiUm && conta.vaiUm[o] !== undefined && conta.vaiUm[o] !== null ? String(conta.vaiUm[o]) : '';
+                carryRowHtml += `
+                    <div class="alg-cell alg-carry-cell">
+                        ${o !== 'U' ? `
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="alg-carry-input" 
+                                   data-conta-id="${conta.id}" 
+                                   data-ordem="${o}" 
+                                   data-expected="${expectedCarry}" 
+                                   id="carry-${atv.id}-${conta.id}-${o}"
+                                   placeholder="0" 
+                                   maxlength="1" 
+                                   value="${isAlreadySolved ? (expectedCarry || '') : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   title="Se subir 1 para a ${o === 'C' ? 'Centena' : 'Dezena'}, anote 1 aqui"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        ` : '<span class="alg-carry-placeholder">-</span>'}
+                    </div>
+                `;
+            });
+
+            // Linha Parcela 1
+            let p1RowHtml = `<div class="alg-col-sign"></div>`;
+            ordens.forEach(o => {
+                const digit = (conta.parcela1 && conta.parcela1[o] !== undefined) ? conta.parcela1[o] : '';
+                p1RowHtml += `<div class="alg-cell alg-digit-fixed">${digit !== '' ? digit : ''}</div>`;
+            });
+
+            // Linha Parcela 2 com sinal +
+            let p2RowHtml = `<div class="alg-col-sign operator-plus"><i class="fa-solid fa-plus"></i></div>`;
+            ordens.forEach(o => {
+                const digit = (conta.parcela2 && conta.parcela2[o] !== undefined) ? conta.parcela2[o] : '';
+                p2RowHtml += `<div class="alg-cell alg-digit-fixed">${digit !== '' ? digit : ''}</div>`;
+            });
+
+            // Linha de Resposta (Resultado)
+            let resultRowHtml = `<div class="alg-col-sign operator-equals"><i class="fa-solid fa-equals"></i></div>`;
+            ordens.forEach(o => {
+                const expectedDigit = conta.resultadoEsperado && conta.resultadoEsperado[o] !== undefined ? String(conta.resultadoEsperado[o]) : '';
+                resultRowHtml += `
+                    <div class="alg-cell alg-result-cell">
+                        <input type="text" 
+                               inputmode="numeric" 
+                               pattern="[0-9]*" 
+                               class="alg-result-input" 
+                               data-conta-id="${conta.id}" 
+                               data-ordem="${o}" 
+                               data-expected="${expectedDigit}" 
+                               id="res-soma-${atv.id}-${conta.id}-${o}"
+                               placeholder="?" 
+                               maxlength="1" 
+                               value="${isAlreadySolved ? expectedDigit : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                `;
+            });
+
+            boardsHtml += `
+                <div class="alg-board-card" id="alg-soma-board-${atv.id}-${conta.id}">
+                    <div class="alg-board-title">
+                        <span><i class="fa-solid fa-calculator"></i> ${conta.titulo}</span>
+                    </div>
+                    <div class="alg-vertical-table">
+                        <div class="alg-table-row alg-header-row">${headerColsHtml}</div>
+                        <div class="alg-table-row alg-carry-row">${carryRowHtml}</div>
+                        <div class="alg-table-row alg-digit-row">${p1RowHtml}</div>
+                        <div class="alg-table-row alg-digit-row">${p2RowHtml}</div>
+                        <div class="alg-calc-divider"></div>
+                        <div class="alg-table-row alg-result-row">${resultRowHtml}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="alg-activity-container">
+                <div class="alg-boards-grid">
+                    ${boardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-algoritmo-soma" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-circle-check"></i> ${isAlreadySolved ? 'Algoritmos da Soma Verificados com Sucesso ✅' : 'Verificar Algoritmos da Soma'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: ALGORITMO DA SUBTRAÇÃO ("CONTA ARMADA" COM TROCA/EMPRÉSTIMO) (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'algoritmo_subtracao' && atv.contas) {
+        let boardsHtml = '';
+        atv.contas.forEach((conta, cIdx) => {
+            const ordens = conta.ordens || ['C', 'D', 'U'];
+            
+            // Cabeçalho de Ordens (C, D, U)
+            let headerColsHtml = `<div class="alg-col-sign"></div>`;
+            ordens.forEach(o => {
+                const labelFull = o === 'C' ? 'Centena' : (o === 'D' ? 'Dezena' : 'Unidade');
+                headerColsHtml += `<div class="alg-col-header" title="${labelFull}">${o}</div>`;
+            });
+
+            // Linha de Troca / Empréstimo (Anotação de corte/novo valor)
+            let borrowRowHtml = `<div class="alg-col-sign alg-borrow-tag"><i class="fa-solid fa-arrows-rotate"></i> Troca</div>`;
+            ordens.forEach(o => {
+                const expectedBorrow = conta.trocas && conta.trocas[o] !== undefined && conta.trocas[o] !== null ? String(conta.trocas[o]) : '';
+                borrowRowHtml += `
+                    <div class="alg-cell alg-borrow-cell">
+                        <input type="text" 
+                               inputmode="numeric" 
+                               pattern="[0-9]*" 
+                               class="alg-borrow-input" 
+                               data-conta-id="${conta.id}" 
+                               data-ordem="${o}" 
+                               data-expected="${expectedBorrow}" 
+                               id="borrow-${atv.id}-${conta.id}-${o}"
+                               placeholder="${expectedBorrow ? '?' : '-'}" 
+                               maxlength="2" 
+                               value="${isAlreadySolved ? (expectedBorrow || '') : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               title="Se houver troca/empréstimo na coluna ${o}, anote o novo valor aqui"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                `;
+            });
+
+            // Linha Minuendo
+            let minuendoRowHtml = `<div class="alg-col-sign"></div>`;
+            ordens.forEach(o => {
+                const digit = (conta.minuendo && conta.minuendo[o] !== undefined) ? conta.minuendo[o] : '';
+                const hasBorrow = conta.trocas && conta.trocas[o] !== undefined && conta.trocas[o] !== null;
+                minuendoRowHtml += `
+                    <div class="alg-cell alg-digit-fixed ${hasBorrow ? 'has-borrow-target' : ''}">
+                        <span class="digit-val">${digit !== '' ? digit : ''}</span>
+                    </div>
+                `;
+            });
+
+            // Linha Subtraendo com sinal -
+            let subtraendoRowHtml = `<div class="alg-col-sign operator-minus"><i class="fa-solid fa-minus"></i></div>`;
+            ordens.forEach(o => {
+                const digit = (conta.subtraendo && conta.subtraendo[o] !== undefined) ? conta.subtraendo[o] : '';
+                subtraendoRowHtml += `<div class="alg-cell alg-digit-fixed">${digit !== '' ? digit : ''}</div>`;
+            });
+
+            // Linha de Resposta (Resultado)
+            let resultRowHtml = `<div class="alg-col-sign operator-equals"><i class="fa-solid fa-equals"></i></div>`;
+            ordens.forEach(o => {
+                const expectedDigit = conta.resultadoEsperado && conta.resultadoEsperado[o] !== undefined ? String(conta.resultadoEsperado[o]) : '';
+                resultRowHtml += `
+                    <div class="alg-cell alg-result-cell">
+                        <input type="text" 
+                               inputmode="numeric" 
+                               pattern="[0-9]*" 
+                               class="alg-result-input" 
+                               data-conta-id="${conta.id}" 
+                               data-ordem="${o}" 
+                               data-expected="${expectedDigit}" 
+                               id="res-sub-${atv.id}-${conta.id}-${o}"
+                               placeholder="?" 
+                               maxlength="1" 
+                               value="${isAlreadySolved ? expectedDigit : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                `;
+            });
+
+            boardsHtml += `
+                <div class="alg-board-card subtracao" id="alg-sub-board-${atv.id}-${conta.id}">
+                    <div class="alg-board-title">
+                        <span><i class="fa-solid fa-calculator"></i> ${conta.titulo}</span>
+                    </div>
+                    <div class="alg-vertical-table">
+                        <div class="alg-table-row alg-header-row">${headerColsHtml}</div>
+                        <div class="alg-table-row alg-borrow-row">${borrowRowHtml}</div>
+                        <div class="alg-table-row alg-digit-row">${minuendoRowHtml}</div>
+                        <div class="alg-table-row alg-digit-row">${subtraendoRowHtml}</div>
+                        <div class="alg-calc-divider"></div>
+                        <div class="alg-table-row alg-result-row">${resultRowHtml}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="alg-activity-container">
+                <div class="alg-boards-grid">
+                    ${boardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-algoritmo-sub" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-circle-check"></i> ${isAlreadySolved ? 'Algoritmos da Subtração Verificados com Sucesso ✅' : 'Verificar Algoritmos da Subtração'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: MULTIPLICAÇÃO POR PARCELAS IGUAIS (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'multiplicacao_parcelas_iguais' && atv.casos) {
+        let casesHtml = '';
+        atv.casos.forEach((caso, cIdx) => {
+            let optionsHtml = '';
+            caso.opcoes.forEach(opt => {
+                const isCorrect = (opt.id === caso.respostaCorreta);
+                let optClass = 'mult-option-btn';
+                if (isAlreadySolved && isCorrect) {
+                    optClass += ' selected-correct';
+                }
+                optionsHtml += `
+                    <button type="button" 
+                            class="${optClass}" 
+                            data-activity-id="${atv.id}" 
+                            data-case-id="${caso.id}" 
+                            data-option-id="${opt.id}" 
+                            ${isAlreadySolved ? 'disabled' : ''}>
+                        <span>${opt.texto}</span>
+                    </button>
+                `;
+            });
+
+            casesHtml += `
+                <div class="mult-case-card" id="mult-card-${atv.id}-${caso.id}">
+                    <div class="mult-card-header">
+                        <span class="mult-badge">${caso.titulo}</span>
+                    </div>
+                    <div class="mult-sum-banner">
+                        <span class="sum-terms">${caso.expressaoSoma}</span>
+                        <span class="sum-equals">=</span>
+                        <span class="sum-total-badge">${caso.total}</span>
+                    </div>
+                    <div class="mult-card-prompt">
+                        <i class="fa-solid fa-hand-pointer" style="color: var(--neon-cyan);"></i> Selecione a multiplicação equivalente:
+                    </div>
+                    <div class="mult-options-grid">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="mult-activity-container">
+                <div class="mult-cases-grid">
+                    ${casesHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-mult-parcelas" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-stamp"></i> ${isAlreadySolved ? 'Multiplicações Confirmadas com Sucesso ✅' : 'Verificar Multiplicações'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: ALGORITMO DA MULTIPLICAÇÃO (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'algoritmo_multiplicacao' && atv.contas) {
+        let boardsHtml = '';
+        atv.contas.forEach((conta, cIdx) => {
+            const hasParciais = conta.parciais && conta.parciais.length > 0;
+            const maxDigits = Math.max(
+                conta.multiplicando.length,
+                conta.multiplicador.length,
+                conta.resultadoEsperado.length,
+                ...(hasParciais ? conta.parciais.map(p => p.valor.length) : [])
+            );
+
+            const padDigitRow = (str, opChar = '') => {
+                let html = `<div class="alg-col-sign">${opChar}</div>`;
+                const padCount = maxDigits - str.length;
+                for (let i = 0; i < padCount; i++) {
+                    html += `<div class="alg-cell empty"></div>`;
+                }
+                for (let i = 0; i < str.length; i++) {
+                    html += `<div class="alg-cell alg-digit-fixed">${str[i]}</div>`;
+                }
+                return html;
+            };
+
+            // Linhas de "Sobe" (Transporte da Multiplicação)
+            let sobeRowsHtml = '';
+            if (conta.sobeLinhas && conta.sobeLinhas.length > 0) {
+                conta.sobeLinhas.forEach((sl, slIdx) => {
+                    const lineIndicator = conta.sobeLinhas.length > 1 ? `<span class="carry-sub">${slIdx + 1}</span>` : '';
+                    let sRow = `<div class="alg-col-sign alg-carry-tag" title="${sl.label || 'Sobe'}"><i class="fa-solid fa-arrow-up"></i>${lineIndicator}</div>`;
+                    const padCount = maxDigits - conta.multiplicando.length;
+                    for (let i = 0; i < padCount; i++) {
+                        sRow += `<div class="alg-cell empty"></div>`;
+                    }
+                    for (let i = 0; i < conta.multiplicando.length; i++) {
+                        const expCarry = sl.carries && sl.carries[i] !== undefined && sl.carries[i] !== null ? String(sl.carries[i]) : '';
+                        if (expCarry !== '') {
+                            sRow += `
+                                <div class="alg-cell alg-carry-cell">
+                                    <input type="text" 
+                                           inputmode="numeric" 
+                                           pattern="[0-9]*" 
+                                           class="alg-mult-carry-input" 
+                                           data-conta-id="${conta.id}" 
+                                           data-sobe-idx="${slIdx}" 
+                                           data-col-idx="${i}" 
+                                           data-expected="${expCarry}" 
+                                           id="mcarry-${atv.id}-${conta.id}-${slIdx}-${i}" 
+                                           placeholder="?" 
+                                           maxlength="1" 
+                                           value="${isAlreadySolved ? expCarry : ''}" 
+                                           ${isAlreadySolved ? 'disabled' : ''}
+                                           title="Sobe para esta coluna: digite o transporte" 
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                </div>
+                            `;
+                        } else {
+                            sRow += `<div class="alg-cell alg-carry-cell"><span class="alg-carry-placeholder">-</span></div>`;
+                        }
+                    }
+                    sobeRowsHtml += `<div class="alg-table-row alg-carry-row mult-carry-row">${sRow}</div>`;
+                });
+            }
+
+            const multiplicandoRow = padDigitRow(conta.multiplicando, '');
+            const multiplicadorRow = padDigitRow(conta.multiplicador, '<i class="fa-solid fa-xmark"></i>');
+
+            let parciaisHtml = '';
+            if (hasParciais) {
+                conta.parciais.forEach((parcial, pIdx) => {
+                    let pRow = `<div class="alg-col-sign alg-partial-tag" title="${parcial.label}">${pIdx === conta.parciais.length - 1 ? '<i class="fa-solid fa-plus"></i>' : ''}</div>`;
+                    const padCount = maxDigits - parcial.valor.length;
+                    for (let i = 0; i < padCount; i++) {
+                        pRow += `<div class="alg-cell empty"></div>`;
+                    }
+                    for (let i = 0; i < parcial.valor.length; i++) {
+                        const expChar = parcial.valor[i];
+                        pRow += `
+                            <div class="alg-cell alg-input-cell">
+                                <input type="text" 
+                                       inputmode="numeric" 
+                                       pattern="[0-9]*" 
+                                       class="alg-partial-input" 
+                                       data-conta-id="${conta.id}" 
+                                       data-partial-idx="${pIdx}" 
+                                       data-digit-idx="${i}" 
+                                       data-expected="${expChar}" 
+                                       id="part-${atv.id}-${conta.id}-${pIdx}-${i}" 
+                                       placeholder="?" 
+                                       maxlength="1" 
+                                       value="${isAlreadySolved ? expChar : ''}" 
+                                       ${isAlreadySolved ? 'disabled' : ''}
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+                        `;
+                    }
+                    parciaisHtml += `<div class="alg-table-row alg-partial-row">${pRow}</div>`;
+                });
+            }
+
+            let resRow = `<div class="alg-col-sign operator-equals"><i class="fa-solid fa-equals"></i></div>`;
+            const resPad = maxDigits - conta.resultadoEsperado.length;
+            for (let i = 0; i < resPad; i++) {
+                resRow += `<div class="alg-cell empty"></div>`;
+            }
+            for (let i = 0; i < conta.resultadoEsperado.length; i++) {
+                const expChar = conta.resultadoEsperado[i];
+                resRow += `
+                    <div class="alg-cell alg-result-cell">
+                        <input type="text" 
+                               inputmode="numeric" 
+                               pattern="[0-9]*" 
+                               class="alg-mult-result-input" 
+                               data-conta-id="${conta.id}" 
+                               data-digit-idx="${i}" 
+                               data-expected="${expChar}" 
+                               id="res-mult-${atv.id}-${conta.id}-${i}" 
+                               placeholder="?" 
+                               maxlength="1" 
+                               value="${isAlreadySolved ? expChar : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                `;
+            }
+
+            boardsHtml += `
+                <div class="alg-board-card multiplicacao" id="alg-mult-board-${atv.id}-${conta.id}">
+                    <div class="alg-board-title">
+                        <span><i class="fa-solid fa-xmark" style="color: var(--neon-amber);"></i> ${conta.titulo}</span>
+                    </div>
+                    <div class="alg-vertical-table mult-table">
+                        ${sobeRowsHtml}
+                        <div class="alg-table-row alg-digit-row">${multiplicandoRow}</div>
+                        <div class="alg-table-row alg-digit-row">${multiplicadorRow}</div>
+                        <div class="alg-calc-divider"></div>
+                        ${hasParciais ? `
+                            ${parciaisHtml}
+                            <div class="alg-calc-divider parcial-divider"></div>
+                        ` : ''}
+                        <div class="alg-table-row alg-result-row">${resRow}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="alg-activity-container">
+                <div class="alg-boards-grid">
+                    ${boardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-algoritmo-mult" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-circle-check"></i> ${isAlreadySolved ? 'Algoritmos da Multiplicação Verificados ✅' : 'Verificar Algoritmos da Multiplicação'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: SOMA COM PARCELA FALTANDO (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'soma_parcela_faltando' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it, idx) => {
+            const isP1Missing = (it.posicaoFaltando === 'parcela1');
+            cardsHtml += `
+                <div class="missing-term-card" id="missing-card-${atv.id}-${it.id}">
+                    <div class="missing-term-badge">Desafio #${idx + 1}</div>
+                    <div class="missing-equation-row">
+                        ${isP1Missing ? `
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-term-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-spf-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="4" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="missing-op">+</span>
+                            <span class="missing-val-fixed">${it.parcela2}</span>
+                        ` : `
+                            <span class="missing-val-fixed">${it.parcela1}</span>
+                            <span class="missing-op">+</span>
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-term-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-spf-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="4" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        `}
+                        <span class="missing-equals">=</span>
+                        <span class="missing-total-badge">${it.total}</span>
+                        <span class="missing-status-icon"></span>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="missing-terms-activity-container">
+                <div class="missing-terms-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-soma-faltando" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Parcelas Verificadas com Sucesso ✅' : 'Verificar Parcelas Ocultas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: SUBTRAÇÃO COM NÚMERO FALTANDO (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'subtracao_numero_faltando' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it, idx) => {
+            const isMinuendoMissing = (it.tipoFaltando === 'minuendo');
+            cardsHtml += `
+                <div class="missing-term-card subtracao" id="missing-sub-card-${atv.id}-${it.id}">
+                    <div class="missing-term-badge subtracao">Desafio #${idx + 1}</div>
+                    <div class="missing-equation-row">
+                        ${isMinuendoMissing ? `
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-sub-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-snf-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="4" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="missing-op minus">-</span>
+                            <span class="missing-val-fixed">${it.subtraendo}</span>
+                        ` : `
+                            <span class="missing-val-fixed">${it.minuendo}</span>
+                            <span class="missing-op minus">-</span>
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-sub-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-snf-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="4" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        `}
+                        <span class="missing-equals">=</span>
+                        <span class="missing-total-badge subtracao">${it.resto}</span>
+                        <span class="missing-status-icon"></span>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="missing-terms-activity-container">
+                <div class="missing-terms-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-sub-faltando" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Subtrações Verificadas com Sucesso ✅' : 'Verificar Números Ocultos'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: TABUADAS VERTICAIS DO 1 AO 10 (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'tabuadas_verticais' && atv.tabuadas) {
+        let navPillsHtml = '';
+        let panelsHtml = '';
+
+        atv.tabuadas.forEach((tab, tIdx) => {
+            navPillsHtml += `
+                <button type="button" class="tabuada-pill-btn ${tIdx === 0 ? 'active' : ''}" data-base="${tab.base}" data-activity-id="${atv.id}">
+                    <span>${tab.base}</span>
+                </button>
+            `;
+
+            let rowsHtml = '';
+            for (let i = 1; i <= 10; i++) {
+                const expectedProd = tab.base * i;
+                rowsHtml += `
+                    <div class="tabuada-vert-row" id="t-row-${atv.id}-${tab.base}-${i}">
+                        <span class="tabuada-factor">${tab.base}</span>
+                        <span class="tabuada-times">×</span>
+                        <span class="tabuada-mult-factor">${i}</span>
+                        <span class="tabuada-equal">=</span>
+                        <input type="text" 
+                               inputmode="numeric" 
+                               pattern="[0-9]*" 
+                               class="tabuada-cell-input" 
+                               data-base="${tab.base}" 
+                               data-factor="${i}" 
+                               data-expected="${expectedProd}" 
+                               id="tab-in-${atv.id}-${tab.base}-${i}"
+                               placeholder="?" 
+                               maxlength="3" 
+                               value="${isAlreadySolved ? expectedProd : ''}" 
+                               ${isAlreadySolved ? 'disabled' : ''}
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                `;
+            }
+
+            panelsHtml += `
+                <div class="tabuada-panel ${tIdx === 0 ? 'active' : ''}" id="tabuada-panel-${atv.id}-${tab.base}">
+                    <div class="tabuada-panel-header">
+                        <span class="tabuada-panel-title"><i class="fa-solid fa-book-bookmark"></i> ${tab.titulo}</span>
+                        <span class="tabuada-panel-counter" id="tab-counter-${atv.id}-${tab.base}">0 / 10 completados</span>
+                    </div>
+                    <div class="tabuada-vert-list">
+                        ${rowsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="tabuadas-activity-container">
+                <div class="tabuadas-nav-bar">
+                    <span class="tabuadas-nav-label"><i class="fa-solid fa-list-ol"></i> Selecione a Tabuada:</span>
+                    <div class="tabuadas-pills-row">
+                        ${navPillsHtml}
+                    </div>
+                </div>
+                <div class="tabuadas-panels-container">
+                    ${panelsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-tabuadas" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Todas as 10 Tabuadas Verificadas ✅' : 'Verificar Todas as Tabuadas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: FATOR FALTANDO NA MULTIPLICAÇÃO (AULA 02 - MATEMÁTICA)
+    if (atv.tipo === 'fator_faltando' && atv.itens) {
+        let cardsHtml = '';
+        atv.itens.forEach((it, idx) => {
+            const isF1Missing = (it.fator1 === null);
+            cardsHtml += `
+                <div class="missing-term-card mult-factor" id="factor-card-${atv.id}-${it.id}">
+                    <div class="missing-term-badge mult-factor">Fator Secreto #${idx + 1}</div>
+                    <div class="missing-equation-row">
+                        ${isF1Missing ? `
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-factor-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-ff-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="2" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="missing-op mult">×</span>
+                            <span class="missing-val-fixed">${it.fator2}</span>
+                        ` : `
+                            <span class="missing-val-fixed">${it.fator1}</span>
+                            <span class="missing-op mult">×</span>
+                            <input type="text" 
+                                   inputmode="numeric" 
+                                   pattern="[0-9]*" 
+                                   class="missing-factor-input" 
+                                   data-expected="${it.respostaEsperada}" 
+                                   id="input-ff-${atv.id}-${it.id}"
+                                   placeholder="?" 
+                                   maxlength="2" 
+                                   value="${isAlreadySolved ? it.respostaEsperada : ''}" 
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        `}
+                        <span class="missing-equals">=</span>
+                        <span class="missing-total-badge mult-factor">${it.produto}</span>
+                        <span class="missing-status-icon"></span>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="missing-terms-activity-container">
+                <div class="missing-terms-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-fator-faltando" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-key"></i> ${isAlreadySolved ? 'Fatores Ocultos Decifrados ✅' : 'Verificar Fatores da Multiplicação'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
     card.innerHTML = `
         <div class="activity-card-header">
             <span class="activity-badge">ENIGMA #${num}</span>
@@ -4665,6 +5520,444 @@ function renderActivityCard(atv, num) {
         });
     }
 
+    // Eventos de Soma por Quantidades (Aula 02 - Matemática)
+    if (atv.tipo === 'soma_quantidades') {
+        const btnVerify = card.querySelector('.btn-verify-soma-quant');
+        const inputs = card.querySelectorAll('.quant-answer-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleSomaQuantidadesSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            // Contorno verde imediato ao digitar o resultado correto
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const row = input.closest('.quant-calc-row');
+                const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (statusIcon) statusIcon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Subtração por Quantidades (Aula 02 - Matemática)
+    if (atv.tipo === 'subtracao_quantidades') {
+        const btnVerify = card.querySelector('.btn-verify-sub-quant');
+        const inputs = card.querySelectorAll('.quant-sub-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleSubtracaoQuantidadesSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            // Contorno verde imediato ao digitar o resultado correto
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const row = input.closest('.quant-calc-row');
+                const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (statusIcon) statusIcon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Algoritmo da Soma ("Conta Armada" com "Sobe 1") (Aula 02 - Matemática)
+    if (atv.tipo === 'algoritmo_soma') {
+        const btnVerify = card.querySelector('.btn-verify-algoritmo-soma');
+        const allInputs = card.querySelectorAll('.alg-carry-input, .alg-result-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlgoritmoSomaSubmit(atv, card);
+        });
+
+        allInputs.forEach((input, idx) => {
+            // Contorno verde imediato ao digitar o resultado ou transporte correto
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+
+                if (input.classList.contains('alg-carry-input')) {
+                    if (expected === '1' && val === '1') {
+                        input.classList.add('cell-correct');
+                        input.classList.remove('cell-incorrect');
+                    } else if (!expected && (val === '' || val === '0')) {
+                        input.classList.remove('cell-incorrect');
+                    } else {
+                        input.classList.remove('cell-correct');
+                    }
+                } else {
+                    if (val !== '' && val === expected) {
+                        input.classList.add('cell-correct');
+                        input.classList.remove('cell-incorrect');
+                    } else {
+                        input.classList.remove('cell-correct');
+                    }
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < allInputs.length - 1) {
+                        allInputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Algoritmo da Subtração ("Conta Armada" com Troca/Empréstimo) (Aula 02 - Matemática)
+    if (atv.tipo === 'algoritmo_subtracao') {
+        const btnVerify = card.querySelector('.btn-verify-algoritmo-sub');
+        const allInputs = card.querySelectorAll('.alg-borrow-input, .alg-result-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlgoritmoSubtracaoSubmit(atv, card);
+        });
+
+        allInputs.forEach((input, idx) => {
+            // Contorno verde imediato ao digitar o resultado ou troca correta
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+
+                if (input.classList.contains('alg-borrow-input')) {
+                    if (expected !== '' && val === expected) {
+                        input.classList.add('cell-correct');
+                        input.classList.remove('cell-incorrect');
+                    } else {
+                        input.classList.remove('cell-correct');
+                    }
+                } else {
+                    if (val !== '' && val === expected) {
+                        input.classList.add('cell-correct');
+                        input.classList.remove('cell-incorrect');
+                    } else {
+                        input.classList.remove('cell-correct');
+                    }
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < allInputs.length - 1) {
+                        allInputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Multiplicação por Parcelas Iguais (Aula 02 - Matemática)
+    if (atv.tipo === 'multiplicacao_parcelas_iguais') {
+        const btnVerify = card.querySelector('.btn-verify-mult-parcelas');
+        const caseCards = card.querySelectorAll('.mult-case-card');
+
+        caseCards.forEach(cCard => {
+            const btns = cCard.querySelectorAll('.mult-option-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    soundManager.playClick();
+                    btns.forEach(b => b.classList.remove('selected', 'selected-correct', 'selected-wrong'));
+                    btn.classList.add('selected');
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleMultiplicacaoParcelasSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Algoritmo da Multiplicação (Aula 02 - Matemática)
+    if (atv.tipo === 'algoritmo_multiplicacao') {
+        const btnVerify = card.querySelector('.btn-verify-algoritmo-mult');
+        const allInputs = card.querySelectorAll('.alg-mult-carry-input, .alg-partial-input, .alg-mult-result-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlgoritmoMultiplicacaoSubmit(atv, card);
+        });
+
+        allInputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+                if (val !== '' && val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                } else {
+                    input.classList.remove('cell-correct');
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < allInputs.length - 1) {
+                        allInputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Soma com Parcela Faltando (Aula 02 - Matemática)
+    if (atv.tipo === 'soma_parcela_faltando') {
+        const btnVerify = card.querySelector('.btn-verify-soma-faltando');
+        const inputs = card.querySelectorAll('.missing-term-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleSomaParcelaFaltandoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+                const row = input.closest('.missing-equation-row');
+                const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+                if (val !== '' && val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Subtração com Número Faltando (Aula 02 - Matemática)
+    if (atv.tipo === 'subtracao_numero_faltando') {
+        const btnVerify = card.querySelector('.btn-verify-sub-faltando');
+        const inputs = card.querySelectorAll('.missing-sub-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleSubtracaoNumeroFaltandoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+                const row = input.closest('.missing-equation-row');
+                const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+                if (val !== '' && val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos de Tabuadas Verticais do 1 ao 10 (Aula 02 - Matemática)
+    if (atv.tipo === 'tabuadas_verticais') {
+        const btnVerify = card.querySelector('.btn-verify-tabuadas');
+        const pillBtns = card.querySelectorAll('.tabuada-pill-btn');
+        const panels = card.querySelectorAll('.tabuada-panel');
+        const allInputs = card.querySelectorAll('.tabuada-cell-input');
+
+        pillBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                soundManager.playClick();
+                pillBtns.forEach(b => b.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+
+                btn.classList.add('active');
+                const base = btn.dataset.base;
+                const targetPanel = card.querySelector(`#tabuada-panel-${atv.id}-${base}`);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    const firstEmpty = targetPanel.querySelector('.tabuada-cell-input:not(.cell-correct)') || targetPanel.querySelector('.tabuada-cell-input');
+                    if (firstEmpty) {
+                        setTimeout(() => {
+                            firstEmpty.focus();
+                            firstEmpty.select();
+                        }, 50);
+                    }
+                }
+            });
+        });
+
+        allInputs.forEach((input) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+                const isCorrect = (val !== '' && val === expected);
+
+                if (isCorrect) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                } else {
+                    input.classList.remove('cell-correct');
+                }
+
+                // Atualiza contador de acertos da aba ativa
+                const base = input.dataset.base;
+                const panel = card.querySelector(`#tabuada-panel-${atv.id}-${base}`);
+                if (panel) {
+                    const panelInputs = Array.from(panel.querySelectorAll('.tabuada-cell-input'));
+                    const correctCells = panel.querySelectorAll('.tabuada-cell-input.cell-correct').length;
+                    const counter = panel.querySelector(`#tab-counter-${atv.id}-${base}`);
+                    if (counter) counter.textContent = `${correctCells} / ${panelInputs.length} corretos`;
+
+                    // Se a resposta estiver correta, avança automaticamente para o próximo campo!
+                    if (isCorrect) {
+                        const currentIdxInPanel = panelInputs.indexOf(input);
+                        if (currentIdxInPanel >= 0 && currentIdxInPanel < panelInputs.length - 1) {
+                            const nextInput = panelInputs[currentIdxInPanel + 1];
+                            setTimeout(() => {
+                                nextInput.focus();
+                                nextInput.select();
+                            }, 50);
+                        } else if (currentIdxInPanel === panelInputs.length - 1 && correctCells === panelInputs.length) {
+                            // Aba concluída com sucesso!
+                            soundManager.playSuccess();
+                            const currentPill = card.querySelector('.tabuada-pill-btn.active');
+                            const nextPill = currentPill ? currentPill.nextElementSibling : null;
+                            if (nextPill && nextPill.classList.contains('tabuada-pill-btn')) {
+                                setTimeout(() => {
+                                    nextPill.click();
+                                }, 350);
+                            } else {
+                                setTimeout(() => {
+                                    btnVerify?.focus();
+                                }, 300);
+                            }
+                        }
+                    }
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    const base = input.dataset.base;
+                    const panel = card.querySelector(`#tabuada-panel-${atv.id}-${base}`);
+                    if (panel) {
+                        const panelInputs = Array.from(panel.querySelectorAll('.tabuada-cell-input'));
+                        const currentIdxInPanel = panelInputs.indexOf(input);
+                        if (currentIdxInPanel < panelInputs.length - 1) {
+                            panelInputs[currentIdxInPanel + 1].focus();
+                            panelInputs[currentIdxInPanel + 1].select();
+                        } else {
+                            btnVerify?.click();
+                        }
+                    }
+                }
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            handleTabuadasVerticaisSubmit(atv, card);
+        });
+    }
+
+    // Eventos de Fator Faltando na Multiplicação (Aula 02 - Matemática)
+    if (atv.tipo === 'fator_faltando') {
+        const btnVerify = card.querySelector('.btn-verify-fator-faltando');
+        const inputs = card.querySelectorAll('.missing-factor-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleFatorFaltandoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected || '');
+                const row = input.closest('.missing-equation-row');
+                const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+                if (val !== '' && val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
     // Toggle de Dica
     const hintBtn = card.querySelector('.hint-toggle-btn');
     if (hintBtn) {
@@ -4676,6 +5969,859 @@ function renderActivityCard(atv, num) {
     }
 
     return card;
+}
+
+// ==========================================================================
+// HANDLERS DE VALIDAÇÃO: AULA 02 DE MATEMÁTICA (OPERAÇÕES BÁSICAS - PARTE 1)
+// ==========================================================================
+
+// Validação de Soma por Quantidades
+function handleSomaQuantidadesSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.quant-answer-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const row = input.closest('.quant-calc-row');
+        const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-soma-quant');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Somas por Quantidades Verificadas com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Excelente, Detetive! Todas as somas foram calculadas corretamente!</strong><br>
+                ${atv.explicacao || 'Lotes de evidências somados com 100% de exatidão!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho e tente novamente.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Você ainda precisa calcular ${emptyCount} linha(s) de soma.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} soma(s) com valor incorreto. Reconte com atenção os objetos de cada card!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção à Contagem!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Subtração por Quantidades
+function handleSubtracaoQuantidadesSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.quant-sub-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const row = input.closest('.quant-calc-row');
+        const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-sub-quant');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Subtrações por Quantidades Verificadas com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Perfeito, Agente! Todas as subtrações de evidências estão exatas!</strong><br>
+                ${atv.explicacao || 'Inventário de evidências subtraído com total precisão!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho e tente novamente.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha o resultado restante nas ${emptyCount} linha(s) em branco.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} resultado(s) incorreto(s). Lembre-se: subtrair é retirar a quantidade do 2º card da quantidade do 1º card!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção ao Inventário!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação do Algoritmo da Soma ("Conta Armada" com "Sobe 1")
+function handleAlgoritmoSomaSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const resultInputs = cardElement.querySelectorAll('.alg-result-input');
+    const carryInputs = cardElement.querySelectorAll('.alg-carry-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongResultCount = 0;
+    let wrongCarryCount = 0;
+
+    // Valida os dígitos de resultado em cada ordem
+    resultInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongResultCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    // Valida os campos de "Sobe 1"
+    carryInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (expected === '1') {
+            if (val === '1') {
+                input.classList.add('cell-correct');
+            } else {
+                allCorrect = false;
+                wrongCarryCount++;
+                input.classList.add('cell-incorrect');
+            }
+        } else {
+            if (val === '' || val === '0') {
+                // Aceito
+            } else {
+                allCorrect = false;
+                wrongCarryCount++;
+                input.classList.add('cell-incorrect');
+            }
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        resultInputs.forEach(input => { input.disabled = true; });
+        carryInputs.forEach(input => { input.disabled = true; });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-algoritmo-soma');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Algoritmos da Soma Verificados com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Incrível, Perito dos Cálculos! Todos os 4 algoritmos da adição e os transportes ("sobe 1") estão 100% corretos!</strong><br>
+                ${atv.explicacao || 'Operações armadas executadas com excelência investigativa!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho nas contas armadas.';
+        if (emptyCount > 0 && wrongResultCount === 0 && wrongCarryCount === 0) {
+            msg = `Preencha os ${emptyCount} campo(s) de resultado que ainda estão em branco.`;
+        } else if (wrongCarryCount > 0 && wrongResultCount === 0) {
+            msg = `Revise os campos de "Sobe 1"! Quando a soma de uma coluna atinge 10 ou mais, anote 1 na bolha "Sobe" da coluna vizinha.`;
+        } else if (wrongResultCount > 0) {
+            msg = `Há algarismos de resultado incorretos. Lembre-se de começar pelas UNIDADES e somar também o "1" que subiu nas dezenas/centenas!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção ao Algoritmo!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação do Algoritmo da Subtração ("Conta Armada" com Troca/Empréstimo)
+function handleAlgoritmoSubtracaoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const resultInputs = cardElement.querySelectorAll('.alg-result-input');
+    const borrowInputs = cardElement.querySelectorAll('.alg-borrow-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongResultCount = 0;
+    let wrongBorrowCount = 0;
+
+    // Valida os dígitos de resultado da subtração
+    resultInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongResultCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    // Valida anotações de troca / empréstimo
+    borrowInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (expected !== '') {
+            if (val === expected) {
+                input.classList.add('cell-correct');
+            } else {
+                allCorrect = false;
+                wrongBorrowCount++;
+                input.classList.add('cell-incorrect');
+            }
+        } else {
+            if (val !== '' && val !== expected) {
+                allCorrect = false;
+                wrongBorrowCount++;
+                input.classList.add('cell-incorrect');
+            }
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        resultInputs.forEach(input => { input.disabled = true; });
+        borrowInputs.forEach(input => { input.disabled = true; });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-algoritmo-sub');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Algoritmos da Subtração Verificados com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Espetacular, Detetive Chefe! Todas as 4 subtrações e os registros de troca/empréstimo foram calculados com perfeição!</strong><br>
+                ${atv.explicacao || 'Mecânica de empréstimo executada com total segurança forense!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho nas subtrações armadas.';
+        if (emptyCount > 0 && wrongResultCount === 0 && wrongBorrowCount === 0) {
+            msg = `Preencha os ${emptyCount} campo(s) que ainda estão em branco.`;
+        } else if (wrongBorrowCount > 0 && wrongResultCount === 0) {
+            msg = `Revise os campos de Troca (empréstimo)! Se o número de cima for menor que o de baixo, peça emprestado: a ordem vizinha fica com 1 a menos e a ordem atual ganha 10.`;
+        } else if (wrongResultCount > 0) {
+            msg = `Há resultados incorretos nas subtrações. Lembre-se de calcular com o novo valor após o empréstimo!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção às Trocas!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Multiplicação por Parcelas Iguais
+function handleMultiplicacaoParcelasSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const caseCards = cardElement.querySelectorAll('.mult-case-card');
+    let allCorrect = true;
+    let unselectedCount = 0;
+    let wrongCount = 0;
+
+    atv.casos.forEach(caso => {
+        const caseCard = cardElement.querySelector(`#mult-card-${atv.id}-${caso.id}`);
+        if (!caseCard) return;
+
+        const selectedBtn = caseCard.querySelector('.mult-option-btn.selected');
+        const allBtns = caseCard.querySelectorAll('.mult-option-btn');
+
+        allBtns.forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
+
+        if (!selectedBtn) {
+            allCorrect = false;
+            unselectedCount++;
+            caseCard.classList.add('case-unanswered');
+        } else {
+            caseCard.classList.remove('case-unanswered');
+            const chosenId = selectedBtn.dataset.optionId;
+            if (chosenId === caso.respostaCorreta) {
+                selectedBtn.classList.add('selected-correct');
+            } else {
+                allCorrect = false;
+                wrongCount++;
+                selectedBtn.classList.add('selected-wrong');
+            }
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        caseCards.forEach(cCard => {
+            const btns = cCard.querySelectorAll('.mult-option-btn');
+            btns.forEach(b => { b.disabled = true; });
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-mult-parcelas');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Multiplicações Confirmadas com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Brilhante, Mestre dos Enigmas! Todas as 5 somas de parcelas iguais foram associadas à sua multiplicação com precisão cirúrgica!</strong><br>
+                ${atv.explicacao || 'Multiplicações decifradas com 100% de aproveitamento!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os códigos em vermelho e ajuste suas escolhas.';
+        if (unselectedCount > 0 && wrongCount === 0) {
+            msg = `Você ainda não selecionou a multiplicação para ${unselectedCount} caso(s).`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} multiplicação(ões) incorreta(s). Lembre-se: conte QUANTAS vezes o número se repete e multiplique pelo seu valor! Exemplo: 4 + 4 + 4 são 3 vezes o 4 (3 × 4).`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção às Parcelas!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação do Algoritmo da Multiplicação (Aula 02 - Matemática)
+function handleAlgoritmoMultiplicacaoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const carryInputs = cardElement.querySelectorAll('.alg-mult-carry-input');
+    const partialInputs = cardElement.querySelectorAll('.alg-partial-input');
+    const resultInputs = cardElement.querySelectorAll('.alg-mult-result-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCarryCount = 0;
+    let wrongCount = 0;
+
+    carryInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongCarryCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    partialInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    resultInputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        carryInputs.forEach(i => i.disabled = true);
+        partialInputs.forEach(i => i.disabled = true);
+        resultInputs.forEach(i => i.disabled = true);
+
+        const btnVerify = cardElement.querySelector('.btn-verify-algoritmo-mult');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Algoritmos e Transportes Verificados com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Espetacular, Detetive Calculista! Todas as multiplicações, transportes ("sobe") e produtos parciais foram executados com perfeição!</strong><br>
+                ${atv.explicacao || 'Algoritmo da multiplicação consolidado com total maestria!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os algarismos em vermelho nas contas armadas.';
+        if (wrongCarryCount > 0 && wrongCount === 0 && emptyCount === 0) {
+            msg = `Revise os círculos de "Sobe" (transporte)! Por exemplo: se 5 × 8 = 40, anote 0 no resultado e suba 4 na próxima coluna.`;
+        } else if (emptyCount > 0 && wrongCount === 0 && wrongCarryCount === 0) {
+            msg = `Preencha os ${emptyCount} campo(s) ainda vazios nas contas (incluindo o transporte "Sobe").`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} algarismo(s) incorreto(s). Lembre-se de somar o número que subiu ao produto da coluna!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção ao Algoritmo!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Soma com Parcela Faltando (Aula 02 - Matemática)
+function handleSomaParcelaFaltandoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.missing-term-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        const row = input.closest('.missing-equation-row');
+        const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(i => i.disabled = true);
+
+        const btnVerify = cardElement.querySelector('.btn-verify-soma-faltando');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as Parcelas Reveladas com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Excelente dedução! Todas as 6 parcelas ocultas foram calculadas corretamente!</strong><br>
+                ${atv.explicacao || 'Operações inversas dominadas com total segurança pericial!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as respostas destacadas em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha a parcela que falta nos ${emptyCount} caso(s) em branco.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} valor(es) incorreto(s). Lembre-se: subtraia a parcela conhecida do total para achar a outra!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção às Parcelas!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Subtração com Número Faltando (Aula 02 - Matemática)
+function handleSubtracaoNumeroFaltandoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.missing-sub-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        const row = input.closest('.missing-equation-row');
+        const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(i => i.disabled = true);
+
+        const btnVerify = cardElement.querySelector('.btn-verify-sub-faltando');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todos os Números Ocultos Revelados!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Magnífico, Perito Forense! Todos os termos ocultos das subtrações foram identificados!</strong><br>
+                ${atv.explicacao || 'Raciocínio lógico e equações solucionadas com maestria!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as respostas destacadas em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha os ${emptyCount} caso(s) de subtração que ainda estão em branco.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} resposta(s) incorreta(s). Se faltar o primeiro número, some o subtraendo com o resto. Se faltar o do meio, subtraia o resto do minuendo!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção aos Termos!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Tabuadas Verticais do 1 ao 10 (Aula 02 - Matemática)
+function handleTabuadasVerticaisSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.tabuada-cell-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+        }
+    });
+
+    // Atualiza contadores de cada aba
+    atv.tabuadas.forEach(tab => {
+        const panel = cardElement.querySelector(`#tabuada-panel-${atv.id}-${tab.base}`);
+        if (panel) {
+            const totalCells = panel.querySelectorAll('.tabuada-cell-input').length;
+            const correctCells = panel.querySelectorAll('.tabuada-cell-input.cell-correct').length;
+            const counter = panel.querySelector(`#tab-counter-${atv.id}-${tab.base}`);
+            if (counter) counter.textContent = `${correctCells} / ${totalCells} completados`;
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(i => i.disabled = true);
+
+        const btnVerify = cardElement.querySelector('.btn-verify-tabuadas');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as 10 Tabuadas Completadas com 100% de Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>LENDÁRIO! Você completou com perfeição todas as 100 operações das 10 tabuadas!</strong><br>
+                ${atv.explicacao || 'Arquivo mestre das tabuadas dominado integralmente!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Ainda restam campos incorretos ou em branco nas tabuadas.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Você ainda tem ${emptyCount} multiplicação(ões) para responder nas abas das tabuadas.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} produto(s) incorreto(s) em vermelho. Revise as tabuadas e corrija os cálculos!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção às Tabuadas!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Fator Faltando na Multiplicação (Aula 02 - Matemática)
+function handleFatorFaltandoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.missing-factor-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected || '');
+        const row = input.closest('.missing-equation-row');
+        const icon = row ? row.querySelector('.missing-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        inputs.forEach(i => i.disabled = true);
+
+        const btnVerify = cardElement.querySelector('.btn-verify-fator-faltando');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todos os Fatores Desvendados!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>PARABÉNS SUPREMO, DETETIVE MESTRE! Todos os 8 fatores foram encontrados e o cofre final da Aula 02 foi aberto!</strong><br>
+                ${atv.explicacao || 'Operações básicas dominadas com honras periciais!'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os fatores destacados em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha o fator que falta nos ${emptyCount} caso(s) em branco.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} fator(es) incorreto(s). Pense: qual número vezes o fator conhecido dá o produto total?`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção aos Fatores!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
 }
 
 // --------------------------------------------------------------------------

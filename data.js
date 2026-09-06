@@ -352,6 +352,427 @@ const CURRICULO_INVESTIGACAO = {
                         explicacao: 'PARABÉNS, DETETIVE SUPREMO! Você desvendou todos os 10 enigmas da Aula 1 com 100% de aproveitamento pericial!'
                     }
                 ]
+            },
+            {
+                id: 'mat_aula_2',
+                numero: 2,
+                titulo: 'Operações Básicas - Parte 1',
+                descricao: 'Domine as operações fundamentais da perícia matemática: some e subtraia através da contagem visual de evidências, execute os algoritmos armados com "sobe 1" e "empréstimo/troca", e descubra a multiplicação como a soma de parcelas iguais!',
+                dificuldade: 'Iniciante',
+                tempoEstimado: '25 min',
+                xpRecompensa: 120,
+                atividades: [
+                    {
+                        id: 'mat_2_atv_1',
+                        tipo: 'soma_quantidades',
+                        titulo: 'Enigma dos Lotes Periciais: Soma por Quantidades',
+                        instrucoes: 'Os detetives coletaram lotes de evidências em duas caixas periciais. Conte os objetos de cada card, some as quantidades e digite o número total no card de resposta correspondente!',
+                        linhas: [
+                            {
+                                id: 'sq_1',
+                                label: 'Pista 1: Lupas Forenses',
+                                card1: { icone: '🔍', nome: 'Lupas', quantidade: 4 },
+                                card2: { icone: '🔍', nome: 'Lupas', quantidade: 3 },
+                                respostaEsperada: 7
+                            },
+                            {
+                                id: 'sq_2',
+                                label: 'Pista 2: Pegadas Suspeitas',
+                                card1: { icone: '🐾', nome: 'Pegadas', quantidade: 6 },
+                                card2: { icone: '🐾', nome: 'Pegadas', quantidade: 5 },
+                                respostaEsperada: 11
+                            },
+                            {
+                                id: 'sq_3',
+                                label: 'Pista 3: Chaves Mestras',
+                                card1: { icone: '🔑', nome: 'Chaves', quantidade: 8 },
+                                card2: { icone: '🔑', nome: 'Chaves', quantidade: 4 },
+                                respostaEsperada: 12
+                            },
+                            {
+                                id: 'sq_4',
+                                label: 'Pista 4: Maletas Secretas',
+                                card1: { icone: '💼', nome: 'Maletas', quantidade: 5 },
+                                card2: { icone: '💼', nome: 'Maletas', quantidade: 7 },
+                                respostaEsperada: 12
+                            },
+                            {
+                                id: 'sq_5',
+                                label: 'Pista 5: Crachás de Acesso',
+                                card1: { icone: '🛡️', nome: 'Crachás', quantidade: 9 },
+                                card2: { icone: '🛡️', nome: 'Crachás', quantidade: 6 },
+                                respostaEsperada: 15
+                            }
+                        ],
+                        dica: 'Dica Forense: Conte primeiro todos os objetos do primeiro card e continue a contagem adicionando os objetos do segundo card!',
+                        explicacao: 'Excelente contagem, Detetive! Todas as somas de evidências foram calculadas com exatidão pericial.'
+                    },
+                    {
+                        id: 'mat_2_atv_2',
+                        tipo: 'subtracao_quantidades',
+                        titulo: 'Enigma do Inventário Pericial: Subtração por Quantidades',
+                        instrucoes: 'Evidências do primeiro lote precisaram ser transferidas ou analisadas pelo laboratório. Observe a quantidade inicial no primeiro card, subtraia a quantia do segundo card e digite quantas evidências restaram!',
+                        linhas: [
+                            {
+                                id: 'subq_1',
+                                label: 'Caso 1: Diamantes Preciosos',
+                                card1: { icone: '💎', nome: 'Diamantes', quantidade: 8 },
+                                card2: { icone: '💎', nome: 'Diamantes', quantidade: 3 },
+                                respostaEsperada: 5
+                            },
+                            {
+                                id: 'subq_2',
+                                label: 'Caso 2: Lanternas Táticas',
+                                card1: { icone: '🔦', nome: 'Lanternas', quantidade: 9 },
+                                card2: { icone: '🔦', nome: 'Lanternas', quantidade: 4 },
+                                respostaEsperada: 5
+                            },
+                            {
+                                id: 'subq_3',
+                                label: 'Caso 3: Moedas Antigas',
+                                card1: { icone: '🪙', nome: 'Moedas', quantidade: 12 },
+                                card2: { icone: '🪙', nome: 'Moedas', quantidade: 5 },
+                                respostaEsperada: 7
+                            },
+                            {
+                                id: 'subq_4',
+                                label: 'Caso 4: Cadeados de Segurança',
+                                card1: { icone: '🔒', nome: 'Cadeados', quantidade: 10 },
+                                card2: { icone: '🔒', nome: 'Cadeados', quantidade: 6 },
+                                respostaEsperada: 4
+                            },
+                            {
+                                id: 'subq_5',
+                                label: 'Caso 5: Pastas Confidenciais',
+                                card1: { icone: '📁', nome: 'Pastas', quantidade: 14 },
+                                card2: { icone: '📁', nome: 'Pastas', quantidade: 8 },
+                                respostaEsperada: 6
+                            }
+                        ],
+                        dica: 'Dica Forense: Subtrair significa retirar! Conte quantos itens havia no primeiro card e retire a quantidade indicada no segundo card.',
+                        explicacao: 'Perfeito, Agente! Todas as subtrações de evidências foram auditadas com sucesso.'
+                    },
+                    {
+                        id: 'mat_2_atv_3',
+                        tipo: 'algoritmo_soma',
+                        titulo: 'O Algoritmo Pericial da Soma: Contas Armadas e "Sobe 1"',
+                        instrucoes: 'Resolva cada conta armada calculando coluna por coluna (começando sempre pelas UNIDADES, depois DEZENAS e CENTENAS). Se a soma de uma coluna for 10 ou mais, anote o algarismo das unidades no resultado e digite "1" no espaço do "Sobe 1" da ordem seguinte!',
+                        contas: [
+                            {
+                                id: 'asoma_1',
+                                titulo: 'Operação 1: 24 + 15 (Sem transporte)',
+                                ordens: ['D', 'U'],
+                                parcela1: { D: 2, U: 4 },
+                                parcela2: { D: 1, U: 5 },
+                                vaiUm: { D: null },
+                                resultadoEsperado: { D: 3, U: 9 },
+                                total: 39
+                            },
+                            {
+                                id: 'asoma_2',
+                                titulo: 'Operação 2: 38 + 27 (Com "Sobe 1" nas Dezenas)',
+                                ordens: ['D', 'U'],
+                                parcela1: { D: 3, U: 8 },
+                                parcela2: { D: 2, U: 7 },
+                                vaiUm: { D: 1 },
+                                resultadoEsperado: { D: 6, U: 5 },
+                                total: 65
+                            },
+                            {
+                                id: 'asoma_3',
+                                titulo: 'Operação 3: 146 + 238 (Com "Sobe 1" nas Dezenas)',
+                                ordens: ['C', 'D', 'U'],
+                                parcela1: { C: 1, D: 4, U: 6 },
+                                parcela2: { C: 2, D: 3, U: 8 },
+                                vaiUm: { C: null, D: 1 },
+                                resultadoEsperado: { C: 3, D: 8, U: 4 },
+                                total: 384
+                            },
+                            {
+                                id: 'asoma_4',
+                                titulo: 'Operação 4: 375 + 258 (Com "Sobe 1" duplo nas Dezenas e Centenas)',
+                                ordens: ['C', 'D', 'U'],
+                                parcela1: { C: 3, D: 7, U: 5 },
+                                parcela2: { C: 2, D: 5, U: 8 },
+                                vaiUm: { C: 1, D: 1 },
+                                resultadoEsperado: { C: 6, D: 3, U: 3 },
+                                total: 633
+                            }
+                        ],
+                        dica: 'Dica Forense: Comece sempre pela coluna das UNIDADES (da direita para a esquerda)! Se a soma for 10 ou mais, anote a unidade embaixo e coloque 1 na bolha "Sobe 1" da coluna seguinte.',
+                        explicacao: 'Fantástico domínio do algoritmo, Detetive! Você calculou todas as adições e gerenciou perfeitamente os transportes ("sobe 1").'
+                    },
+                    {
+                        id: 'mat_2_atv_4',
+                        tipo: 'algoritmo_subtracao',
+                        titulo: 'O Algoritmo Pericial da Subtração: Troca e Empréstimo',
+                        instrucoes: 'Resolva as contas armadas de subtração calculando ordem por ordem, começando pelas UNIDADES. Quando o número superior for menor que o inferior, faça a TROCA (empréstimo): anote o novo valor da ordem que emprestou e o novo valor aumentado da ordem que recebeu!',
+                        contas: [
+                            {
+                                id: 'asub_1',
+                                titulo: 'Operação 1: 58 - 25 (Sem necessidade de troca)',
+                                ordens: ['D', 'U'],
+                                minuendo: { D: 5, U: 8 },
+                                subtraendo: { D: 2, U: 5 },
+                                trocas: { D: null, U: null },
+                                resultadoEsperado: { D: 3, U: 3 },
+                                total: 33
+                            },
+                            {
+                                id: 'asub_2',
+                                titulo: 'Operação 2: 63 - 28 (Troca da Dezena para as Unidades)',
+                                ordens: ['D', 'U'],
+                                minuendo: { D: 6, U: 3 },
+                                subtraendo: { D: 2, U: 8 },
+                                trocas: { D: 5, U: 13 },
+                                resultadoEsperado: { D: 3, U: 5 },
+                                total: 35
+                            },
+                            {
+                                id: 'asub_3',
+                                titulo: 'Operação 3: 352 - 127 (Troca na Unidade)',
+                                ordens: ['C', 'D', 'U'],
+                                minuendo: { C: 3, D: 5, U: 2 },
+                                subtraendo: { C: 1, D: 2, U: 7 },
+                                trocas: { C: null, D: 4, U: 12 },
+                                resultadoEsperado: { C: 2, D: 2, U: 5 },
+                                total: 225
+                            },
+                            {
+                                id: 'asub_4',
+                                titulo: 'Operação 4: 528 - 274 (Troca da Centena para as Dezenas)',
+                                ordens: ['C', 'D', 'U'],
+                                minuendo: { C: 5, D: 2, U: 8 },
+                                subtraendo: { C: 2, D: 7, U: 4 },
+                                trocas: { C: 4, D: 12, U: null },
+                                resultadoEsperado: { C: 2, D: 5, U: 4 },
+                                total: 254
+                            }
+                        ],
+                        dica: 'Dica Forense: Se o algarismo de cima for menor que o de baixo, ele pede emprestado à ordem vizinha à esquerda! A ordem vizinha perde 1 e a atual ganha 10.',
+                        explicacao: 'Excelente técnica pericial! O algoritmo da subtração e a mecânica das trocas foram executados com maestria.'
+                    },
+                    {
+                        id: 'mat_2_atv_5',
+                        tipo: 'multiplicacao_parcelas_iguais',
+                        titulo: 'Decodificador de Multiplicação: Soma de Parcelas Iguais',
+                        instrucoes: 'A multiplicação é uma forma rápida e eficiente de somar parcelas iguais! Para cada soma repetida abaixo, clique na opção de MULTIPLICAÇÃO que representa exatamente aquela operação.',
+                        casos: [
+                            {
+                                id: 'mult_1',
+                                titulo: 'Código 1: Parcelas de 4',
+                                expressaoSoma: '4 + 4 + 4',
+                                parcelas: [4, 4, 4],
+                                total: 12,
+                                respostaCorreta: '3x4',
+                                opcoes: [
+                                    { id: '3x4', texto: '3 × 4' },
+                                    { id: '4x4', texto: '4 × 4' },
+                                    { id: '3x3', texto: '3 × 3' },
+                                    { id: '2x4', texto: '2 × 4' }
+                                ]
+                            },
+                            {
+                                id: 'mult_2',
+                                titulo: 'Código 2: Parcelas de 5',
+                                expressaoSoma: '5 + 5 + 5 + 5',
+                                parcelas: [5, 5, 5, 5],
+                                total: 20,
+                                respostaCorreta: '4x5',
+                                opcoes: [
+                                    { id: '4x5', texto: '4 × 5' },
+                                    { id: '5x5', texto: '5 × 5' },
+                                    { id: '3x5', texto: '3 × 5' },
+                                    { id: '4x4', texto: '4 × 4' }
+                                ]
+                            },
+                            {
+                                id: 'mult_3',
+                                titulo: 'Código 3: Parcelas de 2',
+                                expressaoSoma: '2 + 2 + 2 + 2 + 2 + 2',
+                                parcelas: [2, 2, 2, 2, 2, 2],
+                                total: 12,
+                                respostaCorreta: '6x2',
+                                opcoes: [
+                                    { id: '6x2', texto: '6 × 2' },
+                                    { id: '5x2', texto: '5 × 2' },
+                                    { id: '2x2', texto: '2 × 2' },
+                                    { id: '6x6', texto: '6 × 6' }
+                                ]
+                            },
+                            {
+                                id: 'mult_4',
+                                titulo: 'Código 4: Parcelas de 7',
+                                expressaoSoma: '7 + 7',
+                                parcelas: [7, 7],
+                                total: 14,
+                                respostaCorreta: '2x7',
+                                opcoes: [
+                                    { id: '2x7', texto: '2 × 7' },
+                                    { id: '3x7', texto: '3 × 7' },
+                                    { id: '7x7', texto: '7 × 7' },
+                                    { id: '2x2', texto: '2 × 2' }
+                                ]
+                            },
+                            {
+                                id: 'mult_5',
+                                titulo: 'Código 5: Parcelas de 6',
+                                expressaoSoma: '6 + 6 + 6',
+                                parcelas: [6, 6, 6],
+                                total: 18,
+                                respostaCorreta: '3x6',
+                                opcoes: [
+                                    { id: '3x6', texto: '3 × 6' },
+                                    { id: '4x6', texto: '4 × 6' },
+                                    { id: '3x3', texto: '3 × 3' },
+                                    { id: '6x6', texto: '6 × 6' }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Conte quantas vezes a parcela se repete! Exemplo: 4 + 4 + 4 são 3 parcelas de 4, logo a multiplicação é 3 × 4.',
+                        explicacao: 'PARABÉNS, AGENTE ESPECIAL! Você dominou as operações básicas de adição, subtração e multiplicação!'
+                    },
+                    {
+                        id: 'mat_2_atv_6',
+                        tipo: 'algoritmo_multiplicacao',
+                        titulo: 'O Algoritmo Pericial da Multiplicação: Contas Armadas e Transporte ("Sobe")',
+                        instrucoes: 'Resolva as multiplicações armadas calculando da direita para a esquerda. Use os círculos superiores do "Sobe" para anotar o transporte quando a multiplicação de uma casa for 10 ou mais (por exemplo, se 5 × 8 = 40, anote 0 no resultado e suba 4 na próxima casa). Em contas com mais de um algarismo no multiplicador, calcule cada produto parcial e depois some para encontrar o resultado final. Todos os campos ganham contorno verde ao digitar o número correto!',
+                        contas: [
+                            {
+                                id: 'amult_1',
+                                titulo: 'Operação 1: 243 × 6 (1 Algarismo)',
+                                multiplicando: '243',
+                                multiplicador: '6',
+                                sobeLinhas: [
+                                    { id: 's1', label: 'Sobe', carries: [2, 1, null] }
+                                ],
+                                parciais: [],
+                                resultadoEsperado: '1458',
+                                total: 1458
+                            },
+                            {
+                                id: 'amult_2',
+                                titulo: 'Operação 2: 268 × 25 (2 Algarismos)',
+                                multiplicando: '268',
+                                multiplicador: '25',
+                                sobeLinhas: [
+                                    { id: 's1', label: 'Sobe (×5)', carries: [3, 4, null] },
+                                    { id: 's2', label: 'Sobe (×2)', carries: [1, 1, null] }
+                                ],
+                                parciais: [
+                                    { label: '268 × 5', valor: '1340', deslocamento: 0 },
+                                    { label: '268 × 20', valor: '5360', deslocamento: 0 }
+                                ],
+                                resultadoEsperado: '6700',
+                                total: 6700
+                            },
+                            {
+                                id: 'amult_3',
+                                titulo: 'Operação 3: 315 × 24 (2 Algarismos)',
+                                multiplicando: '315',
+                                multiplicador: '24',
+                                sobeLinhas: [
+                                    { id: 's1', label: 'Sobe (×4)', carries: [null, 2, null] },
+                                    { id: 's2', label: 'Sobe (×2)', carries: [null, 1, null] }
+                                ],
+                                parciais: [
+                                    { label: '315 × 4', valor: '1260', deslocamento: 0 },
+                                    { label: '315 × 20', valor: '6300', deslocamento: 0 }
+                                ],
+                                resultadoEsperado: '7560',
+                                total: 7560
+                            },
+                            {
+                                id: 'amult_4',
+                                titulo: 'Operação 4: 142 × 123 (3 Algarismos)',
+                                multiplicando: '142',
+                                multiplicador: '123',
+                                sobeLinhas: [
+                                    { id: 's1', label: 'Sobe (×3)', carries: [1, null, null] }
+                                ],
+                                parciais: [
+                                    { label: '142 × 3', valor: '426', deslocamento: 0 },
+                                    { label: '142 × 20', valor: '2840', deslocamento: 0 },
+                                    { label: '142 × 100', valor: '14200', deslocamento: 0 }
+                                ],
+                                resultadoEsperado: '17466',
+                                total: 17466
+                            }
+                        ],
+                        dica: 'Dica Forense: Multiplique primeiro as unidades. Lembre-se de preencher as bolhas superiores do "Sobe" quando o produto dos dígitos passar de 10 e somar esse transporte no cálculo da coluna vizinha!',
+                        explicacao: 'Incrível domínio do algoritmo da multiplicação! Você calculou com exatidão operações de 1, 2 e 3 algarismos com todos os transportes periciais.'
+                    },
+                    {
+                        id: 'mat_2_atv_7',
+                        tipo: 'soma_parcela_faltando',
+                        titulo: 'Enigma da Parcela Secreta: Adição com Termo Faltando',
+                        instrucoes: 'Os peritos encontraram equações com uma das parcelas apagada pelo suspeito! Use a dedução (ou a operação inversa: subtraia a parcela conhecida do total) para descobrir qual parcela está faltando em cada caso.',
+                        itens: [
+                            { id: 'spf_1', posicaoFaltando: 'parcela2', parcela1: 45, parcela2: null, total: 82, respostaEsperada: 37 },
+                            { id: 'spf_2', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 68, total: 115, respostaEsperada: 47 },
+                            { id: 'spf_3', posicaoFaltando: 'parcela2', parcela1: 120, parcela2: null, total: 250, respostaEsperada: 130 },
+                            { id: 'spf_4', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 74, total: 100, respostaEsperada: 26 },
+                            { id: 'spf_5', posicaoFaltando: 'parcela2', parcela1: 89, parcela2: null, total: 142, respostaEsperada: 53 },
+                            { id: 'spf_6', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 155, total: 300, respostaEsperada: 145 }
+                        ],
+                        dica: 'Dica Forense: Para descobrir a parcela que falta, subtraia a parcela conhecida do resultado total! Exemplo: se 45 + ? = 82, faça 82 - 45 = 37.',
+                        explicacao: 'Dedução pericial impecável! Todas as 6 parcelas ocultas foram reveladas com sucesso.'
+                    },
+                    {
+                        id: 'mat_2_atv_8',
+                        tipo: 'subtracao_numero_faltando',
+                        titulo: 'Enigma do Termo Desconhecido: Subtração com Número Faltando',
+                        instrucoes: 'Descubra qual número está faltando em cada subtração. Se faltar o subtraendo, faça Minuendo - Resto. Se faltar o minuendo, some o Subtraendo com o Resto!',
+                        itens: [
+                            { id: 'snf_1', tipoFaltando: 'subtraendo', minuendo: 94, subtraendo: null, resto: 61, respostaEsperada: 33 },
+                            { id: 'snf_2', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 35, resto: 48, respostaEsperada: 83 },
+                            { id: 'snf_3', tipoFaltando: 'subtraendo', minuendo: 150, subtraendo: null, resto: 85, respostaEsperada: 65 },
+                            { id: 'snf_4', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 72, resto: 128, respostaEsperada: 200 },
+                            { id: 'snf_5', tipoFaltando: 'subtraendo', minuendo: 210, subtraendo: null, resto: 145, respostaEsperada: 65 },
+                            { id: 'snf_6', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 59, resto: 41, respostaEsperada: 100 }
+                        ],
+                        dica: 'Dica Forense: Se o número que falta está no começo ([?] - B = C), some: B + C. Se estiver no meio (A - [?] = C), subtraia: A - C.',
+                        explicacao: 'Excelente análise, Agente! Todos os números ocultos das subtrações foram perfeitamente identificados.'
+                    },
+                    {
+                        id: 'mat_2_atv_9',
+                        tipo: 'tabuadas_verticais',
+                        titulo: 'O Grande Arquivo das Tabuadas: Tabuadas Verticais de 1 a 10',
+                        instrucoes: 'Navegue pelas abas das tabuadas de 1 a 10 e complete os resultados de cada multiplicação vertical. Ao digitar o produto correto, o campo ficará com contorno verde imediatamente!',
+                        tabuadas: [
+                            { base: 1, titulo: 'Tabuada do 1' },
+                            { base: 2, titulo: 'Tabuada do 2' },
+                            { base: 3, titulo: 'Tabuada do 3' },
+                            { base: 4, titulo: 'Tabuada do 4' },
+                            { base: 5, titulo: 'Tabuada do 5' },
+                            { base: 6, titulo: 'Tabuada do 6' },
+                            { base: 7, titulo: 'Tabuada do 7' },
+                            { base: 8, titulo: 'Tabuada do 8' },
+                            { base: 9, titulo: 'Tabuada do 9' },
+                            { base: 10, titulo: 'Tabuada do 10' }
+                        ],
+                        dica: 'Dica Forense: Cada tabuada pula de acordo com sua base (ex: na tabuada do 7, cada linha soma +7 ao valor anterior: 7, 14, 21, 28...).',
+                        explicacao: 'MESTRE DA MULTIPLICAÇÃO! Todas as 10 tabuadas foram completadas com 100% de precisão!'
+                    },
+                    {
+                        id: 'mat_2_atv_10',
+                        tipo: 'fator_faltando',
+                        titulo: 'O Cofre dos Fatores Ocultos: Multiplicação com Fator Faltando',
+                        instrucoes: 'Descubra qual é o fator que falta para completar a multiplicação e abrir o cofre pericial final da aula. Digite o número e veja o contorno verde confirmar seu acerto!',
+                        itens: [
+                            { id: 'ff_1', fator1: 6, fator2: null, produto: 42, respostaEsperada: 7 },
+                            { id: 'ff_2', fator1: null, fator2: 8, produto: 56, respostaEsperada: 7 },
+                            { id: 'ff_3', fator1: 9, fator2: null, produto: 72, respostaEsperada: 8 },
+                            { id: 'ff_4', fator1: null, fator2: 5, produto: 45, respostaEsperada: 9 },
+                            { id: 'ff_5', fator1: 7, fator2: null, produto: 63, respostaEsperada: 9 },
+                            { id: 'ff_6', fator1: null, fator2: 4, produto: 36, respostaEsperada: 9 },
+                            { id: 'ff_7', fator1: 8, fator2: null, produto: 64, respostaEsperada: 8 },
+                            { id: 'ff_8', fator1: null, fator2: 3, produto: 27, respostaEsperada: 9 }
+                        ],
+                        dica: 'Dica Forense: Pense: "qual número vezes o fator conhecido dá o produto?" Exemplo: 6 vezes quanto dá 42? 6 × 7 = 42!',
+                        explicacao: 'PARABÉNS SUPREMO, DETETIVE MESTRE! Você concluiu todos os 10 enigmas da Aula 02 de Matemática com honras periciais!'
+                    }
+                ]
             }
         ]
     },

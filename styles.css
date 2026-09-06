@@ -9229,3 +9229,1491 @@ body {
     color: var(--text-muted);
 }
 
+/* ==========================================================================
+   AULA 02 DE MATEMÁTICA: OPERAÇÕES BÁSICAS - PARTE 1
+   Estilos Periciais para Quantidades, Algoritmos Armados e Multiplicação
+   ========================================================================== */
+
+/* 1. Atividades de Contagem por Quantidades (Soma e Subtração) */
+.quant-calc-activity-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.quant-rows-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.quant-calc-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.quant-calc-row:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.quant-calc-row.subtracao {
+    border-left: 4px solid var(--neon-rose);
+}
+
+.quant-calc-row:not(.subtracao) {
+    border-left: 4px solid var(--neon-cyan);
+}
+
+.quant-row-header {
+    margin-bottom: 0.85rem;
+}
+
+.quant-row-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-gold);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.quant-calc-equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+}
+
+.quant-object-card {
+    flex: 1;
+    min-width: 140px;
+    min-height: 100px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition-fast);
+}
+
+.quant-object-card:hover {
+    background: rgba(30, 41, 69, 0.8);
+    border-color: var(--neon-cyan);
+    transform: translateY(-2px);
+}
+
+.quant-object-card.card-subtraendo {
+    border-color: rgba(244, 63, 94, 0.3);
+    background: rgba(244, 63, 94, 0.04);
+}
+
+.quant-icons-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.2rem;
+    min-height: 48px;
+}
+
+.quant-item-icon {
+    font-size: 1.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    user-select: none;
+    transition: transform 0.15s ease;
+}
+
+.quant-item-icon:hover {
+    transform: scale(1.25);
+}
+
+.quant-item-icon.subtrair {
+    filter: drop-shadow(0 0 4px rgba(244, 63, 94, 0.6));
+}
+
+.quant-card-footer {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.4rem;
+}
+
+.quant-card-count-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.15);
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.quant-card-count-badge.sub-badge {
+    color: var(--neon-rose);
+    background: rgba(244, 63, 94, 0.15);
+    border-color: rgba(244, 63, 94, 0.3);
+}
+
+.quant-operator-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.quant-operator-badge.operator-plus {
+    background: rgba(56, 189, 248, 0.18);
+    color: var(--neon-cyan);
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+
+.quant-operator-badge.operator-minus {
+    background: rgba(244, 63, 94, 0.18);
+    color: var(--neon-rose);
+    border: 2px solid var(--neon-rose);
+    box-shadow: 0 0 10px var(--neon-rose-glow);
+}
+
+.quant-operator-badge.operator-equal {
+    background: rgba(245, 158, 11, 0.18);
+    color: var(--neon-amber);
+    border: 2px solid var(--neon-amber);
+    box-shadow: 0 0 10px var(--neon-amber-glow);
+}
+
+.quant-result-card {
+    min-width: 130px;
+    height: 100px;
+    background: rgba(245, 158, 11, 0.06);
+    border: 2px dashed rgba(245, 158, 11, 0.45);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    gap: 0.35rem;
+}
+
+.quant-result-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quant-answer-input {
+    width: 75px;
+    height: 46px;
+    background: var(--bg-dark);
+    border: 2px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    color: #f8fafc;
+    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    text-align: center;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.quant-answer-input:focus {
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 15px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.quant-answer-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.quant-answer-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.quant-result-status-icon {
+    font-size: 1.1rem;
+    min-height: 18px;
+}
+
+/* 2. Algoritmos Verticais ("Contas Armadas" de Soma e Subtração) */
+.alg-activity-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.alg-boards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.alg-board-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.alg-board-card:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.alg-board-card.subtracao {
+    border-top: 4px solid var(--neon-rose);
+}
+
+.alg-board-card:not(.subtracao) {
+    border-top: 4px solid var(--neon-cyan);
+}
+
+.alg-board-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    margin-bottom: 1.1rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.alg-board-card.subtracao .alg-board-title {
+    color: var(--neon-rose);
+}
+
+.alg-vertical-table {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    margin: 0 auto;
+}
+
+.alg-table-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 44px;
+}
+
+.alg-col-sign {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.alg-col-sign.operator-plus {
+    color: var(--neon-cyan);
+}
+
+.alg-col-sign.operator-minus {
+    color: var(--neon-rose);
+}
+
+.alg-col-sign.operator-equals {
+    color: var(--neon-amber);
+}
+
+.alg-col-header {
+    width: 50px;
+    text-align: center;
+    font-weight: 800;
+    color: var(--text-gold);
+    font-size: 1.15rem;
+    font-family: var(--font-mono);
+    border-bottom: 2px solid rgba(245, 158, 11, 0.4);
+    padding-bottom: 2px;
+}
+
+.alg-cell {
+    width: 50px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.alg-digit-fixed {
+    font-size: 1.65rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.alg-digit-fixed.has-borrow-target .digit-val {
+    position: relative;
+    opacity: 0.75;
+    color: #fca5a5;
+    text-decoration: line-through;
+}
+
+.alg-carry-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.alg-carry-input {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-amber);
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--neon-amber);
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.alg-carry-input:focus {
+    box-shadow: 0 0 12px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.3);
+}
+
+.alg-carry-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5) !important;
+}
+
+.alg-carry-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+}
+
+.alg-carry-placeholder {
+    color: var(--text-muted);
+    opacity: 0.35;
+    font-weight: 700;
+}
+
+.alg-borrow-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--neon-rose);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.alg-borrow-input {
+    width: 42px;
+    height: 34px;
+    border-radius: 6px;
+    border: 2px dashed var(--neon-rose);
+    background: rgba(244, 63, 94, 0.15);
+    color: #fda4af;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.alg-borrow-input:focus {
+    box-shadow: 0 0 12px var(--neon-rose-glow);
+    background: rgba(244, 63, 94, 0.3);
+}
+
+.alg-borrow-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5) !important;
+}
+
+.alg-borrow-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+}
+
+.alg-calc-divider {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 4px 0 6px 0;
+}
+
+.alg-board-card.subtracao .alg-calc-divider {
+    background: linear-gradient(90deg, transparent, var(--neon-rose), transparent);
+}
+
+.alg-result-input {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 2px solid var(--border-glass);
+    background: var(--bg-dark);
+    color: #f8fafc;
+    font-size: 1.55rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.alg-result-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 14px var(--neon-cyan-glow);
+    background: rgba(56, 189, 248, 0.15);
+}
+
+.alg-board-card.subtracao .alg-result-input:focus {
+    border-color: var(--neon-rose);
+    box-shadow: 0 0 14px var(--neon-rose-glow);
+    background: rgba(244, 63, 94, 0.15);
+}
+
+.alg-result-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.alg-result-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* 3. Multiplicação como Adição de Parcelas Iguais */
+.mult-activity-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.mult-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.25rem;
+}
+
+.mult-case-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.mult-case-card:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.mult-case-card.case-unanswered {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+}
+
+.mult-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 0.25rem;
+}
+
+.mult-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* Destaque da Soma de Mesma Parcela em Linha Única */
+.mult-sum-banner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1.5px solid rgba(56, 189, 248, 0.35);
+    border-radius: var(--radius-md);
+    padding: 0.8rem 1rem;
+    margin: 0.2rem 0 0.5rem 0;
+    gap: 0.75rem;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.12);
+}
+
+.mult-sum-banner .sum-terms {
+    font-size: 1.35rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 0.5px;
+}
+
+.mult-sum-banner .sum-equals {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--neon-amber);
+}
+
+.mult-sum-banner .sum-total-badge {
+    background: rgba(16, 185, 129, 0.25);
+    color: var(--neon-emerald);
+    border: 1.5px solid var(--neon-emerald);
+    padding: 3px 12px;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+}
+
+.mult-card-prompt {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.mult-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+}
+
+.mult-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-glass);
+    background: rgba(15, 23, 42, 0.65);
+    color: #f8fafc;
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.mult-option-btn:hover:not(:disabled) {
+    border-color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.18);
+    transform: translateY(-2px);
+}
+
+.mult-option-btn.selected {
+    border-color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.35);
+    color: #fff;
+    box-shadow: 0 0 14px var(--neon-cyan-glow);
+}
+
+.mult-option-btn.selected-correct {
+    border-color: var(--neon-emerald) !important;
+    background: rgba(16, 185, 129, 0.35) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.45) !important;
+}
+
+.mult-option-btn.selected-wrong {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.35) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* Modo Claro (Light Theme) para Aula 02 */
+:root[data-theme="light"] .quant-object-card {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .quant-answer-input,
+:root[data-theme="light"] .alg-result-input {
+    background: #ffffff;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .quant-answer-input.cell-correct,
+:root[data-theme="light"] .alg-result-input.cell-correct,
+:root[data-theme="light"] .alg-carry-input.cell-correct,
+:root[data-theme="light"] .alg-borrow-input.cell-correct {
+    background: #ecfdf5 !important;
+    border: 2.5px solid #059669 !important;
+    outline: 2px solid rgba(5, 150, 105, 0.4) !important;
+    color: #047857 !important;
+    box-shadow: 0 0 12px rgba(5, 150, 105, 0.4) !important;
+}
+
+:root[data-theme="light"] .alg-digit-fixed {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .mult-sum-banner {
+    background: #f0f9ff;
+    border: 1.5px solid #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+:root[data-theme="light"] .mult-sum-banner .sum-terms {
+    color: #0c4a6e;
+}
+
+:root[data-theme="light"] .mult-option-btn {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .mult-option-btn:hover:not(:disabled) {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0369a1;
+}
+
+:root[data-theme="light"] .mult-option-btn.selected {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(2, 132, 199, 0.5) !important;
+    font-weight: 900;
+}
+
+:root[data-theme="light"] .mult-option-btn.selected-correct {
+    background: #059669 !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(5, 150, 105, 0.5) !important;
+}
+
+:root[data-theme="light"] .mult-option-btn.selected-wrong {
+    background: #e11d48 !important;
+    border-color: #e11d48 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(225, 29, 72, 0.5) !important;
+}
+
+/* ==========================================================================
+   AULA 02 - MATEMÁTICA: ATIVIDADES 6 A 10
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ATIVIDADE 6: ALGORITMO DA MULTIPLICAÇÃO (CONTAS ARMADAS E PARCIAIS)
+   -------------------------------------------------------------------------- */
+.alg-board-card.multiplicacao {
+    border-top: 4px solid var(--neon-amber);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 1.25rem 0.65rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.alg-board-card.multiplicacao .alg-board-title {
+    color: var(--neon-amber);
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.alg-vertical-table.mult-table {
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mult-table .alg-table-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    width: auto;
+}
+
+.mult-table .alg-col-sign {
+    width: 28px;
+    min-width: 28px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+    flex-shrink: 0;
+}
+
+.mult-table .alg-cell {
+    width: 36px;
+    min-width: 36px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mult-table .alg-digit-fixed {
+    font-size: 1.4rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: #f8fafc;
+    line-height: 1;
+}
+
+.mult-table .alg-cell.empty {
+    width: 36px;
+    min-width: 36px;
+    height: 38px;
+}
+
+.mult-table .mult-carry-row {
+    height: 34px;
+    margin-bottom: 2px;
+}
+
+.mult-table .mult-carry-row .alg-col-sign {
+    font-size: 0.82rem;
+    height: 34px;
+    color: var(--neon-amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+.mult-table .carry-sub {
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--neon-amber);
+}
+
+.mult-table .alg-mult-carry-input {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-amber);
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--neon-amber);
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    padding: 0;
+    transition: var(--transition-fast);
+}
+
+.mult-table .alg-mult-carry-input:focus {
+    box-shadow: 0 0 10px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.28);
+}
+
+.mult-table .alg-mult-carry-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.6) !important;
+}
+
+.mult-table .alg-mult-carry-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.mult-table .alg-partial-tag {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+}
+
+.mult-table .alg-partial-input {
+    width: 32px;
+    height: 34px;
+    border-radius: 6px;
+    border: 2px solid rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.08);
+    color: #fef08a;
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    padding: 0;
+    transition: var(--transition-fast);
+}
+
+.mult-table .alg-partial-input:focus {
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 12px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.2);
+}
+
+.mult-table .alg-partial-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.mult-table .alg-partial-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.mult-table .parcial-divider {
+    width: 100%;
+    border-top: 1px dashed rgba(245, 158, 11, 0.4);
+    margin: 3px 0 5px 0;
+}
+
+.mult-table .alg-calc-divider {
+    width: 100%;
+    margin: 3px 0 5px 0;
+}
+
+.mult-table .alg-mult-result-input {
+    width: 34px;
+    height: 36px;
+    border-radius: 6px;
+    border: 2px solid var(--border-glass);
+    background: var(--bg-dark);
+    color: #f8fafc;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    padding: 0;
+    transition: var(--transition-fast);
+}
+
+.mult-table .alg-mult-result-input:focus {
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 12px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.mult-table .alg-mult-result-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.mult-table .alg-mult-result-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+
+/* --------------------------------------------------------------------------
+   ATIVIDADES 7, 8 E 10: TERMOS E FATORES FALTANDO
+   -------------------------------------------------------------------------- */
+.missing-terms-activity-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.missing-terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.25rem;
+}
+
+.missing-term-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.missing-term-card:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.missing-term-card.subtracao {
+    border-left: 4px solid var(--neon-rose);
+}
+
+.missing-term-card.mult-factor {
+    border-left: 4px solid var(--neon-amber);
+}
+
+.missing-term-card:not(.subtracao):not(.mult-factor) {
+    border-left: 4px solid var(--neon-cyan);
+}
+
+.missing-term-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    align-self: flex-start;
+}
+
+.missing-term-badge.subtracao {
+    background: rgba(244, 63, 94, 0.15);
+    color: var(--neon-rose);
+    border-color: rgba(244, 63, 94, 0.3);
+}
+
+.missing-term-badge.mult-factor {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--neon-amber);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.missing-equation-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(5, 8, 17, 0.6);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.missing-val-fixed {
+    font-size: 1.55rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: #f8fafc;
+    min-width: 32px;
+    text-align: center;
+}
+
+.missing-op {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--neon-cyan);
+}
+
+.missing-op.minus {
+    color: var(--neon-rose);
+}
+
+.missing-op.mult {
+    color: var(--neon-amber);
+}
+
+.missing-equals {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--neon-amber);
+}
+
+.missing-term-input,
+.missing-sub-input,
+.missing-factor-input {
+    width: 68px;
+    min-height: 48px;
+    border-radius: 8px;
+    border: 2px dashed rgba(56, 189, 248, 0.5);
+    background: rgba(56, 189, 248, 0.1);
+    color: #f8fafc;
+    font-size: 1.45rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.missing-sub-input {
+    border-color: rgba(244, 63, 94, 0.5);
+    background: rgba(244, 63, 94, 0.1);
+}
+
+.missing-factor-input {
+    border-color: rgba(245, 158, 11, 0.5);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.missing-term-input:focus {
+    border-style: solid;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 14px var(--neon-cyan-glow);
+    background: rgba(56, 189, 248, 0.2);
+}
+
+.missing-sub-input:focus {
+    border-style: solid;
+    border-color: var(--neon-rose);
+    box-shadow: 0 0 14px var(--neon-rose-glow);
+    background: rgba(244, 63, 94, 0.2);
+}
+
+.missing-factor-input:focus {
+    border-style: solid;
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 14px var(--neon-amber-glow);
+    background: rgba(245, 158, 11, 0.2);
+}
+
+.missing-term-input.cell-correct,
+.missing-sub-input.cell-correct,
+.missing-factor-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    border-style: solid !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.missing-term-input.cell-incorrect,
+.missing-sub-input.cell-incorrect,
+.missing-factor-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    border-style: solid !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+.missing-total-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--neon-emerald);
+    border: 1.5px solid var(--neon-emerald);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    min-width: 44px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+.missing-total-badge.subtracao {
+    background: rgba(244, 63, 94, 0.2);
+    color: #fca5a5;
+    border-color: var(--neon-rose);
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+}
+
+.missing-total-badge.mult-factor {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fef08a;
+    border-color: var(--neon-amber);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.missing-status-icon {
+    font-size: 1.3rem;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   ATIVIDADE 9: TABUADAS VERTICAIS DO 1 AO 10
+   -------------------------------------------------------------------------- */
+.tabuadas-activity-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.tabuadas-nav-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.tabuadas-nav-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.tabuadas-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tabuada-pill-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border-glass);
+    background: rgba(15, 23, 42, 0.85);
+    color: #f8fafc;
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabuada-pill-btn:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
+}
+
+.tabuada-pill-btn.active {
+    background: linear-gradient(135deg, #0284c7, var(--neon-cyan));
+    border-color: var(--neon-cyan);
+    color: #ffffff;
+    box-shadow: 0 0 16px var(--neon-cyan-glow);
+}
+
+.tabuadas-panels-container {
+    width: 100%;
+}
+
+.tabuada-panel {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 0.3s ease;
+}
+
+.tabuada-panel.active {
+    display: block;
+}
+
+.tabuada-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.tabuada-panel-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    color: var(--neon-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tabuada-panel-counter {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.tabuada-vert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    max-width: 320px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.tabuada-vert-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.55rem 1rem;
+    background: rgba(5, 8, 17, 0.65);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: var(--transition-fast);
+}
+
+.tabuada-vert-row:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.tabuada-factor,
+.tabuada-mult-factor {
+    font-size: 1.35rem;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: #f8fafc;
+    min-width: 24px;
+    text-align: center;
+}
+
+.tabuada-times,
+.tabuada-equal {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--neon-amber);
+}
+
+.tabuada-cell-input {
+    width: 58px;
+    height: 42px;
+    border-radius: 8px;
+    border: 2px solid var(--border-glass);
+    background: var(--bg-dark);
+    color: #f8fafc;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.tabuada-cell-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 14px var(--neon-cyan-glow);
+    background: rgba(56, 189, 248, 0.15);
+}
+
+.tabuada-cell-input.cell-correct {
+    border: 2.5px solid var(--neon-emerald) !important;
+    outline: 2px solid rgba(16, 185, 129, 0.45) !important;
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #34d399 !important;
+    box-shadow: 0 0 14px rgba(52, 211, 153, 0.6) !important;
+}
+
+.tabuada-cell-input.cell-incorrect {
+    border-color: var(--neon-rose) !important;
+    background: rgba(244, 63, 94, 0.25) !important;
+    color: #fca5a5 !important;
+    animation: shake 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   MODO CLARO (LIGHT THEME) PARA ATIVIDADES 6 A 10
+   -------------------------------------------------------------------------- */
+:root[data-theme="light"] .alg-partial-input {
+    background: #fffbeb;
+    border-color: #d97706;
+    color: #78350f;
+}
+
+:root[data-theme="light"] .alg-mult-result-input {
+    background: #ffffff;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .mult-table .alg-mult-carry-input {
+    background: #fffbeb;
+    border-color: #d97706;
+    color: #92400e;
+}
+
+:root[data-theme="light"] .alg-partial-input.cell-correct,
+:root[data-theme="light"] .alg-mult-result-input.cell-correct,
+:root[data-theme="light"] .mult-table .alg-mult-carry-input.cell-correct,
+:root[data-theme="light"] .missing-term-input.cell-correct,
+:root[data-theme="light"] .missing-sub-input.cell-correct,
+:root[data-theme="light"] .missing-factor-input.cell-correct,
+:root[data-theme="light"] .tabuada-cell-input.cell-correct {
+    background: #ecfdf5 !important;
+    border: 2.5px solid #059669 !important;
+    outline: 2px solid rgba(5, 150, 105, 0.4) !important;
+    color: #047857 !important;
+    box-shadow: 0 0 12px rgba(5, 150, 105, 0.4) !important;
+}
+
+:root[data-theme="light"] .missing-term-card {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .missing-equation-row {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+:root[data-theme="light"] .missing-val-fixed {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .missing-term-input,
+:root[data-theme="light"] .missing-sub-input,
+:root[data-theme="light"] .missing-factor-input {
+    background: #ffffff;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .missing-total-badge {
+    background: #dcfce7;
+    color: #15803d;
+    border-color: #16a34a;
+}
+
+:root[data-theme="light"] .missing-total-badge.subtracao {
+    background: #ffe4e6;
+    color: #be123c;
+    border-color: #f43f5e;
+}
+
+:root[data-theme="light"] .missing-total-badge.mult-factor {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: #d97706;
+}
+
+:root[data-theme="light"] .tabuada-panel {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .tabuada-pill-btn {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .tabuada-pill-btn:hover {
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0284c7;
+}
+
+:root[data-theme="light"] .tabuada-pill-btn.active {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
+}
+
+:root[data-theme="light"] .tabuada-vert-row {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+:root[data-theme="light"] .tabuada-factor,
+:root[data-theme="light"] .tabuada-mult-factor {
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .tabuada-cell-input {
+    background: #ffffff;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+:root[data-theme="light"] .tabuada-panel-counter {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-color: #7dd3fc;
+}
+
+
+
