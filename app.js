@@ -11991,9 +11991,9 @@ class StudentRunnerMiniGame {
         this.charPreview = document.getElementById('runner-char-preview');
 
         // Dimensões do jogo ampliadas para máxima visibilidade
-        this.width = 800;
-        this.height = 240;
-        this.groundY = 195;
+        this.width = 900;
+        this.height = 260;
+        this.groundY = 210;
 
         this.highScore = parseInt(localStorage.getItem('decifradores_runner_highscore') || '0', 10);
         if (isNaN(this.highScore)) this.highScore = 0;
@@ -12050,17 +12050,17 @@ class StudentRunnerMiniGame {
     reset() {
         this.distance = 0;
         this.lastMilestone = 0;
-        this.speed = 4.6;
+        this.speed = 4.8;
         this.groundOffset = 0;
 
         this.player = {
-            x: 55,
-            y: this.groundY - 48,
-            width: 44,
-            height: 48,
+            x: 60,
+            y: this.groundY - 50,
+            width: 46,
+            height: 50,
             vy: 0,
-            gravity: 0.72,
-            jumpForce: -13.6,
+            gravity: 0.74,
+            jumpForce: -14.2,
             isGrounded: true,
             legPhase: 0
         };
@@ -12069,7 +12069,7 @@ class StudentRunnerMiniGame {
         this.spawnTimer = 55;
 
         this.stars = [];
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < 30; i++) {
             this.stars.push({
                 x: Math.random() * this.width,
                 y: Math.random() * (this.groundY - 55),
@@ -12079,9 +12079,9 @@ class StudentRunnerMiniGame {
         }
 
         this.clouds = [
-            { x: 100, y: 28, width: 75, speed: 0.28 },
-            { x: 380, y: 50, width: 95, speed: 0.38 },
-            { x: 650, y: 25, width: 65, speed: 0.22 }
+            { x: 120, y: 30, width: 85, speed: 0.28 },
+            { x: 420, y: 55, width: 105, speed: 0.38 },
+            { x: 720, y: 28, width: 75, speed: 0.22 }
         ];
     }
 
@@ -12217,7 +12217,7 @@ class StudentRunnerMiniGame {
     }
 
     update(dt) {
-        this.speed = Math.min(11.5, 4.6 + (this.distance / 250));
+        this.speed = Math.min(11.8, 4.8 + (this.distance / 250));
         this.distance += this.speed * 0.08;
 
         const currentDist = Math.floor(this.distance);
@@ -12300,13 +12300,13 @@ class StudentRunnerMiniGame {
         let obs = null;
 
         if (type === 'cone') {
-            obs = { type: 'cone', x: this.width + 10, y: this.groundY - 38, width: 28, height: 38 };
+            obs = { type: 'cone', x: this.width + 10, y: this.groundY - 40, width: 30, height: 40 };
         } else if (type === 'double-cone') {
-            obs = { type: 'double-cone', x: this.width + 10, y: this.groundY - 38, width: 56, height: 38 };
+            obs = { type: 'double-cone', x: this.width + 10, y: this.groundY - 40, width: 62, height: 40 };
         } else if (type === 'cactus') {
-            obs = { type: 'cactus', x: this.width + 10, y: this.groundY - 50, width: 34, height: 50 };
+            obs = { type: 'cactus', x: this.width + 10, y: this.groundY - 54, width: 36, height: 54 };
         } else if (type === 'drone') {
-            obs = { type: 'drone', x: this.width + 10, y: this.groundY - 78, width: 40, height: 28, floatPhase: 0 };
+            obs = { type: 'drone', x: this.width + 10, y: this.groundY - 84, width: 44, height: 30, floatPhase: 0 };
         }
 
         if (obs) this.obstacles.push(obs);
@@ -12348,18 +12348,18 @@ class StudentRunnerMiniGame {
 
             ctx.fillStyle = '#fef08a';
             ctx.beginPath();
-            ctx.arc(720, 42, 18, 0, Math.PI * 2);
+            ctx.arc(810, 45, 20, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillStyle = '#080e1e';
             ctx.beginPath();
-            ctx.arc(726, 39, 15, 0, Math.PI * 2);
+            ctx.arc(816, 42, 17, 0, Math.PI * 2);
             ctx.fill();
         } else {
             // Fundo claro: nuvens suaves
             ctx.fillStyle = 'rgba(14, 165, 233, 0.16)';
             this.clouds.forEach(cloud => {
                 ctx.beginPath();
-                ctx.roundRect(cloud.x, cloud.y, cloud.width, 22, 11);
+                ctx.roundRect(cloud.x, cloud.y, cloud.width, 24, 12);
                 ctx.fill();
             });
         }
@@ -12375,15 +12375,15 @@ class StudentRunnerMiniGame {
         // Linhas tracejadas simulando pista pericial veloz
         ctx.strokeStyle = isLight ? 'rgba(2, 132, 199, 0.4)' : 'rgba(56, 189, 248, 0.4)';
         ctx.lineWidth = 2;
-        for (let x = -this.groundOffset; x < this.width; x += 36) {
+        for (let x = -this.groundOffset; x < this.width; x += 40) {
             ctx.beginPath();
             ctx.moveTo(x, this.groundY + 10);
-            ctx.lineTo(x + 18, this.groundY + 10);
+            ctx.lineTo(x + 20, this.groundY + 10);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.moveTo(x + 12, this.groundY + 22);
-            ctx.lineTo(x + 26, this.groundY + 22);
+            ctx.moveTo(x + 14, this.groundY + 24);
+            ctx.lineTo(x + 30, this.groundY + 24);
             ctx.stroke();
         }
 
@@ -12404,7 +12404,7 @@ class StudentRunnerMiniGame {
 
         // Personagem em escala grande e legível
         ctx.save();
-        ctx.font = '46px sans-serif';
+        ctx.font = '50px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         const tilt = this.player.isGrounded ? Math.sin(this.player.legPhase) * 0.06 : -0.12;
@@ -12419,9 +12419,9 @@ class StudentRunnerMiniGame {
 
             if (obs.type === 'cone' || obs.type === 'double-cone') {
                 const count = obs.type === 'double-cone' ? 2 : 1;
-                const singleW = 26;
+                const singleW = 28;
                 for (let k = 0; k < count; k++) {
-                    const cx = obs.x + (k * 28);
+                    const cx = obs.x + (k * 31);
                     const grad = ctx.createLinearGradient(cx, obsY, cx, obsY + obs.height);
                     grad.addColorStop(0, '#f97316');
                     grad.addColorStop(1, '#ea580c');
@@ -12439,29 +12439,31 @@ class StudentRunnerMiniGame {
                     ctx.beginPath();
                     ctx.moveTo(cx + 5, obsY + 18);
                     ctx.lineTo(cx + singleW - 5, obsY + 18);
-                    ctx.lineTo(cx + singleW - 8, obsY + 25);
-                    ctx.lineTo(cx + 8, obsY + 25);
+                    ctx.lineTo(cx + singleW - 8, obsY + 26);
+                    ctx.lineTo(cx + 8, obsY + 26);
                     ctx.closePath();
                     ctx.fill();
                 }
             } else if (obs.type === 'cactus') {
                 ctx.fillStyle = isLight ? '#059669' : '#10b981';
                 ctx.beginPath();
-                ctx.roundRect(obs.x + 8, obsY, 8, obs.height, 4);
+                ctx.roundRect(obs.x + 12, obsY, 12, obs.height, 5);
                 ctx.fill();
 
+                // Braço esquerdo
                 ctx.beginPath();
-                ctx.roundRect(obs.x, obsY + 8, 8, 14, 4);
+                ctx.roundRect(obs.x, obsY + 11, 12, 22, 5);
                 ctx.fill();
-                ctx.fillRect(obs.x, obsY + 18, 12, 5);
+                ctx.fillRect(obs.x, obsY + 25, 18, 8);
 
+                // Braço direito
                 ctx.beginPath();
-                ctx.roundRect(obs.x + 16, obsY + 12, 8, 14, 4);
+                ctx.roundRect(obs.x + 24, obsY + 17, 12, 22, 5);
                 ctx.fill();
-                ctx.fillRect(obs.x + 12, obsY + 22, 12, 5);
+                ctx.fillRect(obs.x + 16, obsY + 31, 18, 8);
             } else if (obs.type === 'drone') {
                 ctx.save();
-                ctx.font = '20px sans-serif';
+                ctx.font = '30px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText('🛸', obs.x + (obs.width / 2), obsY + (obs.height / 2));

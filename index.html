@@ -878,27 +878,27 @@
                         </div>
                     </div>
 
-                    <!-- 1. CARD DO JOGO (TELA LIVRE E AMPLA) -->
-                    <div class="student-game-screen-card" id="student-runner-game-container">
-                        <div class="runner-screen-header">
-                            <div class="runner-live-tag">
+                    <!-- 1. TELA DO JOGO 100% LIVRE (SEM CARD OU MOLDURA EXTERNA) -->
+                    <div class="runner-free-container" id="student-runner-game-container">
+                        <div class="runner-hud-bar">
+                            <div class="runner-hud-status">
                                 <span class="live-pulse-dot"></span>
-                                <span>PISTA DE TREINAMENTO AO VIVO</span>
+                                <span>PISTA DE TREINAMENTO</span>
                             </div>
-                            <div class="runner-game-scores">
+                            <div class="runner-hud-scores">
                                 <span class="runner-score-badge">DISTÂNCIA: <strong id="runner-score-dist">0000m</strong></span>
                                 <span class="runner-score-badge high"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> RECORDE: <strong id="runner-score-high">0000m</strong></span>
                             </div>
                         </div>
                         
-                        <div class="runner-canvas-wrapper" id="runner-canvas-wrapper">
-                            <canvas id="student-runner-canvas" width="800" height="240"></canvas>
+                        <div class="runner-canvas-free-wrapper">
+                            <canvas id="student-runner-canvas" width="900" height="260"></canvas>
                             <div class="runner-overlay" id="runner-game-overlay">
                                 <div class="runner-overlay-content">
                                     <div class="runner-overlay-icon" id="runner-overlay-icon">🦖</div>
                                     <h4 class="runner-overlay-headline" id="runner-overlay-headline">Corrida dos Detetives</h4>
                                     <p class="runner-overlay-subtext" id="runner-overlay-subtext">Pule os obstáculos enquanto espera a turma terminar!</p>
-                                    <button type="button" class="btn-neon-primary" id="btn-runner-start" style="font-size: 1.1rem; padding: 0.75rem 2rem;">
+                                    <button type="button" class="btn-neon-primary" id="btn-runner-start" style="font-size: 1.15rem; padding: 0.8rem 2.2rem;">
                                         <i class="fa-solid fa-play"></i> Iniciar Corrida
                                     </button>
                                 </div>
