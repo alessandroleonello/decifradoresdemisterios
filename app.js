@@ -12030,12 +12030,16 @@ class StudentRunnerMiniGame {
             this.characterEmoji = avatarObj ? avatarObj.icone : '🕵️';
         }
         if (this.overlayIcon) {
-            this.overlayIcon.textContent = this.characterEmoji;
+            this.overlayIcon.innerHTML = this.useDino 
+                ? '<span style="display:inline-block; transform:scaleX(-1);">🦖</span>' 
+                : `<span style="display:inline-block;">${this.characterEmoji}</span>`;
             this.overlayIcon.title = 'Clique para alternar entre o Dino e seu Avatar!';
             this.overlayIcon.style.cursor = 'pointer';
         }
         if (this.charPreview) {
-            this.charPreview.textContent = this.useDino ? '🦖 Dino' : `${this.characterEmoji} Avatar`;
+            this.charPreview.innerHTML = this.useDino 
+                ? '<span style="display:inline-block; transform:scaleX(-1);">🦖</span> Dino' 
+                : `${this.characterEmoji} Avatar`;
         }
     }
 
@@ -12409,6 +12413,9 @@ class StudentRunnerMiniGame {
         ctx.textBaseline = 'bottom';
         const tilt = this.player.isGrounded ? Math.sin(this.player.legPhase) * 0.06 : -0.12;
         ctx.translate(this.player.x + (this.player.width / 2), this.player.y + this.player.height);
+        if (this.useDino) {
+            ctx.scale(-1, 1); // Vira o Dino horizontalmente para correr olhando para a frente (direita)
+        }
         ctx.rotate(tilt);
         ctx.fillText(this.characterEmoji, 0, 4);
         ctx.restore();
