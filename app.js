@@ -12054,7 +12054,7 @@ class StudentRunnerMiniGame {
     reset() {
         this.distance = 0;
         this.lastMilestone = 0;
-        this.speed = 4.8;
+        this.speed = 5.2;
         this.groundOffset = 0;
 
         this.player = {
@@ -12221,20 +12221,26 @@ class StudentRunnerMiniGame {
     }
 
     update(dt) {
-        this.speed = Math.min(11.8, 4.8 + (this.distance / 250));
+        // Aceleração progressiva e perceptível (estilo Dino do Chrome)
+        // Ganha um impulso dinâmico a cada 100m, além de aceleração contínua
+        const milestoneBonus = Math.floor(this.distance / 100) * 0.95;
+        const continuousBonus = (this.distance % 100) * 0.0095;
+        this.speed = Math.min(14.8, 5.2 + milestoneBonus + continuousBonus);
         this.distance += this.speed * 0.08;
 
         const currentDist = Math.floor(this.distance);
         this.updateScoreDisplay(currentDist, this.highScore);
 
-        // Celebração a cada 100 metros
+        // Celebração estilo Chrome Dino a cada 100 metros (som e piscar comemorativo da pontuação)
         if (currentDist > 0 && currentDist % 100 === 0 && currentDist !== this.lastMilestone) {
             this.lastMilestone = currentDist;
             soundManager.playSuccess();
             if (this.distEl) {
-                this.distEl.style.color = '#fbbf24';
+                this.distEl.classList.remove('milestone-flash');
+                void this.distEl.offsetWidth; // Dispara reflow para reiniciar animação limpa
+                this.distEl.classList.add('milestone-flash');
                 setTimeout(() => {
-                    if (this.distEl) this.distEl.style.color = '';
+                    if (this.distEl) this.distEl.classList.remove('milestone-flash');
                 }, 1200);
             }
         }
@@ -12406,9 +12412,11 @@ class StudentRunnerMiniGame {
         );
         ctx.fill();
 
-        // Personagem em escala grande e legível
+        // Personagem em escala grande, 100% opaco e nítido
         ctx.save();
-        ctx.font = '50px sans-serif';
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = '#ffffff'; // Garante opacidade 100% no Desktop e anula o alpha da sombra
+        ctx.font = '50px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         const tilt = this.player.isGrounded ? Math.sin(this.player.legPhase) * 0.06 : -0.12;
@@ -12470,9 +12478,19 @@ class StudentRunnerMiniGame {
                 ctx.fillRect(obs.x + 16, obsY + 31, 18, 8);
             } else if (obs.type === 'drone') {
                 ctx.save();
-                ctx.font = '30px sans-serif';
+                ctx.globalAlpha = 1.0;
+                ctx.fillStyle = '#ffffff'; // Garante opacidade 100% no Desktop
+                ctx.font = '36px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
+
+                // Efeito luminoso de propulsão para contraste nítido em qualquer tema
+                ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.45)' : 'rgba(56, 189, 248, 0.55)';
+                ctx.beginPath();
+                ctx.ellipse(obs.x + (obs.width / 2), obsY + obs.height - 2, 14, 5, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
                 ctx.fillText('🛸', obs.x + (obs.width / 2), obsY + (obs.height / 2));
                 ctx.restore();
             }
