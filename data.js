@@ -634,6 +634,58 @@ const CURRICULO_INVESTIGACAO = {
                     },
                     {
                         id: 'mat_2_atv_6',
+                        tipo: 'tabuadas_verticais',
+                        titulo: 'O Grande Arquivo das Tabuadas: Tabuadas Verticais de 1 a 10',
+                        instrucoes: 'Navegue pelas abas das tabuadas de 1 a 10 e complete os resultados de cada multiplicação vertical. Ao digitar o produto correto, o campo ficará com contorno verde imediatamente!',
+                        tabuadas: [
+                            { base: 1, titulo: 'Tabuada do 1' },
+                            { base: 2, titulo: 'Tabuada do 2' },
+                            { base: 3, titulo: 'Tabuada do 3' },
+                            { base: 4, titulo: 'Tabuada do 4' },
+                            { base: 5, titulo: 'Tabuada do 5' },
+                            { base: 6, titulo: 'Tabuada do 6' },
+                            { base: 7, titulo: 'Tabuada do 7' },
+                            { base: 8, titulo: 'Tabuada do 8' },
+                            { base: 9, titulo: 'Tabuada do 9' },
+                            { base: 10, titulo: 'Tabuada do 10' }
+                        ],
+                        dica: 'Dica Forense: Cada tabuada pula de acordo com sua base (ex: na tabuada do 7, cada linha soma +7 ao valor anterior: 7, 14, 21, 28...).',
+                        explicacao: 'MESTRE DA MULTIPLICAÇÃO! Todas as 10 tabuadas foram completadas com 100% de precisão!'
+                    },
+                    {
+                        id: 'mat_2_atv_7',
+                        tipo: 'soma_parcela_faltando',
+                        titulo: 'Enigma da Parcela Secreta: Adição com Termo Faltando',
+                        instrucoes: 'Os peritos encontraram equações com uma das parcelas apagada pelo suspeito! Use a dedução (ou a operação inversa: subtraia a parcela conhecida do total) para descobrir qual parcela está faltando em cada caso.',
+                        itens: [
+                            { id: 'spf_1', posicaoFaltando: 'parcela2', parcela1: 45, parcela2: null, total: 82, respostaEsperada: 37 },
+                            { id: 'spf_2', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 68, total: 115, respostaEsperada: 47 },
+                            { id: 'spf_3', posicaoFaltando: 'parcela2', parcela1: 120, parcela2: null, total: 250, respostaEsperada: 130 },
+                            { id: 'spf_4', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 74, total: 100, respostaEsperada: 26 },
+                            { id: 'spf_5', posicaoFaltando: 'parcela2', parcela1: 89, parcela2: null, total: 142, respostaEsperada: 53 },
+                            { id: 'spf_6', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 155, total: 300, respostaEsperada: 145 }
+                        ],
+                        dica: 'Dica Forense: Para descobrir a parcela que falta, subtraia a parcela conhecida do resultado total! Exemplo: se 45 + ? = 82, faça 82 - 45 = 37.',
+                        explicacao: 'Dedução pericial impecável! Todas as 6 parcelas ocultas foram reveladas com sucesso.'
+                    },
+                    {
+                        id: 'mat_2_atv_8',
+                        tipo: 'subtracao_numero_faltando',
+                        titulo: 'Enigma do Termo Desconhecido: Subtração com Número Faltando',
+                        instrucoes: 'Descubra qual número está faltando em cada subtração. Se faltar o subtraendo, faça Minuendo - Resto. Se faltar o minuendo, some o Subtraendo com o Resto!',
+                        itens: [
+                            { id: 'snf_1', tipoFaltando: 'subtraendo', minuendo: 94, subtraendo: null, resto: 61, respostaEsperada: 33 },
+                            { id: 'snf_2', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 35, resto: 48, respostaEsperada: 83 },
+                            { id: 'snf_3', tipoFaltando: 'subtraendo', minuendo: 150, subtraendo: null, resto: 85, respostaEsperada: 65 },
+                            { id: 'snf_4', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 72, resto: 128, respostaEsperada: 200 },
+                            { id: 'snf_5', tipoFaltando: 'subtraendo', minuendo: 210, subtraendo: null, resto: 145, respostaEsperada: 65 },
+                            { id: 'snf_6', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 59, resto: 41, respostaEsperada: 100 }
+                        ],
+                        dica: 'Dica Forense: Se o número que falta está no começo ([?] - B = C), some: B + C. Se estiver no meio (A - [?] = C), subtraia: A - C.',
+                        explicacao: 'Excelente análise, Agente! Todos os números ocultos das subtrações foram perfeitamente identificados.'
+                    },
+                    {
+                        id: 'mat_2_atv_9',
                         tipo: 'algoritmo_multiplicacao',
                         titulo: 'O Algoritmo Pericial da Multiplicação: Contas Armadas e Transporte ("Sobe")',
                         instrucoes: 'Resolva as multiplicações armadas calculando da direita para a esquerda. Use os círculos superiores do "Sobe" para anotar o transporte quando a multiplicação de uma casa for 10 ou mais (por exemplo, se 5 × 8 = 40, anote 0 no resultado e suba 4 na próxima casa). Em contas com mais de um algarismo no multiplicador, calcule cada produto parcial e depois some para encontrar o resultado final. Todos os campos ganham contorno verde ao digitar o número correto!',
@@ -703,58 +755,6 @@ const CURRICULO_INVESTIGACAO = {
                         explicacao: 'Incrível domínio do algoritmo da multiplicação! Você calculou com exatidão operações de 1, 2 e 3 algarismos com todos os transportes periciais.'
                     },
                     {
-                        id: 'mat_2_atv_7',
-                        tipo: 'soma_parcela_faltando',
-                        titulo: 'Enigma da Parcela Secreta: Adição com Termo Faltando',
-                        instrucoes: 'Os peritos encontraram equações com uma das parcelas apagada pelo suspeito! Use a dedução (ou a operação inversa: subtraia a parcela conhecida do total) para descobrir qual parcela está faltando em cada caso.',
-                        itens: [
-                            { id: 'spf_1', posicaoFaltando: 'parcela2', parcela1: 45, parcela2: null, total: 82, respostaEsperada: 37 },
-                            { id: 'spf_2', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 68, total: 115, respostaEsperada: 47 },
-                            { id: 'spf_3', posicaoFaltando: 'parcela2', parcela1: 120, parcela2: null, total: 250, respostaEsperada: 130 },
-                            { id: 'spf_4', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 74, total: 100, respostaEsperada: 26 },
-                            { id: 'spf_5', posicaoFaltando: 'parcela2', parcela1: 89, parcela2: null, total: 142, respostaEsperada: 53 },
-                            { id: 'spf_6', posicaoFaltando: 'parcela1', parcela1: null, parcela2: 155, total: 300, respostaEsperada: 145 }
-                        ],
-                        dica: 'Dica Forense: Para descobrir a parcela que falta, subtraia a parcela conhecida do resultado total! Exemplo: se 45 + ? = 82, faça 82 - 45 = 37.',
-                        explicacao: 'Dedução pericial impecável! Todas as 6 parcelas ocultas foram reveladas com sucesso.'
-                    },
-                    {
-                        id: 'mat_2_atv_8',
-                        tipo: 'subtracao_numero_faltando',
-                        titulo: 'Enigma do Termo Desconhecido: Subtração com Número Faltando',
-                        instrucoes: 'Descubra qual número está faltando em cada subtração. Se faltar o subtraendo, faça Minuendo - Resto. Se faltar o minuendo, some o Subtraendo com o Resto!',
-                        itens: [
-                            { id: 'snf_1', tipoFaltando: 'subtraendo', minuendo: 94, subtraendo: null, resto: 61, respostaEsperada: 33 },
-                            { id: 'snf_2', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 35, resto: 48, respostaEsperada: 83 },
-                            { id: 'snf_3', tipoFaltando: 'subtraendo', minuendo: 150, subtraendo: null, resto: 85, respostaEsperada: 65 },
-                            { id: 'snf_4', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 72, resto: 128, respostaEsperada: 200 },
-                            { id: 'snf_5', tipoFaltando: 'subtraendo', minuendo: 210, subtraendo: null, resto: 145, respostaEsperada: 65 },
-                            { id: 'snf_6', tipoFaltando: 'minuendo', minuendo: null, subtraendo: 59, resto: 41, respostaEsperada: 100 }
-                        ],
-                        dica: 'Dica Forense: Se o número que falta está no começo ([?] - B = C), some: B + C. Se estiver no meio (A - [?] = C), subtraia: A - C.',
-                        explicacao: 'Excelente análise, Agente! Todos os números ocultos das subtrações foram perfeitamente identificados.'
-                    },
-                    {
-                        id: 'mat_2_atv_9',
-                        tipo: 'tabuadas_verticais',
-                        titulo: 'O Grande Arquivo das Tabuadas: Tabuadas Verticais de 1 a 10',
-                        instrucoes: 'Navegue pelas abas das tabuadas de 1 a 10 e complete os resultados de cada multiplicação vertical. Ao digitar o produto correto, o campo ficará com contorno verde imediatamente!',
-                        tabuadas: [
-                            { base: 1, titulo: 'Tabuada do 1' },
-                            { base: 2, titulo: 'Tabuada do 2' },
-                            { base: 3, titulo: 'Tabuada do 3' },
-                            { base: 4, titulo: 'Tabuada do 4' },
-                            { base: 5, titulo: 'Tabuada do 5' },
-                            { base: 6, titulo: 'Tabuada do 6' },
-                            { base: 7, titulo: 'Tabuada do 7' },
-                            { base: 8, titulo: 'Tabuada do 8' },
-                            { base: 9, titulo: 'Tabuada do 9' },
-                            { base: 10, titulo: 'Tabuada do 10' }
-                        ],
-                        dica: 'Dica Forense: Cada tabuada pula de acordo com sua base (ex: na tabuada do 7, cada linha soma +7 ao valor anterior: 7, 14, 21, 28...).',
-                        explicacao: 'MESTRE DA MULTIPLICAÇÃO! Todas as 10 tabuadas foram completadas com 100% de precisão!'
-                    },
-                    {
                         id: 'mat_2_atv_10',
                         tipo: 'fator_faltando',
                         titulo: 'O Cofre dos Fatores Ocultos: Multiplicação com Fator Faltando',
@@ -770,7 +770,407 @@ const CURRICULO_INVESTIGACAO = {
                             { id: 'ff_8', fator1: null, fator2: 3, produto: 27, respostaEsperada: 9 }
                         ],
                         dica: 'Dica Forense: Pense: "qual número vezes o fator conhecido dá o produto?" Exemplo: 6 vezes quanto dá 42? 6 × 7 = 42!',
-                        explicacao: 'PARABÉNS SUPREMO, DETETIVE MESTRE! Você concluiu todos os 10 enigmas da Aula 02 de Matemática com honras periciais!'
+                        explicacao: 'Excelente dedução! Todos os fatores ocultos da multiplicação foram identificados.'
+                    },
+                    {
+                        id: 'mat_2_atv_11',
+                        tipo: 'situacoes_problema_operacoes',
+                        titulo: 'Dossiê Forense: Situações-Problema das 3 Operações',
+                        instrucoes: 'Leia atentamente o relatório de cada caso investigativo. Identifique se você deve somar, subtrair ou multiplicar e digite a resposta correta no campo indicado!',
+                        casos: [
+                            {
+                                id: 'sp_1',
+                                titulo: 'Caso 1: Contagem de Evidências',
+                                operacao: 'Adição',
+                                texto: 'O detetive Marcos recolheu 148 impressões digitais no saguão e a perita Júlia encontrou outras 235 no cofre. Quantas impressões digitais foram coletadas ao todo?',
+                                expressaoDica: '148 + 235',
+                                respostaEsperada: 383,
+                                unidade: 'impressões digitais'
+                            },
+                            {
+                                id: 'sp_2',
+                                titulo: 'Caso 2: Arquivos Criptografados',
+                                operacao: 'Subtração',
+                                texto: 'Os agentes interceptaram 520 arquivos secretos do suspeito. A equipe de inteligência já conseguiu descriptografar 285 arquivos. Quantos arquivos ainda faltam decodificar?',
+                                expressaoDica: '520 - 285',
+                                respostaEsperada: 235,
+                                unidade: 'arquivos'
+                            },
+                            {
+                                id: 'sp_3',
+                                titulo: 'Caso 3: Caixas de Reagentes Químicos',
+                                operacao: 'Multiplicação',
+                                texto: 'O laboratório pericial comprou 6 caixas lacradas para testes de evidências. Cada caixa contém exatamente 24 frascos de reagente. Quantos frascos o laboratório recebeu no total?',
+                                expressaoDica: '6 × 24',
+                                respostaEsperada: 144,
+                                unidade: 'frascos'
+                            },
+                            {
+                                id: 'sp_4',
+                                titulo: 'Caso 4: Distância do Rastreamento',
+                                operacao: 'Subtração',
+                                texto: 'O veículo suspeito planejava fugir por uma rota de 410 km. A viatura policial interceptou o carro quando ele já havia percorrido 175 km. Quantos quilômetros restavam da fuga?',
+                                expressaoDica: '410 - 175',
+                                respostaEsperada: 235,
+                                unidade: 'km'
+                            }
+                        ],
+                        dica: 'Dica Forense: Para juntar quantidades, use a Adição (+). Para achar a diferença ou o que resta, use a Subtração (−). Para somar grupos repetidos iguais, use a Multiplicação (×)!',
+                        explicacao: 'Excelente raciocínio lógico-investigativo! Todas as 4 situações-problema foram solucionadas com sucesso.'
+                    },
+                    {
+                        id: 'mat_2_atv_12',
+                        tipo: 'piramide_numerica',
+                        titulo: 'Pirâmide Numérica Pericial: Adição em Cadeia de Blocos',
+                        instrucoes: 'O suspeito escondeu códigos numéricos em pirâmides de blocos! A regra de ouro é: cada bloco superior é a SOMA dos dois blocos imediatamente abaixo dele. Calcule e preencha os blocos vazios!',
+                        piramides: [
+                            {
+                                id: 'pyr_1',
+                                titulo: 'Pirâmide 1: Código Alfa (3 Níveis)',
+                                niveis: [
+                                    // Nível 0 (Topo): 1 bloco
+                                    [{ id: 'p1_top', valor: null, respostaEsperada: 73, readonly: false }],
+                                    // Nível 1 (Meio): 2 blocos
+                                    [{ id: 'p1_m1', valor: null, respostaEsperada: 30, readonly: false }, { id: 'p1_m2', valor: null, respostaEsperada: 43, readonly: false }],
+                                    // Nível 2 (Base): 3 blocos
+                                    [{ id: 'p1_b1', valor: 12, respostaEsperada: 12, readonly: true }, { id: 'p1_b2', valor: 18, respostaEsperada: 18, readonly: true }, { id: 'p1_b3', valor: 25, respostaEsperada: 25, readonly: true }]
+                                ]
+                            },
+                            {
+                                id: 'pyr_2',
+                                titulo: 'Pirâmide 2: Código Beta (3 Níveis com Dedução)',
+                                niveis: [
+                                    [{ id: 'p2_top', valor: null, respostaEsperada: 111, readonly: false }],
+                                    [{ id: 'p2_m1', valor: 60, respostaEsperada: 60, readonly: true }, { id: 'p2_m2', valor: 51, respostaEsperada: 51, readonly: true }],
+                                    [{ id: 'p2_b1', valor: null, respostaEsperada: 24, readonly: false }, { id: 'p2_b2', valor: 36, respostaEsperada: 36, readonly: true }, { id: 'p2_b3', valor: null, respostaEsperada: 15, readonly: false }]
+                                ]
+                            },
+                            {
+                                id: 'pyr_3',
+                                titulo: 'Pirâmide 3: Fortaleza Numérica (4 Níveis)',
+                                niveis: [
+                                    [{ id: 'p3_top', valor: null, respostaEsperada: 140, readonly: false }],
+                                    [{ id: 'p3_l3_1', valor: null, respostaEsperada: 60, readonly: false }, { id: 'p3_l3_2', valor: null, respostaEsperada: 80, readonly: false }],
+                                    [{ id: 'p3_l2_1', valor: null, respostaEsperada: 25, readonly: false }, { id: 'p3_l2_2', valor: 35, respostaEsperada: 35, readonly: true }, { id: 'p3_l2_3', valor: null, respostaEsperada: 45, readonly: false }],
+                                    [{ id: 'p3_b1', valor: 10, respostaEsperada: 10, readonly: true }, { id: 'p3_b2', valor: 15, respostaEsperada: 15, readonly: true }, { id: 'p3_b3', valor: 20, respostaEsperada: 20, readonly: true }, { id: 'p3_b4', valor: 25, respostaEsperada: 25, readonly: true }]
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Cada tijolo de cima é a soma dos dois tijolos que o apoiam embaixo. Se precisar descobrir um da base, faça o de cima MENOS o da base conhecido!',
+                        explicacao: 'Incrível dedução lógica! Todas as pirâmides numéricas foram construídas e verificadas com máxima precisão.'
+                    },
+                    {
+                        id: 'mat_2_atv_13',
+                        tipo: 'balanca_comparacao_operacoes',
+                        titulo: 'Balança da Justiça Forense: Comparação de Operações (<, = ou >)',
+                        instrucoes: 'Compare o resultado das operações do Prato Esquerdo e do Prato Direito da balança. Selecione o símbolo correto: < (Menor), = (Igual) ou > (Maior) para equilibrar o julgamento pericial!',
+                        itens: [
+                            { id: 'bc_1', esq: '35 + 45', esqValor: 80, dir: '100 - 20', dirValor: 80, respostaEsperada: '=' },
+                            { id: 'bc_2', esq: '7 × 6', esqValor: 42, dir: '50 - 6', dirValor: 44, respostaEsperada: '<' },
+                            { id: 'bc_3', esq: '150 + 80', esqValor: 230, dir: '4 × 60', dirValor: 240, respostaEsperada: '<' },
+                            { id: 'bc_4', esq: '9 × 8', esqValor: 72, dir: '36 + 36', dirValor: 72, respostaEsperada: '=' },
+                            { id: 'bc_5', esq: '500 - 180', esqValor: 320, dir: '80 × 4', dirValor: 320, respostaEsperada: '=' },
+                            { id: 'bc_6', esq: '65 + 45', esqValor: 110, dir: '3 × 35', dirValor: 105, respostaEsperada: '>' }
+                        ],
+                        dica: 'Dica Forense: Calcule mentalmente o valor de cada lado primeiro. Lembre-se: o bico estreito aponta para o menor valor e o sinal de igual (=) é usado quando ambos têm o mesmo total!',
+                        explicacao: 'Equilíbrio pericial impecável! Todas as 6 comparações de expressões matemáticas foram avaliadas corretamente.'
+                    },
+                    {
+                        id: 'mat_2_atv_14',
+                        tipo: 'cadeia_operatoria_trilha',
+                        titulo: 'Trilha da Rota de Fuga: Cadeia Operatória Passo a Passo',
+                        instrucoes: 'O suspeito tentou escapar por uma trilha matemática! Comece pelo valor inicial e execute cada operação indicada na flecha para descobrir o número de cada posto de controle até o destino final.',
+                        trilhas: [
+                            {
+                                id: 'tr_1',
+                                titulo: 'Rota 1: Fuga pelo Porto',
+                                valorInicial: 40,
+                                passos: [
+                                    { op: '+', valor: 25, labelOp: '+ 25', respostaEsperada: 65 },
+                                    { op: '-', valor: 15, labelOp: '- 15', respostaEsperada: 50 },
+                                    { op: '×', valor: 3, labelOp: '× 3', respostaEsperada: 150 }
+                                ]
+                            },
+                            {
+                                id: 'tr_2',
+                                titulo: 'Rota 2: Esconderijo no Túnel',
+                                valorInicial: 100,
+                                passos: [
+                                    { op: '-', valor: 38, labelOp: '- 38', respostaEsperada: 62 },
+                                    { op: '+', valor: 18, labelOp: '+ 18', respostaEsperada: 80 },
+                                    { op: '×', valor: 2, labelOp: '× 2', respostaEsperada: 160 }
+                                ]
+                            },
+                            {
+                                id: 'tr_3',
+                                titulo: 'Rota 3: Rastreamento Aéreo',
+                                valorInicial: 12,
+                                passos: [
+                                    { op: '×', valor: 5, labelOp: '× 5', respostaEsperada: 60 },
+                                    { op: '+', valor: 65, labelOp: '+ 65', respostaEsperada: 125 },
+                                    { op: '-', valor: 45, labelOp: '- 45', respostaEsperada: 80 }
+                                ]
+                            }
+                        ],
+                        dica: 'Dica Forense: Cada número que você descobre se torna a base para a próxima seta de operação. Mantenha a atenção em cada etapa do caminho!',
+                        explicacao: 'Rotas de fuga bloqueadas! Você calculou cada posto de controle com precisão cirúrgica.'
+                    },
+                    {
+                        id: 'mat_2_atv_15',
+                        tipo: 'descubra_sinal_operacao',
+                        titulo: 'O Perito dos Sinais Ocultos: Descubra o Operador (+, − ou ×)',
+                        instrucoes: 'A chuva borrou os sinais das equações no caderno de anotações do suspeito! Analise os números e o resultado para descobrir qual operador foi usado: + (Adição), − (Subtração) ou × (Multiplicação).',
+                        itens: [
+                            { id: 'so_1', num1: 18, num2: 12, resultado: 30, respostaEsperada: '+' },
+                            { id: 'so_2', num1: 8, num2: 7, resultado: 56, respostaEsperada: '×' },
+                            { id: 'so_3', num1: 95, num2: 45, resultado: 50, respostaEsperada: '−' },
+                            { id: 'so_4', num1: 15, num2: 4, resultado: 60, respostaEsperada: '×' },
+                            { id: 'so_5', num1: 120, num2: 80, resultado: 200, respostaEsperada: '+' },
+                            { id: 'so_6', num1: 200, num2: 75, resultado: 125, respostaEsperada: '−' }
+                        ],
+                        dica: 'Dica Forense: Se o resultado é muito maior que os dois números, teste a multiplicação. Se é a soma exata dos dois, use o (+). Se diminuiu, use o (−)!',
+                        explicacao: 'Caderno pericial restaurado! Todos os 6 operadores matemáticos ocultos foram revelados.'
+                    },
+                    {
+                        id: 'mat_2_atv_16',
+                        tipo: 'calculo_mental_exato',
+                        titulo: 'Cálculo Mental Forense: Operações com Dezenas e Centenas Exatas',
+                        instrucoes: 'Agilidade de raciocínio é crucial em uma investigação! Resolva mentalmente as operações com dezenas e centenas inteiras sem armar a conta. Digite o valor e observe a confirmação pericial imediata!',
+                        itens: [
+                            { id: 'cm_1', expressao: '300 + 450', respostaEsperada: 750, dicaRapida: 'Some as centenas (300 + 400) e junte as dezenas' },
+                            { id: 'cm_2', expressao: '40 × 6', respostaEsperada: 240, dicaRapida: 'Multiplique 4 × 6 e adicione o zero da dezena' },
+                            { id: 'cm_3', expressao: '700 - 280', respostaEsperada: 420, dicaRapida: 'Subtraia 200 de 700 e depois tire mais 80' },
+                            { id: 'cm_4', expressao: '80 × 5', respostaEsperada: 400, dicaRapida: 'Multiplique 8 × 5 e adicione o zero da dezena' },
+                            { id: 'cm_5', expressao: '1200 - 400', respostaEsperada: 800, dicaRapida: 'Pense em 12 centenas menos 4 centenas' },
+                            { id: 'cm_6', expressao: '60 × 7', respostaEsperada: 420, dicaRapida: 'Multiplique 6 × 7 e adicione o zero da dezena' },
+                            { id: 'cm_7', expressao: '550 + 250', respostaEsperada: 800, dicaRapida: 'Some 500 + 200 e depois junte 50 + 50' },
+                            { id: 'cm_8', expressao: '50 × 8', respostaEsperada: 400, dicaRapida: 'Multiplique 5 × 8 e adicione o zero da dezena' }
+                        ],
+                        dica: 'Dica Forense: Para multiplicar dezenas por um número, multiplique o algarismo inicial e acrescente um zero à direita no resultado (exemplo: 30 × 4 -> 3 × 4 = 12 -> 120)!',
+                        explicacao: 'Velocidade de raciocínio comprovada! Você dominou o cálculo mental de dezenas e centenas exatas.'
+                    },
+                    {
+                        id: 'mat_2_atv_17',
+                        tipo: 'adicao_tres_parcelas',
+                        titulo: 'A Soma dos 3 Lotes de Provas: Adição Armada com 3 Parcelas',
+                        instrucoes: 'Some as três parcelas de evidências apreendidas pela equipe. Comece calculando a coluna das unidades (à direita), preencha o transporte do "Vai Um" ou "Vai Dois" nos círculos superiores quando a soma passar de 9, e termine o cálculo até a centena!',
+                        contas: [
+                            {
+                                id: 'atp_1',
+                                titulo: 'Lote 1: 124 + 238 + 155',
+                                parcelas: ['124', '238', '155'],
+                                carries: [1, 1, null], // [Centenas, Dezenas, Unidades]
+                                resultadoEsperado: '517',
+                                total: 517
+                            },
+                            {
+                                id: 'atp_2',
+                                titulo: 'Lote 2: 267 + 148 + 319 (Transporte Duplo)',
+                                parcelas: ['267', '148', '319'],
+                                carries: [1, 2, null], // 7+8+9=24 (sobe 2!)
+                                resultadoEsperado: '734',
+                                total: 734
+                            },
+                            {
+                                id: 'atp_3',
+                                titulo: 'Lote 3: 345 + 286 + 194 (Transporte Múltiplo)',
+                                parcelas: ['345', '286', '194'],
+                                carries: [2, 1, null], // 5+6+4=15 (sobe 1), 1+4+8+9=22 (sobe 2!)
+                                resultadoEsperado: '825',
+                                total: 825
+                            }
+                        ],
+                        dica: 'Dica Forense: Ao somar 3 parcelas, a soma da coluna pode passar de 19! Se der entre 20 e 29, coloque o dígito das unidades no resultado e suba 2 ("Vai Dois") para a próxima coluna!',
+                        explicacao: 'Contabilidade pericial impecável! As 3 parcelas foram somadas com rigor e domínio completo dos transportes múltiplos.'
+                    },
+                    {
+                        id: 'mat_2_atv_18',
+                        tipo: 'multiplicacao_decomposicao',
+                        titulo: 'Decomposição Tática: A Propriedade Distributiva da Multiplicação',
+                        instrucoes: 'Para multiplicar números maiores mentalmente, a técnica dos peritos é separar a DEZENA da UNIDADE! Multiplique cada parte separada e depois some os resultados parciais para encontrar o produto total.',
+                        casos: [
+                            {
+                                id: 'md_1',
+                                titulo: 'Operação 1: 14 × 6',
+                                multiplicando: 14,
+                                multiplicador: 6,
+                                dezena: 10,
+                                unidade: 4,
+                                parcialDezenaEsperado: 60, // 10 × 6
+                                parcialUnidadeEsperado: 24, // 4 × 6
+                                totalEsperado: 84
+                            },
+                            {
+                                id: 'md_2',
+                                titulo: 'Operação 2: 18 × 5',
+                                multiplicando: 18,
+                                multiplicador: 5,
+                                dezena: 10,
+                                unidade: 8,
+                                parcialDezenaEsperado: 50, // 10 × 5
+                                parcialUnidadeEsperado: 40, // 8 × 5
+                                totalEsperado: 90
+                            },
+                            {
+                                id: 'md_3',
+                                titulo: 'Operação 3: 23 × 4',
+                                multiplicando: 23,
+                                multiplicador: 4,
+                                dezena: 20,
+                                unidade: 3,
+                                parcialDezenaEsperado: 80, // 20 × 4
+                                parcialUnidadeEsperado: 12, // 3 × 4
+                                totalEsperado: 92
+                            },
+                            {
+                                id: 'md_4',
+                                titulo: 'Operação 4: 32 × 3',
+                                multiplicando: 32,
+                                multiplicador: 3,
+                                dezena: 30,
+                                unidade: 2,
+                                parcialDezenaEsperado: 90, // 30 × 3
+                                parcialUnidadeEsperado: 6,  // 2 × 3
+                                totalEsperado: 96
+                            }
+                        ],
+                        dica: 'Dica Forense: Decomponha o número (exemplo: 23 é 20 + 3). Primeiro faça 20 × 4 = 80, depois 3 × 4 = 12, e por fim some: 80 + 12 = 92!',
+                        explicacao: 'Tática distributiva dominada! Você agora é capaz de decompor qualquer multiplicação para resolver com extrema facilidade.'
+                    },
+                    {
+                        id: 'mat_2_atv_19',
+                        tipo: 'cruzadinha_operacoes',
+                        titulo: 'Criptograma da Grade Pericial: Cruzadinha Operatória',
+                        instrucoes: 'Resolva as equações que se cruzam na grade pericial! Cada linha horizontal e cada coluna vertical deve fechar com a resposta correta simultaneamente. Preencha todos os campos vazios!',
+                        grades: [
+                            {
+                                id: 'gr_1',
+                                titulo: 'Criptograma Alfa: Cruzamento de Adições',
+                                celulas: {
+                                    // Linha 1: 25 + [15] = 40
+                                    // Linha 2: [35] + 20 = 55
+                                    // Coluna 1: 25 + [35] = 60
+                                    // Coluna 2: [15] + 20 = [35]
+                                    // Coluna 3: 40 + 55 = 95
+                                    // Linha 3: 60 + [35] = 95
+                                    a1: { valor: 25, readonly: true },
+                                    op1: '+',
+                                    a2: { valor: null, respostaEsperada: 15, readonly: false },
+                                    eq1: '=',
+                                    a3: { valor: 40, readonly: true },
+
+                                    opCol1: '+',
+                                    opCol2: '+',
+                                    opCol3: '+',
+
+                                    b1: { valor: null, respostaEsperada: 35, readonly: false },
+                                    op2: '+',
+                                    b2: { valor: 20, readonly: true },
+                                    eq2: '=',
+                                    b3: { valor: 55, readonly: true },
+
+                                    eqCol1: '=',
+                                    eqCol2: '=',
+                                    eqCol3: '=',
+
+                                    c1: { valor: 60, readonly: true },
+                                    op3: '+',
+                                    c2: { valor: null, respostaEsperada: 35, readonly: false },
+                                    eq3: '=',
+                                    c3: { valor: 95, readonly: true }
+                                }
+                            },
+                            {
+                                id: 'gr_2',
+                                titulo: 'Criptograma Beta: Cruzamento de Subtrações e Adições',
+                                celulas: {
+                                    // Linha 1: 50 - [20] = 30
+                                    // Linha 2: [30] - 10 = 20
+                                    // Coluna 1: 50 + [30] = [80]
+                                    // Coluna 2: [20] + 10 = 30
+                                    // Coluna 3: 30 + 20 = 50
+                                    // Linha 3: [80] - 30 = 50
+                                    a1: { valor: 50, readonly: true },
+                                    op1: '−',
+                                    a2: { valor: null, respostaEsperada: 20, readonly: false },
+                                    eq1: '=',
+                                    a3: { valor: 30, readonly: true },
+
+                                    opCol1: '+',
+                                    opCol2: '+',
+                                    opCol3: '+',
+
+                                    b1: { valor: null, respostaEsperada: 30, readonly: false },
+                                    op2: '−',
+                                    b2: { valor: 10, readonly: true },
+                                    eq2: '=',
+                                    b3: { valor: 20, readonly: true },
+
+                                    eqCol1: '=',
+                                    eqCol2: '=',
+                                    eqCol3: '=',
+
+                                    c1: { valor: null, respostaEsperada: 80, readonly: false },
+                                    op3: '−',
+                                    c2: { valor: 30, readonly: true },
+                                    eq3: '=',
+                                    c3: { valor: 50, readonly: true }
+                                }
+                            }
+                        ],
+                        dica: 'Dica Forense: Os números nas caixas compartilhadas precisam satisfazer tanto a conta da linha quanto a conta da coluna! Use uma para conferir a outra.',
+                        explicacao: 'Criptograma decifrado com honras! Todas as equações horizontais e verticais se fecharam em perfeita harmonia matemática.'
+                    },
+                    {
+                        id: 'mat_2_atv_20',
+                        tipo: 'cofre_final_operacoes',
+                        titulo: 'O Grande Cofre do Sombra: A Missão Final das 5 Pistas',
+                        instrucoes: 'MISSÃO FINAL DA AULA! O arqui-inimigo "Sombra" trancou o cofre central com uma senha secreta de 5 DÍGITOS. Resolva cada uma das 5 pistas operatórias para descobrir os dígitos correspondentes e desativar o sistema de segurança!',
+                        pistas: [
+                            {
+                                id: 'pista_1',
+                                numero: 1,
+                                operacao: 'Adição com Reserva',
+                                texto: 'Some 247 + 389. Qual é o algarismo das UNIDADES do resultado final?',
+                                calculoAuxiliar: '247 + 389 = 636',
+                                digitoEsperado: 6
+                            },
+                            {
+                                id: 'pista_2',
+                                numero: 2,
+                                operacao: 'Subtração com Reagrupamento',
+                                texto: 'Calcule 800 - 345. Qual é o algarismo das CENTENAS do resultado?',
+                                calculoAuxiliar: '800 - 345 = 455',
+                                digitoEsperado: 4
+                            },
+                            {
+                                id: 'pista_3',
+                                numero: 3,
+                                operacao: 'Multiplicação da Tabuada',
+                                texto: 'Calcule 7 × 8. Qual é o algarismo das DEZENAS do produto?',
+                                calculoAuxiliar: '7 × 8 = 56',
+                                digitoEsperado: 5
+                            },
+                            {
+                                id: 'pista_4',
+                                numero: 4,
+                                operacao: 'Subtração Simples',
+                                texto: 'Calcule 58 − 36. Qual é o algarismo das UNIDADES do resultado?',
+                                calculoAuxiliar: '58 - 36 = 22 -> Unidade: 2',
+                                digitoEsperado: 2
+                            },
+                            {
+                                id: 'pista_5',
+                                numero: 5,
+                                operacao: 'Multiplicação da Tabuada',
+                                texto: 'Calcule a multiplicação 3 × 3 da tabuada. Qual é o resultado?',
+                                calculoAuxiliar: '3 × 3 = 9',
+                                digitoEsperado: 9
+                            }
+                        ],
+                        senhaEsperada: '64529',
+                        dica: 'Dica Forense: Calcule cada pista separadamente em um rascunho pericial. Digite cada dígito encontrado na sua respectiva trava do cofre!',
+                        explicacao: 'ACESSO TOTAL CONCEDIDO! O COFRE CENTRAL FOI ABERTO! Você superou todos os 20 desafios da Aula 02 de Matemática com maestria absoluta e agora é oficialmente um MESTRE DAS OPERAÇÕES BÁSICAS!'
                     }
                 ]
             }
