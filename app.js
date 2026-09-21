@@ -1429,6 +1429,50 @@ function renderActivityCard(atv, num) {
         inputSectionHtml = `<div class="activity-options-grid">${optionsHtml}</div>`;
     }
 
+    // TIPO 1.5: VERDADEIRO OU FALSO (PORTUGUÊS AULA 2)
+    if (atv.tipo === 'verdadeiro_falso' && atv.itens) {
+        let itemsHtml = '';
+        atv.itens.forEach((it, idx) => {
+            const letter = String.fromCharCode(65 + idx);
+            const isVSelected = isAlreadySolved && (it.respostaEsperada === 'V');
+            const isFSelected = isAlreadySolved && (it.respostaEsperada === 'F');
+
+            itemsHtml += `
+                <div class="vf-item-row" data-vf-id="${it.id}">
+                    <div class="vf-item-left">
+                        <span class="vf-letter-badge">${letter}</span>
+                        <div class="vf-statement-text">${it.texto}</div>
+                    </div>
+                    <div class="vf-btn-group">
+                        <button type="button" class="vf-toggle-btn ${isVSelected ? 'selected-correct' : ''}" data-item-id="${it.id}" data-val="V" ${isAlreadySolved ? 'disabled' : ''}>
+                            <i class="fa-solid fa-check"></i> <span>V</span>
+                        </button>
+                        <button type="button" class="vf-toggle-btn ${isFSelected ? 'selected-correct' : ''}" data-item-id="${it.id}" data-val="F" ${isAlreadySolved ? 'disabled' : ''}>
+                            <i class="fa-solid fa-xmark"></i> <span>F</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="vf-activity-container" id="vf-container-${atv.id}">
+                <div class="vf-instructions-note">
+                    <i class="fa-solid fa-scale-balanced" style="color: var(--neon-amber);"></i>
+                    <span>Analise cada afirmação pericial e marque <strong>[V]</strong> para Verdadeira ou <strong>[F]</strong> para Falsa:</span>
+                </div>
+                <div class="vf-items-list">
+                    ${itemsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-vf" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-gavel"></i> ${isAlreadySolved ? 'Julgamento Concluído com Sucesso ✅' : 'Verificar Julgamento Pericial'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
     // TIPO 2: DECIFRADOR DE CÓDIGO (INPUT TEXTUAL)
     if (atv.tipo === 'decifrador') {
         inputSectionHtml = `
@@ -2424,8 +2468,8 @@ function renderActivityCard(atv, num) {
         `;
     }
 
-    // TIPO 20 (PORTUGUÊS 8): CLASSIFICAR POR CONTAGEM DE SÍLABAS (ARQUIVO SILÁBICO)
-    if (atv.tipo === 'classificar_contagem_silabas' && atv.categorias && atv.palavras) {
+    // TIPO 20 (PORTUGUÊS 8 & 12/20 AULA 2): CLASSIFICAR POR CATEGORIAS (ARQUIVO PERICIAL)
+    if ((atv.tipo === 'classificar_contagem_silabas' || atv.tipo === 'associacao_categorias') && atv.categorias && atv.palavras) {
         // Embaralha as palavras do banco para ficarem em ordem totalmente aleatória
         const shuffledWords = [...atv.palavras];
         for (let i = shuffledWords.length - 1; i > 0; i--) {
@@ -2497,7 +2541,7 @@ function renderActivityCard(atv, num) {
 
                 <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
                     <button type="button" class="btn-decode-action btn-verify-syllable-count" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
-                        <i class="fa-solid fa-box-archive"></i> ${isAlreadySolved ? 'Arquivo Silábico Verificado com Sucesso ✅' : 'Verificar Classificação de Sílabas'}
+                        <i class="fa-solid fa-box-archive"></i> ${isAlreadySolved ? 'Classificação Verificada com Sucesso ✅' : (atv.botaoTexto || 'Verificar Classificação')}
                     </button>
                 </div>
             </div>
@@ -2754,7 +2798,7 @@ function renderActivityCard(atv, num) {
                 </div>
                 <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
                     <button type="button" class="btn-decode-action btn-verify-simple-crossword" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
-                        <i class="fa-solid fa-pen-ruler"></i> ${isAlreadySolved ? 'Cruzadinha Verificada com Sucesso ✅' : 'Verificar Todas as Adivinhas'}
+                        <i class="fa-solid fa-pen-ruler"></i> ${isAlreadySolved ? 'Cruzadinha Verificada com Sucesso ✅' : 'Verificar Cruzadinha'}
                     </button>
                 </div>
             </div>
@@ -4653,6 +4697,41 @@ function renderActivityCard(atv, num) {
         });
     }
 
+    // Eventos de Verdadeiro ou Falso (Português Aula 2)
+    if (atv.tipo === 'verdadeiro_falso') {
+        const vfContainer = card.querySelector(`#vf-container-${atv.id}`);
+        const rows = vfContainer?.querySelectorAll('.vf-item-row') || [];
+        const btnVerify = vfContainer?.querySelector('.btn-verify-vf');
+
+        card._vfChoices = {};
+
+        if (isAlreadySolved) {
+            atv.itens.forEach(it => {
+                card._vfChoices[it.id] = it.respostaEsperada;
+            });
+        }
+
+        rows.forEach(row => {
+            const itemId = row.dataset.vfId;
+            const btns = row.querySelectorAll('.vf-toggle-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (isAlreadySolved) return;
+                    soundManager.playClick();
+                    const val = btn.dataset.val;
+                    card._vfChoices[itemId] = val;
+                    btns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
+        });
+
+        btnVerify?.addEventListener('click', () => {
+            soundManager.playClick();
+            handleVerdadeiroFalsoAnswerSubmit(atv, card);
+        });
+    }
+
     // Eventos de Decifrador
     if (atv.tipo === 'decifrador') {
         const btnDecode = card.querySelector('.btn-decode-action');
@@ -5379,8 +5458,8 @@ function renderActivityCard(atv, num) {
         });
     }
 
-    // Eventos de Classificação de Sílabas (Português 8)
-    if (atv.tipo === 'classificar_contagem_silabas') {
+    // Eventos de Classificação de Sílabas e Categorias (Português 8 & Aula 2)
+    if (atv.tipo === 'classificar_contagem_silabas' || atv.tipo === 'associacao_categorias') {
         const btnVerify = card.querySelector('.btn-verify-syllable-count');
         const btnReset = card.querySelector(`#btn-reset-classifier-${atv.id}`);
         const bankContainer = card.querySelector(`#bank-chips-${atv.id}`);
@@ -5413,7 +5492,7 @@ function renderActivityCard(atv, num) {
             const unplacedCount = atv.palavras.filter(w => !placements[w.id]).length;
             if (bankContainer) {
                 if (unplacedCount === 0) {
-                    bankContainer.innerHTML = '<em class="all-placed-msg"><i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i> Todas as 12 evidências foram distribuídas nas gavetas!</em>';
+                    bankContainer.innerHTML = `<em class="all-placed-msg"><i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i> Todas as ${atv.palavras.length} evidências foram distribuídas nas gavetas!</em>`;
                 } else if (!bankContainer.querySelector('.classifier-word-chip')) {
                     // Restaura chips no container se necessário
                     bankContainer.innerHTML = '';
@@ -5547,7 +5626,11 @@ function renderActivityCard(atv, num) {
             for (const p of atv.palavras) {
                 if (card._wsState.foundWords.includes(p.palavra)) continue;
 
-                if (currentStr === p.palavra || reversedStr === p.palavra) {
+                const normCurrent = currentStr.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                const normReversed = reversedStr.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+                const normTarget = p.palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+
+                if (currentStr === p.palavra || reversedStr === p.palavra || normCurrent === normTarget || normReversed === normTarget) {
                     // Palavra encontrada!
                     soundManager.playSuccess();
                     card._wsState.foundWords.push(p.palavra);
@@ -10371,7 +10454,7 @@ function handleSyllableCountClassifyAnswerSubmit(atv, cardElement) {
         const btnVerify = cardElement.querySelector('.btn-verify-syllable-count');
         if (btnVerify) {
             btnVerify.disabled = true;
-            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as 12 Evidências Arquivadas com Sucesso!';
+            btnVerify.innerHTML = `<i class="fa-solid fa-circle-check"></i> Todas as ${atv.palavras.length} Evidências Arquivadas com Sucesso!`;
         }
 
         const dotBtns = document.querySelectorAll('.wizard-dot-btn');
@@ -10384,7 +10467,7 @@ function handleSyllableCountClassifyAnswerSubmit(atv, cardElement) {
         feedbackBox.innerHTML = `
             <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
             <div>
-                <strong>Incrível organização, Detetive! Monossílabas, Dissílabas, Trissílabas e Polissílabas catalogadas com louvor pericial!</strong><br>
+                <strong>Incrível organização, Detetive! Arquivo pericial catalogado com maestria!</strong><br>
                 ${atv.explicacao || 'Arquivo pericial 100% organizado.'}
             </div>
         `;
@@ -10398,12 +10481,90 @@ function handleSyllableCountClassifyAnswerSubmit(atv, cardElement) {
         if (unplacedCount > 0 && wrongCategoryCount === 0) {
             msg = `Ainda faltam ${unplacedCount} palavra(s) do banco para serem arquivadas nas gavetas.`;
         } else if (wrongCategoryCount > 0) {
-            msg = `Há ${wrongCategoryCount} palavra(s) na gaveta errada. Lembre-se: Monossílaba = 1 sílaba, Dissílaba = 2, Trissílaba = 3, Polissílaba = 4 ou mais!`;
+            msg = atv.dica ? `Há ${wrongCategoryCount} palavra(s) na gaveta incorreta. ${atv.dica}` : `Há ${wrongCategoryCount} palavra(s) na gaveta errada. Revise a classificação e tente novamente!`;
         }
         feedbackBox.innerHTML = `
             <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
             <div>
                 <strong>Atenção ao Arquivo!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+
+    updateAccumulatedScoreUI();
+}
+
+// 8.5. Validação de Verdadeiro ou Falso (Português Aula 2)
+function handleVerdadeiroFalsoAnswerSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const choices = cardElement._vfChoices || {};
+    const total = atv.itens.length;
+    let answeredCount = 0;
+    let wrongCount = 0;
+
+    atv.itens.forEach(it => {
+        const userChoice = choices[it.id];
+        const row = cardElement.querySelector(`.vf-item-row[data-vf-id="${it.id}"]`);
+        if (userChoice) {
+            answeredCount++;
+            if (userChoice !== it.respostaEsperada) {
+                wrongCount++;
+                row?.classList.add('incorrect-highlight');
+            } else {
+                row?.classList.remove('incorrect-highlight');
+            }
+        }
+    });
+
+    if (answeredCount < total) {
+        soundManager.playError();
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Julgamento Incompleto!</strong> Por favor, avalie todas as ${total} afirmações como Verdadeiro (V) ou Falso (F) antes de verificar.
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+        return;
+    }
+
+    if (wrongCount === 0) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+
+        cardElement.querySelectorAll('.vf-toggle-btn').forEach(btn => {
+            btn.disabled = true;
+            if (btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+                btn.classList.add('selected-correct');
+            }
+        });
+
+        const btnVerify = cardElement.querySelector('.btn-verify-vf');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as Afirmações Julgadas com Sucesso!';
+        }
+
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Julgamento Aprovado com Louvor Pericial!</strong><br>
+                ${atv.explicacao || 'Todas as afirmações foram analisadas corretamente.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Atenção ao Veredito!</strong> Há ${wrongCount} afirmação(ões) com julgamento incorreto (destacadas acima). ${atv.dica || 'Consulte a dica pericial e tente novamente!'}
             </div>
         `;
         feedbackBox.style.display = 'flex';
@@ -10429,7 +10590,7 @@ function handleWordSearchAnswerSubmit(atv, cardElement) {
         const btnVerify = cardElement.querySelector('.btn-verify-wordsearch');
         if (btnVerify) {
             btnVerify.disabled = true;
-            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as 6 Palavras Encontradas no Caça-Palavras!';
+            btnVerify.innerHTML = `<i class="fa-solid fa-circle-check"></i> Todas as ${totalWords} Palavras Encontradas no Caça-Palavras!`;
         }
 
         const dotBtns = document.querySelectorAll('.wizard-dot-btn');
@@ -10442,7 +10603,7 @@ function handleWordSearchAnswerSubmit(atv, cardElement) {
         feedbackBox.innerHTML = `
             <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
             <div>
-                <strong>Sensacional, Perito! Todas as 6 palavras-chave foram localizadas e destacadas na grade pericial!</strong><br>
+                <strong>Sensacional, Perito! Todas as ${totalWords} palavras-chave foram localizadas e destacadas na grade pericial!</strong><br>
                 ${atv.explicacao || 'Caça-palavras desvendado com sucesso!'}
             </div>
         `;
@@ -10622,7 +10783,7 @@ function handleSimpleCrosswordAnswerSubmit(atv, cardElement) {
         const btnVerify = cardElement.querySelector('.btn-verify-simple-crossword');
         if (btnVerify) {
             btnVerify.disabled = true;
-            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Todas as 6 Adivinhas Decifradas com Sucesso!';
+            btnVerify.innerHTML = `<i class="fa-solid fa-circle-check"></i> Todas as ${atv.itens?.length || ''} Palavras Decifradas com Sucesso!`;
         }
 
         const dotBtns = document.querySelectorAll('.wizard-dot-btn');

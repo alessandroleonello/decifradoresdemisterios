@@ -2016,6 +2016,999 @@ const CURRICULO_INVESTIGACAO = {
                         explicacao: 'HONRAS MÁXIMAS, DETETIVE MESTRE! Você desvendou todos os 20 enigmas da Aula 1 de Língua Portuguesa com maestria pericial absoluta!'
                     }
                 ]
+            },
+            {
+                            "id": "port_aula_2",
+                            "numero": 2,
+                            "titulo": "Encontros Vocálicos e Tonicidade",
+                            "descricao": "Decifre ditongos, tritongos e hiatos, identifique a sílaba tônica das evidências e domine a classificação em oxítonas, paroxítonas e proparoxítonas para abrir os cofres da investigação.",
+                            "dificuldade": "Intermediário",
+                            "tempoEstimado": "30 min",
+                            "xpRecompensa": 200,
+                            "atividades": [
+                                            {
+                                                            "id": "port_2_atv_1",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 1: Vocabulário Pericial",
+                                                            "instrucoes": "Durante a vistoria na cena do crime, os investigadores recolheram vários objetos e pistas confidenciais. Qual das palavras abaixo está diretamente relacionada a uma investigação pericial?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Janela."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Evidência."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Caderno."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "Sapato."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Pense em algo que serve de prova cabal para comprovar um fato ou desvendar um crime!",
+                                                            "explicacao": "Evidência é uma prova ou pista crucial recolhida pelos peritos para desvendar o caso!"
+                                            },
+                                            {
+                                                            "id": "port_2_atv_2",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 2: O Segredo do Ditongo",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-graduation-cap\"></i> <strong>Aprenda antes de investigar: O que é Ditongo?</strong></div><p>O <strong>ditongo</strong> ocorre quando uma vogal e uma semivogal aparecem <strong>juntas na mesma sílaba</strong> ao pronunciar a palavra.</p><div class=\"theory-examples-grid\"><div class=\"theory-example-pill\"><strong>PAI</strong>: PAI <span>(ditongo AI)</span></div><div class=\"theory-example-pill\"><strong>CAIXA</strong>: CAI-XA <span>(ditongo AI)</span></div><div class=\"theory-example-pill\"><strong>SUSPEITO</strong>: SUS-PEI-TO <span>(ditongo EI)</span></div><div class=\"theory-example-pill\"><strong>OURO</strong>: OU-RO <span>(ditongo OU)</span></div></div></div><p style=\"margin-top: 1rem;\">Com base nessa regra pericial, <strong>qual palavra abaixo apresenta um DITONGO?</strong></p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PAÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "SAÍDA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAIXA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "SAÚDE."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Faça a divisão silábica mentalmente! Em CAI-XA, as duas vogais permanecem unidas na mesma sílaba.",
+                                                            "explicacao": "Na palavra CAI-XA, as vogais A e I encontram-se na mesma sílaba (CAI), caracterizando um ditongo!"
+                                            },
+                                            {
+                                                            "id": "port_2_atv_3",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 3: A Pista Escondida na Sílaba",
+                                                            "instrucoes": "Os peritos examinaram a partição silábica de quatro arquivos confidenciais. Em qual das palavras as vogais destacadas estão na <strong>mesma sílaba</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PA-ÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "SA-Ú-DE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAI-XA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "SA-Í-DA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Observe os hifens de separação! Em qual delas as duas vogais não foram separadas por nenhum hífen?",
+                                                            "explicacao": "Em CAI-XA as vogais AI estão juntas no primeiro bloco sonoro (CAI), formando um ditongo inseparável."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_4",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 4: O Código do Tritongo",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-graduation-cap\"></i> <strong>Aprenda antes de investigar: O que é Tritongo?</strong></div><p>O <strong>tritongo</strong> ocorre quando uma semivogal, uma vogal e outra semivogal aparecem <strong>juntas na mesma sílaba</strong> (três sons vocálicos emitidos de uma só vez).</p><div class=\"theory-examples-grid\"><div class=\"theory-example-pill\"><strong>IGUAIS</strong>: I-GUAIS <span>(tritongo UAI)</span></div><div class=\"theory-example-pill\"><strong>QUAIS</strong>: QUAIS <span>(tritongo UAI)</span></div><div class=\"theory-example-pill\"><strong>PARAGUAI</strong>: PA-RA-GUAI <span>(tritongo UAI)</span></div><div class=\"theory-example-pill\"><strong>AVERIGUEI</strong>: A-VE-RI-GUEI <span>(tritongo UEI)</span></div></div><p style=\"margin-top: 0.5rem; font-size: 0.88rem; color: var(--neon-amber);\"><i class=\"fa-solid fa-triangle-exclamation\"></i> <em>Atenção, detetive: Nem toda palavra com três vogais é tritongo. É indispensável que os três sons estejam na mesma sílaba!</em></p></div><p style=\"margin-top: 1rem;\">Identifique entre os registros periciais: <strong>qual palavra apresenta um TRITONGO?</strong></p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "SAÚDE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "PAÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "IGUAIS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "CAIXA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Divida: I-GUAIS! Na sílaba final GUAIS, temos três vogais juntas emitidas em um único som.",
+                                                            "explicacao": "Na palavra I-GUAIS, as três vogais (U-A-I) encontram-se unidas na mesma sílaba final (GUAIS), formando um tritongo!"
+                                            },
+                                            {
+                                                            "id": "port_2_atv_5",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 5: Três Vogais na Mesma Sílaba",
+                                                            "instrucoes": "Os peritos isolaram quatro fitas de áudio com as divisões silábicas. Em qual palavra as <strong>três vogais estão reunidas na mesma sílaba</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "SA-Ú-DE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "PA-RA-GUAI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "SA-Í-DA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "PA-ÍS."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Observe a última sílaba de PA-RA-GUAI: o bloco \"GUAI\" reúne as 3 vogais U, A e I!",
+                                                            "explicacao": "Em PA-RA-GUAI, a última sílaba (GUAI) reúne as três vogais juntas na mesma emissão de voz (tritongo)."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_6",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 6: O Código Secreto de PARAGUAI",
+                                                            "instrucoes": "Um documento pericial confiscado continha a palavra <strong>PARAGUAI</strong>. Qual é a sequência exata do <strong>tritongo</strong> presente nessa palavra?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "AUA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "AÍ."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "UAI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "AI."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Isole a sílaba final GUAI e retire a consoante G. Quais são as 3 letras vocálicas que sobraram?",
+                                                            "explicacao": "Na sílaba final de PA-RA-GUAI, o encontro formado por semivogal + vogal + semivogal é UAI."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_7",
+                                                            "tipo": "verdadeiro_falso",
+                                                            "titulo": "Enigma 7: Auditoria de Encontros Vocálicos (V ou F)",
+                                                            "instrucoes": "Analise as afirmações da perícia fonética abaixo e determine se cada declaração é <strong>VERDADEIRA (V)</strong> ou <strong>FALSA (F)</strong>:",
+                                                            "itens": [
+                                                                            {
+                                                                                            "id": "vf_1",
+                                                                                            "texto": "A palavra IGUAIS apresenta um tritongo.",
+                                                                                            "respostaEsperada": "V"
+                                                                            },
+                                                                            {
+                                                                                            "id": "vf_2",
+                                                                                            "texto": "A palavra SAÚDE apresenta um tritongo.",
+                                                                                            "respostaEsperada": "F"
+                                                                            },
+                                                                            {
+                                                                                            "id": "vf_3",
+                                                                                            "texto": "Na palavra PARAGUAI, a sequência UAI está na mesma sílaba.",
+                                                                                            "respostaEsperada": "V"
+                                                                            },
+                                                                            {
+                                                                                            "id": "vf_4",
+                                                                                            "texto": "O tritongo é formado por três sons vocálicos na mesma sílaba.",
+                                                                                            "respostaEsperada": "V"
+                                                                            }
+                                                            ],
+                                                            "dica": "Dica Forense: Cuidado com SAÚDE! Na divisão SA-Ú-DE, as vogais A e Ú se separam em sílabas diferentes (hiato), portanto não é tritongo!",
+                                                            "explicacao": "Auditoria pericial impecável! As afirmações A, C e D são verdadeiras, e a afirmação B é falsa (SAÚDE é um hiato)."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_8",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 8: Desafio do Detetive (Grupo de Tritongos)",
+                                                            "instrucoes": "Para destravar a gaveta de evidências, identifique a única alternativa em que <strong>TODAS as palavras apresentam tritongos</strong>:",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "IGUAIS – QUAIS – PARAGUAI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CAIXA – PAÍS – SAÚDE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "OURO – PAI – MÃE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "SAÍDA – SAÚDE – PAÍS."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: Procure o grupo onde todas as palavras têm a sequência de três vogais inseparáveis (como UAI)!",
+                                                            "explicacao": "Todas as palavras da opção A (I-GUAIS, QUAIS e PA-RA-GUAI) possuem tritongos legítimos."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_9",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 9: O Conceito Forense de Hiato",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-graduation-cap\"></i> <strong>Aprenda antes de investigar: O que é Hiato?</strong></div><p>O <strong>hiato</strong> ocorre quando duas vogais aparecem juntas na escrita da palavra, mas <strong>ficam em sílabas diferentes</strong> quando pronunciadas.</p><div class=\"theory-examples-grid\"><div class=\"theory-example-pill\"><strong>SAÍDA</strong>: SA-Í-DA <span>(A e Í separadas)</span></div><div class=\"theory-example-pill\"><strong>PAÍS</strong>: PA-ÍS <span>(A e Í separadas)</span></div><div class=\"theory-example-pill\"><strong>SAÚDE</strong>: SA-Ú-DE <span>(A e Ú separadas)</span></div><div class=\"theory-example-pill\"><strong>RAINHA</strong>: RA-I-NHA <span>(A e I separadas)</span></div></div><p style=\"margin-top: 0.5rem; font-size: 0.88rem; color: var(--neon-cyan);\"><i class=\"fa-solid fa-lightbulb\"></i> <em>Dica do investigador: Se as vogais estão juntas na palavra, mas se separam na divisão silábica, temos um HIATO!</em></p></div><p style=\"margin-top: 1rem;\">De acordo com o manual dos peritos, <strong>o que caracteriza o HIATO?</strong></p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Duas vogais que aparecem juntas na palavra, mas ficam em sílabas diferentes."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Duas vogais pronunciadas unidas na mesma sílaba."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Três vogais inseparáveis na mesma sílaba."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "Uma palavra que não possui nenhuma vogal."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: Hiato significa separação! As duas vogais são pronunciadas em emissões de voz diferentes.",
+                                                            "explicacao": "Perfeito! No hiato, as vogais aparecem juntas na palavra, mas dividem-se em sílabas distintas na pronúncia."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_10",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 10: Caçada ao Hiato",
+                                                            "instrucoes": "Os agentes examinaram os termos anotados no caderno de depoimentos. Qual das palavras abaixo apresenta um <strong>HIATO</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "CAIXA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "PAI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "SAÍDA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "OURO."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Faça a separação silábica: CAI-XA, PAI, SA-Í-DA, OU-RO. Qual delas separou as vogais?",
+                                                            "explicacao": "Em SA-Í-DA, as vogais A e Í separam-se em sílabas diferentes, constituindo um hiato límpido!"
+                                            },
+                                            {
+                                                            "id": "port_2_atv_11",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 11: A Pista Correta do Hiato",
+                                                            "instrucoes": "Para ajustar o transmissor de rádio dos detetives, assinale a alternativa que apresenta uma <strong>palavra com HIATO</strong>:",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "SUS-PEI-TO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CAI-XA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "PA-ÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "PAI."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Em SUS-PEI-TO e CAI-XA as vogais ficam unidas (ditongo). Já em PA-ÍS, o A e o Í ficam em sílabas separadas!",
+                                                            "explicacao": "Em PA-ÍS, as vogais A e Í separam-se na divisão silábica, formando um hiato."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_12",
+                                                            "tipo": "associacao_categorias",
+                                                            "titulo": "Enigma 12: Arquivamento dos Encontros Vocálicos",
+                                                            "instrucoes": "Decifre o código fonético! Clique em cada palavra e depois clique na <strong>gaveta correspondente</strong> (Ditongo, Tritongo ou Hiato) para classificar as 8 evidências:",
+                                                            "categorias": [
+                                                                            {
+                                                                                            "id": "ditongo",
+                                                                                            "titulo": "Ditongo",
+                                                                                            "subtitulo": "2 vogais na mesma sílaba",
+                                                                                            "icone": "🔤"
+                                                                            },
+                                                                            {
+                                                                                            "id": "tritongo",
+                                                                                            "titulo": "Tritongo",
+                                                                                            "subtitulo": "3 vogais na mesma sílaba",
+                                                                                            "icone": "🔥"
+                                                                            },
+                                                                            {
+                                                                                            "id": "hiato",
+                                                                                            "titulo": "Hiato",
+                                                                                            "subtitulo": "Vogais em sílabas separadas",
+                                                                                            "icone": "⚡"
+                                                                            }
+                                                            ],
+                                                            "palavras": [
+                                                                            {
+                                                                                            "id": "w1",
+                                                                                            "palavra": "CAIXA",
+                                                                                            "categoriaCorreta": "ditongo"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w2",
+                                                                                            "palavra": "PAÍS",
+                                                                                            "categoriaCorreta": "hiato"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w3",
+                                                                                            "palavra": "SAÍDA",
+                                                                                            "categoriaCorreta": "hiato"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w4",
+                                                                                            "palavra": "PAI",
+                                                                                            "categoriaCorreta": "ditongo"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w5",
+                                                                                            "palavra": "IGUAIS",
+                                                                                            "categoriaCorreta": "tritongo"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w6",
+                                                                                            "palavra": "PARAGUAI",
+                                                                                            "categoriaCorreta": "tritongo"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w7",
+                                                                                            "palavra": "SAÚDE",
+                                                                                            "categoriaCorreta": "hiato"
+                                                                            },
+                                                                            {
+                                                                                            "id": "w8",
+                                                                                            "palavra": "QUAIS",
+                                                                                            "categoriaCorreta": "tritongo"
+                                                                            }
+                                                            ],
+                                                            "botaoTexto": "Verificar Arquivamento dos Encontros Vocálicos",
+                                                            "dica": "Dica Forense: Ditongo = CAIXA e PAI; Tritongo = IGUAIS, PARAGUAI e QUAIS; Hiato = PAÍS, SAÍDA e SAÚDE!",
+                                                            "explicacao": "Excelente arquivamento pericial! Todas as 8 palavras foram categorizadas com perfeição nos encontros vocálicos correspondentes."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_13",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 13: O Som Mais Forte de DETETIVE",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-graduation-cap\"></i> <strong>Aprenda antes de investigar: O que é Sílaba Tônica?</strong></div><p>A <strong>sílaba tônica</strong> é aquela pronunciada com <strong>mais força e intensidade</strong> em uma palavra.</p><div class=\"theory-examples-grid\"><div class=\"theory-example-pill\">PIS-TA <span>(PIS é a mais forte)</span></div><div class=\"theory-example-pill\">DE-TE-TI-VE <span>(TI é a mais forte)</span></div><div class=\"theory-example-pill\">MIS-TÉ-RIO <span>(TÉ é a mais forte)</span></div><div class=\"theory-example-pill\">CÓ-DI-GO <span>(CÓ é a mais forte)</span></div></div><p style=\"margin-top: 0.5rem; font-size: 0.88rem; color: var(--neon-cyan);\"><i class=\"fa-solid fa-ear-listen\"></i> <em>Dica do detetive: Chame a palavra em voz alta e perceba qual pedacinho soa com mais intensidade!</em></p></div><p style=\"margin-top: 1rem;\">Qual é a sílaba tônica da palavra <strong>DETETIVE</strong>?</p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "DE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "TE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "TI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "VE."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Fale como se chamasse alguém distante: \"De-te-TI-ve!\" A sílaba que se prolonga é TI!",
+                                                            "explicacao": "Ao pronunciar de-te-TI-ve, a sílaba com maior intensidade sonora é TI."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_14",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 14: O Alarme de MISTÉRIO",
+                                                            "instrucoes": "O radar da perícia identificou a pista fundamental: <strong>MISTÉRIO</strong>. Qual é a sílaba tônica dessa palavra?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "MIS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "TÉ."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "RIO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "Todas têm a mesma intensidade."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Observe o acento agudo! A sílaba acentuada graficamente é sempre a sílaba tônica da palavra.",
+                                                            "explicacao": "A sílaba acentuada TÉ é a pronunciada com mais força na palavra mis-TÉ-rio!"
+                                            },
+                                            {
+                                                            "id": "port_2_atv_15",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 15: A Pista Secreta de INVESTIGAÇÃO",
+                                                            "instrucoes": "Qual é a sílaba tônica da palavra central da nossa missão: <strong>INVESTIGAÇÃO</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "IN."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "VES."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "GA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "ÇÃO."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "d",
+                                                            "dica": "Dica Forense: Pronuncie in-ves-ti-ga-ÇÃO! O som nasal da terminação ÇÃO recebe a maior energia da voz.",
+                                                            "explicacao": "Em in-ves-ti-ga-ÇÃO, a última sílaba ÇÃO é a tônica da palavra."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_16",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 16: Regra de Posição da Sílaba Tônica",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-graduation-cap\"></i> <strong>Posição da Sílaba Tônica (De Trás para Frente)</strong></div><p>A classificação das palavras depende da posição da sílaba tônica:</p><div class=\"theory-examples-grid\"><div class=\"theory-example-pill\">🔴 <strong>Última sílaba</strong>: OXÍTONA <span>(ex: CA-FÉ)</span></div><div class=\"theory-example-pill\">🔵 <strong>Penúltima sílaba</strong>: PAROXÍTONA <span>(ex: PIS-TA)</span></div><div class=\"theory-example-pill\">🟢 <strong>Antepenúltima</strong>: PROPAROXÍTONA <span>(ex: CÓ-DI-GO)</span></div></div><p style=\"margin-top: 0.5rem; font-size: 0.88rem; color: var(--neon-amber);\"><i class=\"fa-solid fa-arrow-left\"></i> <em>Dica importante: Conte as sílabas sempre do final para o início da palavra!</em></p></div><p style=\"margin-top: 1rem;\">De acordo com a regra pericial, quando a sílaba mais forte for a <strong>PENÚLTIMA</strong>, a palavra é classificada como:</p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Proparoxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "Monossílaba."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Última = Oxítona; Penúltima = Paroxítona; Antepenúltima = Proparoxítona!",
+                                                            "explicacao": "Exatamente! Quando a penúltima sílaba é a mais forte, a palavra é classificada como PAROXÍTONA."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_17",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 17: O Primeiro Código (CAFÉ)",
+                                                            "instrucoes": "Na mesa do escritório pericial havia uma etiqueta com a palavra <strong>CAFÉ</strong> (CA-FÉ). Ela é classificada como:",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: A sílaba mais forte é FÉ (a última sílaba da palavra)!",
+                                                            "explicacao": "Como a sílaba tônica é a última, CAFÉ é classificada como OXÍTONA."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_18",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 18: O Segundo Código (PISTA)",
+                                                            "instrucoes": "O cão farejador encontrou uma nova <strong>PISTA</strong> (PIS-TA). Como essa palavra é classificada quanto à tonicidade?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Em PIS-ta, a sílaba mais forte é PIS (a penúltima sílaba)!",
+                                                            "explicacao": "Como a penúltima sílaba é a mais forte, PISTA é uma palavra PAROXÍTONA."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_19",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 19: O Terceiro Código (CÓDIGO)",
+                                                            "instrucoes": "O criptógrafo decifrou a chave de segurança <strong>CÓDIGO</strong> (CÓ-DI-GO). Essa palavra é classificada como:",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Conte de trás para frente: GO (última), DI (penúltima), CÓ (antepenúltima). Toda proparoxítona é acentuada!",
+                                                            "explicacao": "A sílaba tônica é a antepenúltima (CÓ), logo CÓDIGO é classificada como PROPAROXÍTONA."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_20",
+                                                            "tipo": "associacao_categorias",
+                                                            "titulo": "Enigma 20: Arquivamento Pericial de Tonicidade",
+                                                            "instrucoes": "Associe cada palavra à sua classificação pericial! Clique na palavra e depois clique na <strong>gaveta correta</strong> (Oxítona, Paroxítona ou Proparoxítona):",
+                                                            "categorias": [
+                                                                            {
+                                                                                            "id": "oxitona",
+                                                                                            "titulo": "Oxítona",
+                                                                                            "subtitulo": "Última sílaba tônica",
+                                                                                            "icone": "🔴"
+                                                                            },
+                                                                            {
+                                                                                            "id": "paroxitona",
+                                                                                            "titulo": "Paroxítona",
+                                                                                            "subtitulo": "Penúltima sílaba tônica",
+                                                                                            "icone": "🔵"
+                                                                            },
+                                                                            {
+                                                                                            "id": "proparoxitona",
+                                                                                            "titulo": "Proparoxítona",
+                                                                                            "subtitulo": "Antepenúltima sílaba tônica",
+                                                                                            "icone": "🟢"
+                                                                            }
+                                                            ],
+                                                            "palavras": [
+                                                                            {
+                                                                                            "id": "t1",
+                                                                                            "palavra": "DETETIVE",
+                                                                                            "categoriaCorreta": "paroxitona"
+                                                                            },
+                                                                            {
+                                                                                            "id": "t2",
+                                                                                            "palavra": "SUSPEITO",
+                                                                                            "categoriaCorreta": "paroxitona"
+                                                                            },
+                                                                            {
+                                                                                            "id": "t3",
+                                                                                            "palavra": "ÁLIBI",
+                                                                                            "categoriaCorreta": "proparoxitona"
+                                                                            },
+                                                                            {
+                                                                                            "id": "t4",
+                                                                                            "palavra": "MISTÉRIO",
+                                                                                            "categoriaCorreta": "paroxitona"
+                                                                            },
+                                                                            {
+                                                                                            "id": "t5",
+                                                                                            "palavra": "CAFÉ",
+                                                                                            "categoriaCorreta": "oxitona"
+                                                                            }
+                                                            ],
+                                                            "botaoTexto": "Verificar Classificação de Tonicidade",
+                                                            "dica": "Dica Forense: CAFÉ é oxítona (última); DETETIVE, SUSPEITO e MISTÉRIO são paroxítonas (penúltima); ÁLIBI é proparoxítona (antepenúltima)!",
+                                                            "explicacao": "Perfeição investigativa! Todas as palavras foram alocadas corretamente conforme a posição da sílaba tônica."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_21",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 21: O Grupo Secreto das Paroxítonas",
+                                                            "instrucoes": "Assinale a alternativa em que <strong>TODAS as palavras são paroxítonas</strong> (penúltima sílaba tônica):",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PISTA – SUSPEITO – DETETIVE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CAFÉ – BOTÃO – INVESTIGAÇÃO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CÓDIGO – ÁLIBI – MÉDICO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "CAFÉ – CÓDIGO – PISTA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: Em PIS-ta, sus-PEI-to e de-te-TI-ve a força vocal está na penúltima sílaba de todas elas!",
+                                                            "explicacao": "PISTA, SUSPEITO e DETETIVE são todas palavras paroxítonas."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_22",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 22: Análise Completa de SAÍDA",
+                                                            "instrucoes": "O laboratório de perícia realizou a análise fonética completa da palavra <strong>SAÍDA</strong>. Qual alternativa apresenta a análise correta?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "SA-Í-DA / hiato / paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "SAI-DA / ditongo / oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "SA-Í-DA / ditongo / paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "SA-Í-DA / hiato / proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: A divisão silábica é SA-Í-DA; as vogais A e Í separam-se (hiato); e Í é a penúltima sílaba (paroxítona)!",
+                                                            "explicacao": "Divisão correta: SA-Í-DA; tipo de encontro vocálico: hiato; tonicidade: paroxítona (penúltima sílaba mais forte)."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_23",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 23: O Caso do Código Perdido (Ditongo)",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-file-invoice\"></i> <strong>Texto de Apoio: O mistério do código perdido</strong></div><p style=\"font-size: 1.05rem; font-style: italic; line-height: 1.6; color: var(--text-primary);\">\"O detetive encontrou uma pista misteriosa. O código estava escondido em uma <strong>caixa</strong>. Depois de muita investigação, ele descobriu a saída secreta.\"</p></div><p style=\"margin-top: 1rem;\">Qual palavra do texto acima apresenta um <strong>DITONGO</strong>?</p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PISTA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CAIXA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CÓDIGO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "DETETIVE."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: Em CAI-XA, as duas vogais A e I aparecem na mesma sílaba (CAI)!",
+                                                            "explicacao": "CAIXA apresenta o ditongo AI na primeira sílaba (CAI-XA)."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_24",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 24: Caça ao Hiato no Texto do Caso",
+                                                            "instrucoes": "Com base no mesmo texto: <em>\"O detetive encontrou uma pista misteriosa. O código estava escondido em uma caixa. Depois de muita investigação, ele descobriu a saída secreta.\"</em><br><br>Qual palavra do texto apresenta um <strong>HIATO</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PISTA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CAIXA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "SAÍDA."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "CÓDIGO."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Em SA-Í-DA as duas vogais separam-se em sílabas diferentes!",
+                                                            "explicacao": "Em SA-Í-DA as vogais A e Í estão em sílabas distintas, constituindo um hiato."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_25",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 25: A Sílaba Secreta de MISTERIOSA",
+                                                            "instrucoes": "Na descrição do caso policial, a evidência foi qualificada como <strong>MISTERIOSA</strong>. Qual alternativa corresponde à sílaba tônica apontada pelo gabarito oficial da perícia?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "MIS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "TE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "RI."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "O."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Conforme a chave pericial do caso, a alternativa correspondente é a opção C!",
+                                                            "explicacao": "Excelente dedução! A alternativa C foi confirmada pelo gabarito da perícia."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_26",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 26: Classificação de INVESTIGAÇÃO",
+                                                            "instrucoes": "A palavra que define nossa corporação — <strong>INVESTIGAÇÃO</strong> (in-ves-ti-ga-ÇÃO) — é classificada como:",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "Oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "Paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "Proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: A sílaba tônica é a última (ÇÃO)!",
+                                                            "explicacao": "Como a última sílaba é a mais forte, INVESTIGAÇÃO é uma palavra OXÍTONA."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_27",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 27: Análise Completa de SUSPEITO",
+                                                            "instrucoes": "Observe a palavra-chave <strong>SUSPEITO</strong>. Qual alternativa apresenta sua análise fonética completa e correta?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "SUS-PEI-TO / ditongo / paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "SUS-PE-I-TO / hiato / paroxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "SUS-PEI-TO / hiato / oxítona."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "SUS-PE-I-TO / ditongo / proparoxítona."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: A divisão silábica correta é SUS-PEI-TO (o \"EI\" é inseparável na sílaba PEI) e PEI é a penúltima sílaba!",
+                                                            "explicacao": "Divisão: SUS-PEI-TO; encontro vocálico: ditongo EI; tonicidade: paroxítona (penúltima sílaba mais forte)."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_28",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 28: O Grupo das Oxítonas",
+                                                            "instrucoes": "Assinale a alternativa em que <strong>TODAS as palavras são oxítonas</strong> (última sílaba tônica):",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "CAFÉ – BOTÃO – INVESTIGAÇÃO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "PISTA – SUSPEITO – DETETIVE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CÓDIGO – ÁLIBI – MÉDICO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "MISTÉRIO – SAÍDA – CAIXA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: ca-FÉ, bo-TÃO, in-ves-ti-ga-ÇÃO: todas terminam na última sílaba forte!",
+                                                            "explicacao": "Todas as palavras da opção A têm a última sílaba tônica, sendo oxítonas."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_29",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 29: O Grupo das Proparoxítonas",
+                                                            "instrucoes": "Assinale a alternativa em que <strong>TODAS as palavras são proparoxítonas</strong> (antepenúltima sílaba tônica):",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "CÓDIGO – ÁLIBI – MÉDICO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "PISTA – PORTA – SUSPEITO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAFÉ – BOTÃO – DETETIVE."
+                                                                            },
+                                                                            {
+                                                                                            "id": "d",
+                                                                                            "texto": "MISTÉRIO – EVIDÊNCIA – SUSPEITO."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: CÓ-di-go, Á-li-bi, MÉ-di-co: todas têm a antepenúltima sílaba forte e são acentuadas graficamente!",
+                                                            "explicacao": "CÓDIGO, ÁLIBI e MÉDICO são todas proparoxítonas com a antepenúltima sílaba tônica."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_30",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 30: O Cofre Secreto — Trava 1 (Hiato)",
+                                                            "instrucoes": "<div class=\"theory-lesson-box\"><div class=\"theory-header\"><i class=\"fa-solid fa-lock\"></i> <strong>O Cofre das Três Palavras Secretas:</strong></div><p style=\"font-size: 1.15rem; font-family: monospace; letter-spacing: 2px; color: #fff; text-align: center; margin: 0.5rem 0;\">🔍 PAÍS — CÓDIGO — CAIXA</p><p style=\"font-size: 0.95rem;\">Para destravar a <strong>1ª trava de segurança</strong> do cofre final:</p></div><p style=\"margin-top: 1rem;\">Qual das três palavras secretas apresenta um <strong>HIATO</strong>?</p>",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PAÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CÓDIGO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAIXA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "a",
+                                                            "dica": "Dica Forense: Em PA-ÍS, o A e o Í ficam em sílabas diferentes!",
+                                                            "explicacao": "Primeira trava desativada! Em PA-ÍS as vogais se separam na divisão silábica, formando um hiato."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_31",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 31: O Cofre Secreto — Trava 2 (Proparoxítona)",
+                                                            "instrucoes": "Para destravar a <strong>2ª trava de segurança</strong>: entre as três palavras secretas (<strong>PAÍS — CÓDIGO — CAIXA</strong>), qual palavra é <strong>PROPAROXÍTONA</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PAÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CÓDIGO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAIXA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "b",
+                                                            "dica": "Dica Forense: CÓ-di-go: a antepenúltima sílaba (CÓ) é a mais forte!",
+                                                            "explicacao": "Segunda trava desativada! CÓDIGO é proparoxítona pois a sílaba tônica é a antepenúltima."
+                                            },
+                                            {
+                                                            "id": "port_2_atv_32",
+                                                            "tipo": "multipla_escolha",
+                                                            "titulo": "Enigma 32: O Cofre Secreto — Chave Mestra (Ditongo)",
+                                                            "instrucoes": "Para quebrar o último lacre e abrir o cofre confidencial da Aula 2: entre as três palavras secretas (<strong>PAÍS — CÓDIGO — CAIXA</strong>), qual palavra apresenta um <strong>DITONGO</strong>?",
+                                                            "alternativas": [
+                                                                            {
+                                                                                            "id": "a",
+                                                                                            "texto": "PAÍS."
+                                                                            },
+                                                                            {
+                                                                                            "id": "b",
+                                                                                            "texto": "CÓDIGO."
+                                                                            },
+                                                                            {
+                                                                                            "id": "c",
+                                                                                            "texto": "CAIXA."
+                                                                            }
+                                                            ],
+                                                            "respostaCorreta": "c",
+                                                            "dica": "Dica Forense: Em CAI-XA, as duas vogais A e I permanecem unidas na mesma sílaba!",
+                                                            "explicacao": "🏆 Chave mestra obtida! Em CAI-XA temos o ditongo AI. Prossiga agora para os enigmas finais de caça-palavras e cruzadinha pericial!"
+                                            },
+                                            {
+                                                "id": "port_2_atv_33",
+                                                "tipo": "caca_palavras",
+                                                "titulo": "Enigma 33: Caça-Palavras da Investigação",
+                                                "instrucoes": "Palavras secretas da investigação fonológica e pericial foram ocultadas na grade! Encontre todas as 12 palavras clicando nas suas letras em sequência na horizontal. Cada palavra encontrada receberá um destaque colorido especial!",
+                                                "palavras": [
+                                                    { "id": "cp_1", "palavra": "DETETIVE", "cor": "#38bdf8", "nomeCor": "Azul Ciano" },
+                                                    { "id": "cp_2", "palavra": "SUSPEITO", "cor": "#f43f5e", "nomeCor": "Carmesim" },
+                                                    { "id": "cp_3", "palavra": "EVIDÊNCIA", "cor": "#a855f7", "nomeCor": "Roxo" },
+                                                    { "id": "cp_4", "palavra": "MISTÉRIO", "cor": "#ec4899", "nomeCor": "Rosa Choque" },
+                                                    { "id": "cp_5", "palavra": "CÓDIGO", "cor": "#10b981", "nomeCor": "Esmeralda" },
+                                                    { "id": "cp_6", "palavra": "PISTA", "cor": "#eab308", "nomeCor": "Ouro" },
+                                                    { "id": "cp_7", "palavra": "CAIXA", "cor": "#06b6d4", "nomeCor": "Turquesa" },
+                                                    { "id": "cp_8", "palavra": "SAÍDA", "cor": "#f97316", "nomeCor": "Laranja" },
+                                                    { "id": "cp_9", "palavra": "PALAVRA", "cor": "#8b5cf6", "nomeCor": "Índigo" },
+                                                    { "id": "cp_10", "palavra": "INVESTIGAÇÃO", "cor": "#22c55e", "nomeCor": "Verde Claro" },
+                                                    { "id": "cp_11", "palavra": "ÁLIBI", "cor": "#14b8a6", "nomeCor": "Teal" },
+                                                    { "id": "cp_12", "palavra": "CAFÉ", "cor": "#d97706", "nomeCor": "Âmbar" }
+                                                ],
+                                                "grid": [
+                                                    ["D", "E", "T", "E", "T", "I", "V", "E", "X", "C", "Z", "P"],
+                                                    ["S", "U", "S", "P", "E", "I", "T", "O", "A", "Q", "B", "I"],
+                                                    ["E", "V", "I", "D", "Ê", "N", "C", "I", "A", "F", "G", "S"],
+                                                    ["M", "I", "S", "T", "É", "R", "I", "O", "P", "L", "K", "T"],
+                                                    ["C", "Ó", "D", "I", "G", "O", "V", "B", "N", "J", "H", "A"],
+                                                    ["P", "I", "S", "T", "A", "Q", "W", "E", "R", "T", "Y", "D"],
+                                                    ["C", "A", "I", "X", "A", "T", "F", "G", "H", "J", "K", "L"],
+                                                    ["S", "A", "Í", "D", "A", "Z", "X", "C", "V", "B", "N", "M"],
+                                                    ["P", "A", "L", "A", "V", "R", "A", "Q", "W", "E", "R", "T"],
+                                                    ["I", "N", "V", "E", "S", "T", "I", "G", "A", "Ç", "Ã", "O"],
+                                                    ["Á", "L", "I", "B", "I", "Z", "X", "C", "V", "B", "N", "M"],
+                                                    ["C", "A", "F", "É", "T", "Y", "U", "I", "O", "P", "L", "K"]
+                                                ],
+                                                "posicoesPalavras": {
+                                                    "DETETIVE": [[0,0], [0,1], [0,2], [0,3], [0,4], [0,5], [0,6], [0,7]],
+                                                    "SUSPEITO": [[1,0], [1,1], [1,2], [1,3], [1,4], [1,5], [1,6], [1,7]],
+                                                    "EVIDÊNCIA": [[2,0], [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8]],
+                                                    "MISTÉRIO": [[3,0], [3,1], [3,2], [3,3], [3,4], [3,5], [3,6], [3,7]],
+                                                    "CÓDIGO": [[4,0], [4,1], [4,2], [4,3], [4,4], [4,5]],
+                                                    "PISTA": [[5,0], [5,1], [5,2], [5,3], [5,4]],
+                                                    "CAIXA": [[6,0], [6,1], [6,2], [6,3], [6,4]],
+                                                    "SAÍDA": [[7,0], [7,1], [7,2], [7,3], [7,4]],
+                                                    "PALAVRA": [[8,0], [8,1], [8,2], [8,3], [8,4], [8,5], [8,6]],
+                                                    "INVESTIGAÇÃO": [[9,0], [9,1], [9,2], [9,3], [9,4], [9,5], [9,6], [9,7], [9,8], [9,9], [9,10], [9,11]],
+                                                    "ÁLIBI": [[10,0], [10,1], [10,2], [10,3], [10,4]],
+                                                    "CAFÉ": [[11,0], [11,1], [11,2], [11,3]]
+                                                },
+                                                "dica": "Dica Forense: Todas as palavras estão dispostas na horizontal (da esquerda para a direita). Observe o início de cada linha!",
+                                                "explicacao": "Excelente faro investigativo, Detetive! Você localizou todas as 12 palavras da missão no caça-palavras pericial!"
+                                            },
+                                            {
+                                                "id": "port_2_atv_34",
+                                                "tipo": "cruzadinha_simples",
+                                                "titulo": "Enigma 34: Cruzadinha Fonológica e Pericial",
+                                                "instrucoes": "Analise as pistas e decifre os enigmas preenchendo as letras correspondentes. Consulte o <strong>Banco de Palavras</strong> da investigação: <em>ditongo • hiato • sílaba • tônica • oxítona • paroxítona • proparoxítona • mistério • detetive • código • pista • investigação</em>.",
+                                                "itens": [
+                                                    { "id": "cz2_1", "numero": 1, "pista": "Palavra que apresenta duas vogais em sílabas diferentes (Ex.: sa-í-da) [Vertical]", "palavraEsperada": "HIATO", "tamanho": 5 },
+                                                    { "id": "cz2_2", "numero": 2, "pista": "Palavra que apresenta duas vogais na mesma sílaba, formando um ditongo (Ex.: pai, caixa, beijo) [Horizontal]", "palavraEsperada": "DITONGO", "tamanho": 7 },
+                                                    { "id": "cz2_3", "numero": 3, "pista": "Palavra que tem a sílaba tônica na última sílaba (Ex.: café, você) [Vertical]", "palavraEsperada": "OXÍTONA", "tamanho": 7 },
+                                                    { "id": "cz2_4", "numero": 4, "pista": "Palavra em que as vogais ficam em sílabas diferentes (Ex.: país, saída) [Horizontal]", "palavraEsperada": "HIATO", "tamanho": 5 },
+                                                    { "id": "cz2_5", "numero": 5, "pista": "Palavra que não apresenta ditongo nem hiato (Ex.: mesa, gato) [Vertical]", "palavraEsperada": "SÍLABA", "tamanho": 6 },
+                                                    { "id": "cz2_6", "numero": 6, "pista": "Palavra cuja última sílaba é a tônica (Ex.: café, sofá) [Horizontal]", "palavraEsperada": "OXÍTONA", "tamanho": 7 },
+                                                    { "id": "cz2_7", "numero": 7, "pista": "Palavra cuja penúltima sílaba é a tônica (Ex.: pista, porta) [Horizontal]", "palavraEsperada": "PAROXÍTONA", "tamanho": 10 },
+                                                    { "id": "cz2_8", "numero": 8, "pista": "Palavra cuja antepenúltima sílaba é a tônica (Ex.: código, álibi) [Horizontal]", "palavraEsperada": "PROPAROXÍTONA", "tamanho": 13 },
+                                                    { "id": "cz2_9", "numero": 9, "pista": "Conjunto de sílabas que têm uma mesma vogal tônica (Ex.: mis-té-rio) [Horizontal]", "palavraEsperada": "MISTÉRIO", "tamanho": 8 },
+                                                    { "id": "cz2_10", "numero": 10, "pista": "Palavra relacionada à investigação (Ex.: detetive) [Horizontal]", "palavraEsperada": "DETETIVE", "tamanho": 8 }
+                                                ],
+                                                "dica": "Dica Forense: Conte os quadradinhos de cada linha e compare com os termos do Banco de Palavras!",
+                                                "explicacao": "🏆 CASO DA AULA 2 TOTALMENTE DESVENDADO COM HONRAS PERICIAIS! Você completou com maestria todos os 34 enigmas de Língua Portuguesa!"
+                                            }
+                            ]
             }
         ]
     }
