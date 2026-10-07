@@ -12654,7 +12654,7 @@ function handleLiveSessionUpdate(session) {
     // 1. VISÃO DO ALUNO LOGADO
     if (AppState.activeStudent) {
         const myCodename = AppState.activeStudent.codinome;
-        const myParticipant = session.participantes ? session.participantes[myCodename] : null;
+        const myParticipant = liveSessionService.getParticipant(session.participantes, myCodename);
         const isStudentInLiveView = document.getElementById('view-student-live-session')?.classList.contains('active');
         const isWelcomeActive = document.getElementById('view-welcome')?.classList.contains('active');
 
@@ -13001,7 +13001,7 @@ function renderStudentLiveWaiting(session, isRankingPhase = false) {
     document.getElementById('student-live-phase-final').style.display = 'none';
 
     const myCodename = AppState.activeStudent?.codinome;
-    const myParticipant = session.participantes?.[myCodename];
+    const myParticipant = liveSessionService.getParticipant(session.participantes, myCodename);
     const myHistory = myParticipant?.history?.[session.currentActivityIndex];
     const isSolved = (myParticipant?.status === 'solved') || (myHistory && myHistory.solved);
 

@@ -394,10 +394,82 @@ const liveSessionService = {
         }
     },
 
+    // Codifica a chave do participante para evitar que o Firestore interprete o ponto (.) como caminho aninhado
+    safeParticipantKey(codename) {
+        if (!codename) return '';
+        return String(codename).replace(/\./g, '___dot___');
+    },
+
+    // Decodifica a chave segura de volta ao codinome original
+    decodeParticipantKey(key) {
+        if (!key) return '';
+        return String(key).replace(/___dot___/g, '.');
+    },
+
+    // Normaliza o mapa de participantes garantindo que objetos aninhados (devido a pontos) sejam recuperados
+    normalizeParticipantes(participantes) {
+        if (!participantes || typeof participantes !== 'object') return {};
+        const normalized = {};
+
+        Object.entries(participantes).forEach(([rawKey, val]) => {
+            if (!val || typeof val !== 'object') return;
+
+            // Se for um participante direto com codinome
+            if (val.codinome) {
+                normalized[val.codinome] = val;
+                return;
+            }
+
+            // Se for um mapa aninhado criado por causa do ponto no codinome (ex: Maryz -> z -> {...})
+            const extractDeepParticipant = (obj) => {
+                if (!obj || typeof obj !== 'object') return null;
+                if (obj.codinome) return obj;
+                for (const subKey of Object.keys(obj)) {
+                    const sub = obj[subKey];
+                    if (sub && typeof sub === 'object') {
+                        if (sub.codinome) return sub;
+                        const found = extractDeepParticipant(sub);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            };
+
+            const deep = extractDeepParticipant(val);
+            if (deep && deep.codinome) {
+                normalized[deep.codinome] = deep;
+            } else {
+                const decKey = this.decodeParticipantKey(rawKey);
+                normalized[decKey] = val;
+            }
+        });
+
+        return normalized;
+    },
+
+    // Helper robusto para buscar participante por codinome (case-insensitive e imune a formatações)
+    getParticipant(participantes, codename) {
+        if (!participantes || !codename) return null;
+        const norm = this.normalizeParticipantes(participantes);
+        if (norm[codename]) return norm[codename];
+
+        const clean = String(codename).trim().toLowerCase();
+        for (const [key, p] of Object.entries(norm)) {
+            if (p && p.codinome && String(p.codinome).trim().toLowerCase() === clean) {
+                return p;
+            }
+            if (String(key).trim().toLowerCase() === clean) {
+                return p;
+            }
+        }
+        return null;
+    },
+
     // Helper para calcular ranking do enigma de forma dinâmica e confiável
     computeEnigmaRanking(participantes, enigmaIndex) {
-        if (!participantes) return [];
-        return Object.values(participantes)
+        const norm = this.normalizeParticipantes(participantes);
+        if (!norm) return [];
+        return Object.values(norm)
             .filter(player => (player.history && player.history[enigmaIndex] && player.history[enigmaIndex].solved) || (player.status === 'solved' && ((player.currentEnigmaTimeSeconds || 0) > 0 || (player.currentEnigmaScore || 0) > 0)))
             .sort((a, b) => {
                 const timeA = (a.history && a.history[enigmaIndex] && typeof a.history[enigmaIndex].timeSeconds === 'number')
@@ -437,15 +509,24 @@ const liveSessionService = {
                 } catch(e) {}
                 callback(null);
             } else {
+                // Sempre normaliza participantes para extrair codinomes com pontos ou aninhamentos
+                if (session.participantes) {
+                    session.participantes = this.normalizeParticipantes(session.participantes);
+                }
+
                 // Mescla segura de participantes para evitar que snapshots concorrentes revertam status de 'solved'
+                // e garante que participantes locais recém-ingressados não sejam descartados
                 if (this.localSession && this.localSession.id === session.id && this.localSession.participantes && session.participantes) {
-                    const localParticipants = this.localSession.participantes;
+                    const localParticipants = this.normalizeParticipantes(this.localSession.participantes);
                     const incomingParticipants = session.participantes;
                     
                     Object.keys(localParticipants).forEach(cd => {
                         const localP = localParticipants[cd];
                         const incomingP = incomingParticipants[cd];
-                        if (localP && incomingP && localP.status === 'solved' && this.localSession.currentActivityIndex === session.currentActivityIndex) {
+                        if (localP && !incomingP) {
+                            // Preserva participante local temporariamente enquanto snapshot do Firestore propaga
+                            incomingParticipants[cd] = localP;
+                        } else if (localP && incomingP && localP.status === 'solved' && this.localSession.currentActivityIndex === session.currentActivityIndex) {
                             if (incomingP.status !== 'solved') {
                                 incomingP.status = 'solved';
                                 incomingP.currentEnigmaTimeSeconds = localP.currentEnigmaTimeSeconds || incomingP.currentEnigmaTimeSeconds;
@@ -640,7 +721,10 @@ const liveSessionService = {
     async joinSession(student) {
         if (!this.localSession || !student) return null;
         const codename = student.codinome;
-        const currentP = this.localSession.participantes?.[codename];
+        if (!this.localSession.participantes) this.localSession.participantes = {};
+        this.localSession.participantes = this.normalizeParticipantes(this.localSession.participantes);
+
+        const currentP = this.getParticipant(this.localSession.participantes, codename);
 
         const participantData = {
             codinome: student.codinome,
@@ -655,7 +739,6 @@ const liveSessionService = {
             joinedAt: currentP?.joinedAt || new Date().toISOString()
         };
 
-        if (!this.localSession.participantes) this.localSession.participantes = {};
         this.localSession.participantes[codename] = participantData;
         this.localSession.updatedAt = new Date().toISOString();
 
@@ -663,17 +746,33 @@ const liveSessionService = {
         this.broadcast('SESSION_UPDATE', this.localSession);
 
         if (isFirebaseReady && firestoreDb) {
+            const safeKey = this.safeParticipantKey(codename);
             try {
                 const updatePayload = {};
-                updatePayload[`participantes.${codename}`] = participantData;
+                updatePayload[`participantes.${safeKey}`] = participantData;
                 updatePayload.updatedAt = new Date().toISOString();
                 await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').update(updatePayload);
             } catch (err) {
+                console.warn("⚠️ [LiveSession] Update atômico de participante falhou, aplicando fallback seguro:", err);
                 try {
-                    await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set({
-                        participantes: { [codename]: participantData },
-                        updatedAt: new Date().toISOString()
-                    }, { merge: true });
+                    const docRef = firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa');
+                    const snap = await docRef.get();
+                    if (snap.exists) {
+                        const existingData = snap.data();
+                        const existingParts = this.normalizeParticipantes(existingData.participantes || {});
+                        existingParts[codename] = participantData;
+                        
+                        // Reconstrói mapa de participantes usando chaves seguras para o Firestore
+                        const safeParts = {};
+                        Object.entries(existingParts).forEach(([k, v]) => {
+                            safeParts[this.safeParticipantKey(k)] = v;
+                        });
+
+                        await docRef.set({
+                            participantes: safeParts,
+                            updatedAt: new Date().toISOString()
+                        }, { merge: true });
+                    }
                 } catch(e) {
                     console.error("Erro ao registrar entrada no Firestore:", e);
                 }
@@ -687,6 +786,20 @@ const liveSessionService = {
         if (!this.localSession || !codename) return null;
         const participantes = { ...(this.localSession.participantes || {}) };
         delete participantes[codename];
+        const safeKey = this.safeParticipantKey(codename);
+        delete participantes[safeKey];
+
+        if (isFirebaseReady && firestoreDb && typeof firebase !== 'undefined' && firebase.firestore?.FieldValue) {
+            try {
+                const updatePayload = {
+                    updatedAt: new Date().toISOString()
+                };
+                updatePayload[`participantes.${safeKey}`] = firebase.firestore.FieldValue.delete();
+                updatePayload[`participantes.${codename}`] = firebase.firestore.FieldValue.delete();
+                await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').update(updatePayload);
+            } catch (e) {}
+        }
+
         return this.updateSession({ participantes });
     },
 
@@ -782,21 +895,36 @@ const liveSessionService = {
         this.broadcast('SESSION_UPDATE', this.localSession);
 
         if (isFirebaseReady && firestoreDb) {
+            const safeKey = this.safeParticipantKey(codename);
             try {
                 const updatePayload = {};
-                updatePayload[`participantes.${codename}`] = p;
+                updatePayload[`participantes.${safeKey}`] = p;
                 updatePayload.updatedAt = new Date().toISOString();
                 if (allSolved) {
                     updatePayload.status = 'enigma_ranking';
                 }
                 await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').update(updatePayload);
             } catch (err) {
+                console.warn("⚠️ [LiveSession] Update atômico de resposta falhou, aplicando fallback seguro:", err);
                 try {
-                    await firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa').set({
-                        participantes: { [codename]: p },
-                        updatedAt: new Date().toISOString(),
-                        ...(allSolved ? { status: 'enigma_ranking' } : {})
-                    }, { merge: true });
+                    const docRef = firestoreDb.collection('sessoes_jogar_junto').doc('sessao_ativa');
+                    const snap = await docRef.get();
+                    if (snap.exists) {
+                        const existingData = snap.data();
+                        const existingParts = this.normalizeParticipantes(existingData.participantes || {});
+                        existingParts[codename] = p;
+
+                        const safeParts = {};
+                        Object.entries(existingParts).forEach(([k, v]) => {
+                            safeParts[this.safeParticipantKey(k)] = v;
+                        });
+
+                        await docRef.set({
+                            participantes: safeParts,
+                            updatedAt: new Date().toISOString(),
+                            ...(allSolved ? { status: 'enigma_ranking' } : {})
+                        }, { merge: true });
+                    }
                 } catch(e) {
                     console.error("Erro ao sincronizar resposta no Firestore:", e);
                 }
