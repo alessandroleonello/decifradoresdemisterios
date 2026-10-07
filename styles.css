@@ -12950,6 +12950,856 @@ body {
     }
 }
 
+/* ==========================================================================
+   AULA 03 DE MATEMÁTICA - DIVISÃO E REPARTIÇÃO EM PARTES IGUAIS
+   ========================================================================== */
+
+/* 1. REPARTIÇÃO VISUAL (ATVS 1, 2 e 3) */
+.div-rep-container {
+    width: 100%;
+}
+
+.div-rep-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-left: 4px solid var(--neon-cyan);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.div-rep-row:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.2);
+}
+
+.div-rep-equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.div-rep-card {
+    flex: 1;
+    min-width: 150px;
+    min-height: 110px;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition-fast);
+    position: relative;
+}
+
+.div-rep-card:hover {
+    background: rgba(30, 41, 69, 0.85);
+    border-color: var(--neon-cyan);
+    transform: translateY(-2px);
+}
+
+.div-receptors-card {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.div-receptors-card:hover {
+    border-color: var(--neon-amber);
+    background: rgba(245, 158, 11, 0.12);
+}
+
+.div-card-badge-top {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--neon-cyan);
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.div-receptors-card .div-card-badge-top {
+    color: var(--neon-amber);
+}
+
+.operator-divide {
+    color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.div-rep-result-card {
+    min-width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+}
+
+.div-rep-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.div-rep-input {
+    width: 65px;
+    height: 48px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    border-radius: var(--radius-md);
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--border-glass);
+    color: #ffffff;
+    transition: var(--transition-fast);
+}
+
+.div-rep-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+    outline: none;
+}
+
+.div-rep-math-hint {
+    margin-top: 0.3rem;
+}
+
+.math-expr-badge {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* 2. ALGORITMO DA DIVISÃO - CHAVE (ATVS 4 e 5) */
+.alg-divisao-container {
+    width: 100%;
+}
+
+.alg-divisao-container .alg-boards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.div-board-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-top: 4px solid var(--neon-cyan);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.div-board-card:hover {
+    border-color: var(--border-glass-hover);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+}
+
+.div-board-header {
+    width: 100%;
+    margin-bottom: 0.75rem;
+}
+
+.div-board-badge {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.div-board-hint-bubble {
+    width: 100%;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px dashed rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+    box-sizing: border-box;
+}
+
+.div-board-hint-bubble i {
+    color: var(--neon-amber);
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Estrutura da Chave da Divisão - Transparente e sem transbordamento */
+.div-chave-wrapper {
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 0.4rem 0.6rem;
+    user-select: none;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    border-radius: var(--radius-md);
+}
+
+.div-chave-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 0.7rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.div-chave-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: 3px solid var(--neon-cyan);
+    padding-left: 0.7rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.div-chave-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    min-height: 40px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.div-pos-label {
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.35rem;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.label-dividendo {
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--neon-cyan);
+}
+
+.label-divisor {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--neon-amber);
+}
+
+.label-quociente {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--neon-emerald);
+}
+
+.label-resto {
+    background: rgba(244, 63, 94, 0.2);
+    color: var(--neon-rose);
+}
+
+.label-dec-zero {
+    background: rgba(245, 158, 11, 0.25);
+    color: var(--neon-amber);
+}
+
+.div-num-display {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    min-width: 38px;
+    text-align: right;
+}
+
+.div-op-minus {
+    color: var(--neon-rose);
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.div-num-sub {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    font-family: var(--font-mono, monospace);
+    min-width: 38px;
+    text-align: right;
+}
+
+.div-num-sobra {
+    font-size: 1.55rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    min-width: 38px;
+    text-align: right;
+}
+
+.neon-zero {
+    color: var(--neon-amber);
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
+    font-weight: 900;
+    font-size: 1.55rem;
+}
+
+.div-chave-hr {
+    width: 100%;
+    max-width: 105px;
+    height: 2px;
+    background: rgba(244, 63, 94, 0.6);
+    margin: 3px 0 4px auto;
+}
+
+.div-chave-divisor-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    border-bottom: 3px solid var(--neon-cyan);
+    padding-bottom: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.div-num-divisor {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: var(--neon-amber);
+    font-family: var(--font-mono, monospace);
+}
+
+.div-chave-quociente-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    padding-top: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.div-quociente-input,
+.div-resto-input {
+    width: 58px;
+    height: 40px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-align: center;
+    background: var(--bg-card);
+    border: 2px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    transition: var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.div-quociente-input.quociente-decimal {
+    width: 76px;
+    font-size: 1.25rem;
+}
+
+.div-quociente-input:focus {
+    border-color: var(--neon-emerald);
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
+    outline: none;
+}
+
+.div-resto-input:focus {
+    border-color: var(--neon-rose);
+    box-shadow: 0 0 14px rgba(244, 63, 94, 0.5);
+    outline: none;
+}
+
+/* 3. DIVISÃO TABUADA INVERSA (ATV 6) */
+.div-inv-container {
+    width: 100%;
+}
+
+.div-inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.div-inv-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.div-inv-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.div-inv-header {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.div-inv-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+}
+
+.div-inv-formula {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--neon-amber);
+    font-family: var(--font-mono, monospace);
+}
+
+.div-inv-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.div-inv-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.85rem;
+}
+
+.div-inv-math-label {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-light);
+    font-family: var(--font-mono, monospace);
+}
+
+.div-inv-input {
+    width: 60px;
+    height: 44px;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    color: #ffffff;
+    transition: var(--transition-fast);
+}
+
+.div-inv-input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    outline: none;
+}
+
+/* 4. TERMOS DA DIVISÃO (ATV 7) */
+.termos-activity-container {
+    width: 100%;
+}
+
+.termos-guide-banner {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.termos-guide-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--neon-cyan);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.termos-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.termo-pill {
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1px solid transparent;
+}
+
+.termo-pill-name {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.termo-pill-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+}
+
+.termo-blue {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: var(--neon-cyan);
+}
+
+.termo-yellow {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.35);
+    color: var(--neon-amber);
+}
+
+.termo-green {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: var(--neon-emerald);
+}
+
+.termo-red {
+    background: rgba(244, 63, 94, 0.12);
+    border-color: rgba(244, 63, 94, 0.35);
+    color: var(--neon-rose);
+}
+
+.termos-questions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.termo-question-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.termo-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.termo-card-badge {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-gold);
+}
+
+.termo-card-expr {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--neon-cyan);
+    font-family: var(--font-mono, monospace);
+}
+
+.termo-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.termo-field-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.termo-field-label {
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.termo-answer-input {
+    width: 100%;
+    height: 42px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* 5. DIVISÃO COM RESTO VISUAL (ATV 8) */
+.resto-vis-container {
+    width: 100%;
+}
+
+.resto-vis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.resto-vis-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.resto-vis-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.resto-vis-badge {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--neon-cyan);
+}
+
+.resto-vis-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.resto-vis-clusters-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    padding: 0.65rem;
+}
+
+.resto-vis-cluster-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.resto-cluster-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.resto-vis-inputs-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.resto-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+}
+
+.resto-input-group label {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.resto-answer-input {
+    width: 60px;
+    height: 42px;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    color: #ffffff;
+}
+
+.resto-calc-explanation {
+    font-size: 0.8rem;
+    color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.08);
+    padding: 0.45rem 0.65rem;
+    border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   MODO CLARO (LIGHT THEME) - AULA 03 DE MATEMÁTICA
+   ========================================================================== */
+:root[data-theme="light"] .div-rep-row,
+:root[data-theme="light"] .div-board-card,
+:root[data-theme="light"] .div-inv-card,
+:root[data-theme="light"] .termo-question-card,
+:root[data-theme="light"] .resto-vis-card {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="light"] .div-rep-card,
+:root[data-theme="light"] .div-receptors-card {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+:root[data-theme="light"] .div-rep-input,
+:root[data-theme="light"] .div-quociente-input,
+:root[data-theme="light"] .div-resto-input,
+:root[data-theme="light"] .div-inv-input,
+:root[data-theme="light"] .termo-answer-input,
+:root[data-theme="light"] .resto-answer-input {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    color: #0f172a;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+:root[data-theme="light"] .div-quociente-input:focus,
+:root[data-theme="light"] .div-resto-input:focus {
+    background: #ffffff;
+    border-color: var(--neon-cyan);
+    color: #0f172a;
+    box-shadow: 0 0 10px rgba(2, 132, 199, 0.25);
+}
+
+:root[data-theme="light"] .div-chave-wrapper {
+    background: transparent !important;
+    border: none !important;
+}
+
+:root[data-theme="light"] .div-num-display,
+:root[data-theme="light"] .div-num-sobra {
+    color: #0f172a !important;
+}
+
+:root[data-theme="light"] .div-num-sub {
+    color: #475569 !important;
+}
+
+:root[data-theme="light"] .div-board-hint-bubble,
+:root[data-theme="light"] .termos-guide-banner {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+:root[data-theme="light"] .div-inv-item,
+:root[data-theme="light"] .resto-vis-clusters-row,
+:root[data-theme="light"] .resto-input-group {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+:root[data-theme="light"] .div-inv-math-label,
+:root[data-theme="light"] .resto-input-group label {
+    color: #1e293b;
+}
+
+/* RESPONSIVIDADE PARA CELULARES */
+@media (max-width: 640px) {
+    .div-rep-equation {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .div-rep-card {
+        width: 100%;
+    }
+
+    .div-chave-wrapper {
+        gap: 0;
+    }
+
+    .div-chave-left,
+    .div-chave-right {
+        min-width: 90px;
+    }
+
+    .div-num-display,
+    .div-num-divisor {
+        font-size: 1.6rem;
+    }
+
+    .termos-fields-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 
 
 

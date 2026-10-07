@@ -4059,7 +4059,7 @@ function renderActivityCard(atv, num) {
                                    placeholder="Resultado" 
                                    value="${isAlreadySolved ? c.respostaEsperada : ''}" 
                                    ${isAlreadySolved ? 'disabled' : ''}
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                   oninput="this.value = this.value.replace(/[^0-9,.]/g, '').replace('.', ',')">
                             <span class="prob-unit-label">${c.unidade}</span>
                             <span class="prob-status-icon"></span>
                         </div>
@@ -4650,6 +4650,486 @@ function renderActivityCard(atv, num) {
                 <div class="hundred-chart-actions" style="margin-top: 1.8rem;">
                     <button type="button" class="btn-decode-action btn-verify-cofre-final" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
                         <i class="fa-solid fa-unlock-keyhole"></i> ${isAlreadySolved ? 'Cofre Central Desbloqueado com Sucesso! 🏆' : 'Desativar Travas e Abrir o Cofre'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: REPARTIÇÃO VISUAL DA DIVISÃO (AULA 03 - MATEMÁTICA)
+    if (atv.tipo === 'divisao_reparticao_visual' && atv.linhas) {
+        let rowsHtml = '';
+        atv.linhas.forEach((linha, idx) => {
+            let itemIconsHtml = '';
+            for (let i = 0; i < linha.item.quantidade; i++) {
+                itemIconsHtml += `<span class="quant-item-icon" title="${linha.item.nome}">${linha.item.icone}</span>`;
+            }
+            let receptorIconsHtml = '';
+            for (let i = 0; i < linha.receptor.quantidade; i++) {
+                receptorIconsHtml += `<span class="quant-item-icon" title="${linha.receptor.nome}">${linha.receptor.icone}</span>`;
+            }
+
+            rowsHtml += `
+                <div class="div-rep-row" id="div-rep-row-${atv.id}-${linha.id}">
+                    <div class="quant-row-header">
+                        <span class="quant-row-label"><i class="fa-solid fa-magnifying-glass"></i> ${linha.label}</span>
+                    </div>
+                    <div class="div-rep-equation">
+                        <!-- Card 1: Itens a Repartir -->
+                        <div class="div-rep-card div-items-card" id="card-item-${atv.id}-${linha.id}">
+                            <div class="div-card-badge-top"><i class="fa-solid fa-box-open"></i> Total a Repartir</div>
+                            <div class="quant-icons-cluster">
+                                ${itemIconsHtml}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge">${linha.item.quantidade} ${linha.item.nome}</span>
+                            </div>
+                        </div>
+
+                        <!-- Operador ÷ -->
+                        <div class="quant-operator-badge operator-divide" title="Dividir / Repartir em partes iguais">
+                            <i class="fa-solid fa-divide"></i>
+                        </div>
+
+                        <!-- Card 2: Destinatários / Grupos -->
+                        <div class="div-rep-card div-receptors-card" id="card-rec-${atv.id}-${linha.id}">
+                            <div class="div-card-badge-top"><i class="fa-solid fa-users"></i> Grupos Iguais</div>
+                            <div class="quant-icons-cluster">
+                                ${receptorIconsHtml}
+                            </div>
+                            <div class="quant-card-footer">
+                                <span class="quant-card-count-badge">${linha.receptor.quantidade} ${linha.receptor.nome}</span>
+                            </div>
+                        </div>
+
+                        <!-- Sinal = -->
+                        <div class="quant-operator-badge operator-equal" title="Igual a">
+                            <i class="fa-solid fa-equals"></i>
+                        </div>
+
+                        <!-- Card de Resposta -->
+                        <div class="quant-result-card div-rep-result-card" id="card-result-${atv.id}-${linha.id}">
+                            <label class="quant-result-label">Cada ${linha.receptor.nome.replace(/s$/i, '')} ganha:</label>
+                            <div class="div-rep-input-wrap">
+                                <input type="text" 
+                                       inputmode="numeric" 
+                                       pattern="[0-9]*" 
+                                       class="quant-answer-input div-rep-input" 
+                                       data-line-id="${linha.id}" 
+                                       data-expected="${linha.respostaEsperada}" 
+                                       id="input-div-rep-${atv.id}-${linha.id}" 
+                                       placeholder="?" 
+                                       maxlength="3" 
+                                       value="${isAlreadySolved ? linha.respostaEsperada : ''}" 
+                                       ${isAlreadySolved ? 'disabled' : ''} 
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <span class="quant-result-status-icon"></span>
+                            </div>
+                            <div class="div-rep-math-hint">
+                                <span class="math-expr-badge">${linha.expressao} = <strong>${isAlreadySolved ? linha.respostaEsperada : '?'}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="div-rep-container">
+                <div class="quant-rows-list">
+                    ${rowsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-div-rep" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-scale-balanced"></i> ${isAlreadySolved ? 'Repartição Confirmada com Sucesso ✅' : 'Verificar Repartição em Partes Iguais'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: ALGORITMO DA DIVISÃO - CHAVE (AULA 03 - MATEMÁTICA)
+    if (atv.tipo === 'algoritmo_divisao' && atv.contas) {
+        let boardsHtml = '';
+        atv.contas.forEach((conta, cIdx) => {
+            boardsHtml += `
+                <div class="div-board-card" id="div-board-${atv.id}-${conta.id}">
+                    <div class="div-board-header">
+                        <span class="div-board-badge"><i class="fa-solid fa-square-root-variable"></i> ${conta.titulo}</span>
+                    </div>
+                    
+                    <div class="div-board-hint-bubble">
+                        <i class="fa-solid fa-lightbulb"></i> <span>${conta.passoAPasso}</span>
+                    </div>
+
+                    <!-- Chave Tradicional da Divisão -->
+                    <div class="div-chave-wrapper">
+                        <div class="div-chave-left">
+                            ${conta.isDecimal ? `
+                                <div class="div-chave-row dividendo-row">
+                                    <span class="div-pos-label label-dividendo">Dividendo</span>
+                                    <span class="div-num-display">${conta.dividendo}</span>
+                                </div>
+                                <div class="div-chave-row subtracao-row">
+                                    <span class="div-op-minus"><i class="fa-solid fa-minus"></i></span>
+                                    <span class="div-num-sub">${conta.produtoInteiro}</span>
+                                </div>
+                                <div class="div-chave-hr"></div>
+                                <div class="div-chave-row sobra-dec-row" title="Resto ${conta.sobraInteira} ganha 0 após a vírgula para continuar a conta!">
+                                    <span class="div-pos-label label-dec-zero">Passo Decimal</span>
+                                    <span class="div-num-sobra">${conta.sobraInteira}<strong class="neon-zero">0</strong></span>
+                                </div>
+                                <div class="div-chave-row subtracao-row">
+                                    <span class="div-op-minus"><i class="fa-solid fa-minus"></i></span>
+                                    <span class="div-num-sub">${conta.produtoDecimal}</span>
+                                </div>
+                                <div class="div-chave-hr"></div>
+                                <div class="div-chave-row resto-row">
+                                    <span class="div-pos-label label-resto">Resto Final</span>
+                                    <input type="text"
+                                           inputmode="numeric"
+                                           pattern="[0-9]*"
+                                           class="div-resto-input"
+                                           data-conta-id="${conta.id}"
+                                           data-expected="${conta.restoEsperado}"
+                                           id="input-resto-${atv.id}-${conta.id}"
+                                           placeholder="0"
+                                           maxlength="2"
+                                           value="${isAlreadySolved ? conta.restoEsperado : ''}"
+                                           ${isAlreadySolved ? 'disabled' : ''}
+                                           title="Resto final da divisão (deve ser 0)"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    <span class="div-input-status status-resto"></span>
+                                </div>
+                            ` : `
+                                <div class="div-chave-row dividendo-row">
+                                    <span class="div-pos-label label-dividendo">Dividendo</span>
+                                    <span class="div-num-display">${conta.dividendo}</span>
+                                </div>
+                                <div class="div-chave-row subtracao-row">
+                                    <span class="div-op-minus"><i class="fa-solid fa-minus"></i></span>
+                                    <span class="div-num-sub">${conta.produtoEsperado}</span>
+                                </div>
+                                <div class="div-chave-hr"></div>
+                                <div class="div-chave-row resto-row">
+                                    <span class="div-pos-label label-resto">Resto</span>
+                                    <input type="text"
+                                           inputmode="numeric"
+                                           pattern="[0-9]*"
+                                           class="div-resto-input"
+                                           data-conta-id="${conta.id}"
+                                           data-expected="${conta.restoEsperado}"
+                                           id="input-resto-${atv.id}-${conta.id}"
+                                           placeholder="?"
+                                           maxlength="2"
+                                           value="${isAlreadySolved ? conta.restoEsperado : ''}"
+                                           ${isAlreadySolved ? 'disabled' : ''}
+                                           title="Resto da divisão (sobra)"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    <span class="div-input-status status-resto"></span>
+                                </div>
+                            `}
+                        </div>
+
+                        <!-- Chave em L (Bracket) -->
+                        <div class="div-chave-right">
+                            <div class="div-chave-divisor-box">
+                                <span class="div-pos-label label-divisor">Divisor</span>
+                                <span class="div-num-divisor">${conta.divisor}</span>
+                            </div>
+                            <div class="div-chave-quociente-box">
+                                <span class="div-pos-label label-quociente">Quociente</span>
+                                <input type="text"
+                                       class="div-quociente-input ${conta.isDecimal ? 'quociente-decimal' : ''}"
+                                       data-conta-id="${conta.id}"
+                                       data-expected="${conta.quocienteEsperado}"
+                                       id="input-quociente-${atv.id}-${conta.id}"
+                                       placeholder="${conta.isDecimal ? 'ex: 8,5' : '?'}"
+                                       maxlength="6"
+                                       value="${isAlreadySolved ? conta.quocienteEsperado : ''}"
+                                       ${isAlreadySolved ? 'disabled' : ''}
+                                       title="Quociente (quantas vezes cabe / resultado)"
+                                       oninput="this.value = this.value.replace(/[^0-9,.]/g, '').replace('.', ',')">
+                                <span class="div-input-status status-quociente"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="alg-divisao-container">
+                <div class="alg-boards-grid">
+                    ${boardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-alg-divisao" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-calculator"></i> ${isAlreadySolved ? 'Contas Armadas Verificadas com Sucesso ✅' : 'Verificar Contas Armadas na Chave'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: DIVISÃO TABUADA INVERSA (AULA 03 - MATEMÁTICA)
+    if (atv.tipo === 'divisao_tabuada_inversa' && atv.casos) {
+        let cardsHtml = '';
+        atv.casos.forEach(c => {
+            cardsHtml += `
+                <div class="div-inv-card" id="div-inv-card-${atv.id}-${c.id}">
+                    <div class="div-inv-header">
+                        <span class="div-inv-badge"><i class="fa-solid fa-key"></i> Tabuada-Chave:</span>
+                        <span class="div-inv-formula">${c.multiplicacao.a} × ${c.multiplicacao.b} = <strong>${c.multiplicacao.produto}</strong></span>
+                    </div>
+                    <div class="div-inv-body">
+                        <div class="div-inv-item">
+                            <span class="div-inv-math-label">${c.div1.dividendo} ÷ ${c.div1.divisor} = </span>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="div-inv-input"
+                                   data-caso-id="${c.id}"
+                                   data-sub-id="1"
+                                   data-expected="${c.div1.esperado}"
+                                   id="input-inv-${atv.id}-${c.id}-1"
+                                   placeholder="?"
+                                   maxlength="2"
+                                   value="${isAlreadySolved ? c.div1.esperado : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="div-inv-status"></span>
+                        </div>
+                        <div class="div-inv-item">
+                            <span class="div-inv-math-label">${c.div2.dividendo} ÷ ${c.div2.divisor} = </span>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="div-inv-input"
+                                   data-caso-id="${c.id}"
+                                   data-sub-id="2"
+                                   data-expected="${c.div2.esperado}"
+                                   id="input-inv-${atv.id}-${c.id}-2"
+                                   placeholder="?"
+                                   maxlength="2"
+                                   value="${isAlreadySolved ? c.div2.esperado : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="div-inv-status"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="div-inv-container">
+                <div class="div-inv-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-div-inv" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-arrows-rotate"></i> ${isAlreadySolved ? 'Famílias Inversas Desvendadas ✅' : 'Verificar Operações Inversas'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: IDENTIFICAÇÃO DOS TERMOS DA DIVISÃO (AULA 03 - MATEMÁTICA)
+    if (atv.tipo === 'termos_divisao_identificacao' && atv.perguntas) {
+        let termosGuideHtml = '';
+        if (atv.guiaTermos) {
+            termosGuideHtml = `
+                <div class="termos-guide-banner">
+                    <div class="termos-guide-title"><i class="fa-solid fa-book-bookmark"></i> Manual Forense dos 4 Termos da Divisão:</div>
+                    <div class="termos-pills-grid">
+                        ${atv.guiaTermos.map(gt => `
+                            <div class="termo-pill termo-${gt.cor}">
+                                <span class="termo-pill-name">${gt.nome.toUpperCase()}</span>
+                                <span class="termo-pill-desc">${gt.papel}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        let questionsHtml = '';
+        atv.perguntas.forEach(p => {
+            questionsHtml += `
+                <div class="termo-question-card" id="termo-card-${atv.id}-${p.id}">
+                    <div class="termo-card-header">
+                        <span class="termo-card-badge">${p.titulo}</span>
+                        <span class="termo-card-expr">${p.expressao}</span>
+                    </div>
+                    <div class="termo-fields-grid">
+                        <div class="termo-field-item">
+                            <label class="termo-field-label label-dividendo">Dividendo:</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="termo-answer-input"
+                                   data-p-id="${p.id}"
+                                   data-term="dividendo"
+                                   data-expected="${p.dividendo}"
+                                   id="input-termo-${atv.id}-${p.id}-dividendo"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? p.dividendo : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="termo-status-icon"></span>
+                        </div>
+                        <div class="termo-field-item">
+                            <label class="termo-field-label label-divisor">Divisor:</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="termo-answer-input"
+                                   data-p-id="${p.id}"
+                                   data-term="divisor"
+                                   data-expected="${p.divisor}"
+                                   id="input-termo-${atv.id}-${p.id}-divisor"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? p.divisor : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="termo-status-icon"></span>
+                        </div>
+                        <div class="termo-field-item">
+                            <label class="termo-field-label label-quociente">Quociente:</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="termo-answer-input"
+                                   data-p-id="${p.id}"
+                                   data-term="quociente"
+                                   data-expected="${p.quociente}"
+                                   id="input-termo-${atv.id}-${p.id}-quociente"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? p.quociente : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="termo-status-icon"></span>
+                        </div>
+                        <div class="termo-field-item">
+                            <label class="termo-field-label label-resto">Resto:</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="termo-answer-input"
+                                   data-p-id="${p.id}"
+                                   data-term="resto"
+                                   data-expected="${p.resto}"
+                                   id="input-termo-${atv.id}-${p.id}-resto"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? p.resto : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="termo-status-icon"></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="termos-activity-container">
+                ${termosGuideHtml}
+                <div class="termos-questions-grid">
+                    ${questionsHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-termos" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-tags"></i> ${isAlreadySolved ? 'Termos Reconhecidos com Sucesso ✅' : 'Confirmar Identificação dos Termos'}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // TIPO: DIVISÃO RESTO VISUAL (AULA 03 - MATEMÁTICA)
+    if (atv.tipo === 'divisao_resto_visual' && atv.casos) {
+        let casesHtml = '';
+        atv.casos.forEach(c => {
+            let itemIconsHtml = '';
+            for (let i = 0; i < c.total; i++) {
+                itemIconsHtml += `<span class="quant-item-icon" title="${c.itemNome}">${c.itemIcone}</span>`;
+            }
+            let recipIconsHtml = '';
+            for (let i = 0; i < c.numRecipientes; i++) {
+                recipIconsHtml += `<span class="quant-item-icon" title="${c.recipientesNome}">${c.recipienteIcone}</span>`;
+            }
+
+            casesHtml += `
+                <div class="resto-vis-card" id="resto-vis-card-${atv.id}-${c.id}">
+                    <div class="resto-vis-header">
+                        <span class="resto-vis-badge">${c.titulo}</span>
+                        <span class="resto-vis-sub">${c.total} ${c.itemNome} em ${c.numRecipientes} ${c.recipientesNome}</span>
+                    </div>
+
+                    <div class="resto-vis-clusters-row">
+                        <div class="resto-vis-cluster-box">
+                            <span class="resto-cluster-label">Itens Totais:</span>
+                            <div class="quant-icons-cluster">${itemIconsHtml}</div>
+                        </div>
+                        <div class="quant-operator-badge operator-divide"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="resto-vis-cluster-box">
+                            <span class="resto-cluster-label">Compartimentos:</span>
+                            <div class="quant-icons-cluster">${recipIconsHtml}</div>
+                        </div>
+                    </div>
+
+                    <div class="resto-vis-inputs-row">
+                        <div class="resto-input-group">
+                            <label><i class="fa-solid fa-box"></i> Cada ${c.recipientesNome.replace(/s$/i, '')} ganha:</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="resto-answer-input resto-quociente-input"
+                                   data-caso-id="${c.id}"
+                                   data-field="quociente"
+                                   data-expected="${c.quocienteEsperado}"
+                                   id="input-rv-q-${atv.id}-${c.id}"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? c.quocienteEsperado : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="resto-status-icon"></span>
+                        </div>
+                        <div class="resto-input-group">
+                            <label><i class="fa-solid fa-triangle-exclamation"></i> Sobra fora (Resto):</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   class="resto-answer-input resto-resto-input"
+                                   data-caso-id="${c.id}"
+                                   data-field="resto"
+                                   data-expected="${c.restoEsperado}"
+                                   id="input-rv-r-${atv.id}-${c.id}"
+                                   placeholder="?"
+                                   value="${isAlreadySolved ? c.restoEsperado : ''}"
+                                   ${isAlreadySolved ? 'disabled' : ''}
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <span class="resto-status-icon"></span>
+                        </div>
+                    </div>
+
+                    <div class="resto-calc-explanation">
+                        <small><i class="fa-solid fa-circle-info"></i> ${c.explicacaoCalculo}</small>
+                    </div>
+                </div>
+            `;
+        });
+
+        inputSectionHtml = `
+            <div class="resto-vis-container">
+                <div class="resto-vis-grid">
+                    ${casesHtml}
+                </div>
+                <div class="hundred-chart-actions" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn-decode-action btn-verify-resto-vis" data-activity-id="${atv.id}" ${isAlreadySolved ? 'disabled' : ''}>
+                        <i class="fa-solid fa-boxes-packing"></i> ${isAlreadySolved ? 'Divisões com Sobra Confirmadas ✅' : 'Verificar Quocientes e Restos'}
                     </button>
                 </div>
             </div>
@@ -6692,8 +7172,8 @@ function renderActivityCard(atv, num) {
 
         inputs.forEach((input, idx) => {
             input.addEventListener('input', () => {
-                const val = input.value.trim();
-                const expected = String(input.dataset.expected || '');
+                const val = input.value.trim().replace('.', ',');
+                const expected = String(input.dataset.expected || '').replace('.', ',');
                 const row = input.closest('.prob-calc-row');
                 const icon = row ? row.querySelector('.prob-status-icon') : null;
 
@@ -7060,6 +7540,197 @@ function renderActivityCard(atv, num) {
                     const idx = Number(input.dataset.dialIndex);
                     if (idx < clueInputs.length - 1) {
                         clueInputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos: Repartição Visual (Aula 3 de Matemática)
+    if (atv.tipo === 'divisao_reparticao_visual') {
+        const btnVerify = card.querySelector('.btn-verify-div-rep');
+        const inputs = card.querySelectorAll('.div-rep-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleDivisaoReparticaoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const row = input.closest('.div-rep-row');
+                const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (statusIcon) statusIcon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos: Algoritmo da Divisão na Chave (Aula 3 de Matemática)
+    if (atv.tipo === 'algoritmo_divisao') {
+        const btnVerify = card.querySelector('.btn-verify-alg-divisao');
+        const inputs = card.querySelectorAll('.div-resto-input, .div-quociente-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleAlgoritmoDivisaoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim().replace('.', ',');
+                const expected = String(input.dataset.expected).replace('.', ',');
+                const isQuociente = input.classList.contains('div-quociente-input');
+                const board = input.closest('.div-board-card');
+                const statusIcon = board ? board.querySelector(isQuociente ? '.status-quociente' : '.status-resto') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (statusIcon) statusIcon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos: Divisão Tabuada Inversa (Aula 3 de Matemática)
+    if (atv.tipo === 'divisao_tabuada_inversa') {
+        const btnVerify = card.querySelector('.btn-verify-div-inv');
+        const inputs = card.querySelectorAll('.div-inv-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleDivisaoTabuadaInversaSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const item = input.closest('.div-inv-item');
+                const icon = item ? item.querySelector('.div-inv-status') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos: Termos da Divisão (Aula 3 de Matemática)
+    if (atv.tipo === 'termos_divisao_identificacao') {
+        const btnVerify = card.querySelector('.btn-verify-termos');
+        const inputs = card.querySelectorAll('.termo-answer-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleTermosDivisaoSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const item = input.closest('.termo-field-item');
+                const icon = item ? item.querySelector('.termo-status-icon') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    } else {
+                        btnVerify?.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // Eventos: Divisão com Resto Visual (Aula 3 de Matemática)
+    if (atv.tipo === 'divisao_resto_visual') {
+        const btnVerify = card.querySelector('.btn-verify-resto-vis');
+        const inputs = card.querySelectorAll('.resto-answer-input');
+
+        btnVerify?.addEventListener('click', () => {
+            handleDivisaoRestoVisualSubmit(atv, card);
+        });
+
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const expected = String(input.dataset.expected);
+                const grp = input.closest('.resto-input-group');
+                const icon = grp ? grp.querySelector('.resto-status-icon') : null;
+
+                if (val === expected) {
+                    input.classList.add('cell-correct');
+                    input.classList.remove('cell-incorrect');
+                    if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+                } else {
+                    input.classList.remove('cell-correct');
+                    if (icon) icon.innerHTML = '';
+                }
+            });
+
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    if (idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
                     } else {
                         btnVerify?.click();
                     }
@@ -7943,8 +8614,8 @@ function handleSituacoesProblemaSubmit(atv, cardElement) {
     let wrongCount = 0;
 
     inputs.forEach(input => {
-        const val = input.value.trim();
-        const expected = String(input.dataset.expected || '');
+        const val = input.value.trim().replace('.', ',');
+        const expected = String(input.dataset.expected || '').replace('.', ',');
         const row = input.closest('.prob-calc-row');
         const icon = row ? row.querySelector('.prob-status-icon') : null;
 
@@ -8607,6 +9278,363 @@ function handleCofreFinalSubmit(atv, cardElement) {
             <i class="fa-solid fa-lock" style="font-size: 1.3rem;"></i>
             <div>
                 <strong>Acesso Negado: Travas Bloqueadas!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// ==========================================================================
+// HANDLERS DE VALIDAÇÃO: AULA 03 DE MATEMÁTICA (DIVISÃO E REPARTIÇÃO)
+// ==========================================================================
+
+// Validação de Repartição Visual (Atividades 1, 2 e 3)
+function handleDivisaoReparticaoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.div-rep-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const row = input.closest('.div-rep-row');
+        const statusIcon = row ? row.querySelector('.quant-result-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        inputs.forEach(i => i.disabled = true);
+        const btnVerify = cardElement.querySelector('.btn-verify-div-rep');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Repartição Perfeita em Partes Iguais! ✅';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>REPARTIÇÃO CONCLUÍDA COM SUCESSO!</strong><br>
+                ${atv.explicacao || 'Todas as cotas foram divididas com exatidão em partes rigorosamente iguais.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as respostas destacadas em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha o resultado das ${emptyCount} repartição(ões) ainda pendente(s).`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} repartição(ões) incorreta(s). Lembre-se: repartir em partes iguais é distribuir a mesma quantidade para cada um!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Repartição Incompleta!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Algoritmo da Divisão na Chave (Atividades 4 e 5)
+function handleAlgoritmoDivisaoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const quocienteInputs = cardElement.querySelectorAll('.div-quociente-input');
+    const restoInputs = cardElement.querySelectorAll('.div-resto-input');
+    const allInputs = [...quocienteInputs, ...restoInputs];
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    allInputs.forEach(input => {
+        const val = input.value.trim().replace('.', ',');
+        const expected = String(input.dataset.expected).replace('.', ',');
+        const isQuociente = input.classList.contains('div-quociente-input');
+        const board = input.closest('.div-board-card');
+        const statusIcon = board ? board.querySelector(isQuociente ? '.status-quociente' : '.status-resto') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (statusIcon) statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        allInputs.forEach(i => i.disabled = true);
+        const btnVerify = cardElement.querySelector('.btn-verify-alg-divisao');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Algoritmo da Chave Dominado! ✅';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>TODAS AS CONTAS ARMADAS ESTÃO CORRETAS!</strong><br>
+                ${atv.explicacao || 'Você dominou o algoritmo da divisão armada e calculou os quocientes e restos perfeitamente.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os campos destacados em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha os ${emptyCount} campo(s) que ainda estão vazios (quociente ou resto).`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} valor(es) incorreto(s). Lembre-se: o Quociente é quantas vezes o divisor cabe no dividendo, e o Resto é o que sobra após a subtração!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Chave da Divisão Travada!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Divisão Tabuada Inversa (Atividade 6)
+function handleDivisaoTabuadaInversaSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.div-inv-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const item = input.closest('.div-inv-item');
+        const icon = item ? item.querySelector('.div-inv-status') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        inputs.forEach(i => i.disabled = true);
+        const btnVerify = cardElement.querySelector('.btn-verify-div-inv');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Conexão Tabuada-Divisão Confirmada! ✅';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>OPERAÇÃO INVERSA DESVENDADA!</strong><br>
+                ${atv.explicacao || 'Você provou que multiplicar e dividir são duas faces da mesma moeda matemática.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as respostas destacadas em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha as ${emptyCount} divisões pendentes observando a tabuada-chave no topo de cada card.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} resposta(s) incorreta(s). Se a × b = c, então c ÷ a = b e c ÷ b = a!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Família de Operações Bloqueada!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Termos da Divisão (Atividade 7)
+function handleTermosDivisaoSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.termo-answer-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const item = input.closest('.termo-field-item');
+        const icon = item ? item.querySelector('.termo-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        inputs.forEach(i => i.disabled = true);
+        const btnVerify = cardElement.querySelector('.btn-verify-termos');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Termos da Divisão Reconhecidos! ✅';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>ANATOMIA DA DIVISÃO IDENTIFICADA COM PERFEIÇÃO!</strong><br>
+                ${atv.explicacao || 'Você identificou corretamente o dividendo, divisor, quociente e resto de todas as operações.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique os termos destacados em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha os ${emptyCount} termos que ainda estão vazios.`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} termo(s) com valor incorreto. Consulte o guia pericial colorido no topo para tirar dúvidas!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Identificação Incompleta!</strong> ${msg}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    }
+    updateAccumulatedScoreUI();
+}
+
+// Validação de Divisão com Resto Visual (Atividade 8)
+function handleDivisaoRestoVisualSubmit(atv, cardElement) {
+    const feedbackBox = cardElement.querySelector(`#feedback-${atv.id}`);
+    const inputs = cardElement.querySelectorAll('.resto-answer-input');
+    let allCorrect = true;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    inputs.forEach(input => {
+        const val = input.value.trim();
+        const expected = String(input.dataset.expected);
+        const grp = input.closest('.resto-input-group');
+        const icon = grp ? grp.querySelector('.resto-status-icon') : null;
+
+        input.classList.remove('cell-correct', 'cell-incorrect');
+
+        if (!val) {
+            allCorrect = false;
+            emptyCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-question" style="color: var(--neon-amber);"></i>';
+        } else if (val === expected) {
+            input.classList.add('cell-correct');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>';
+        } else {
+            allCorrect = false;
+            wrongCount++;
+            input.classList.add('cell-incorrect');
+            if (icon) icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: var(--neon-rose);"></i>';
+        }
+    });
+
+    if (allCorrect) {
+        onEnigmaSolvedSuccess(atv, cardElement);
+        inputs.forEach(i => i.disabled = true);
+        const btnVerify = cardElement.querySelector('.btn-verify-resto-vis');
+        if (btnVerify) {
+            btnVerify.disabled = true;
+            btnVerify.innerHTML = '<i class="fa-solid fa-circle-check"></i> Quocientes e Restos Verificados! ✅';
+        }
+        feedbackBox.className = 'activity-feedback-box correct';
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>DIVISÃO COM RESTO DOMINADA NO CONCRETO!</strong><br>
+                ${atv.explicacao || 'Você compreendeu visualmente que o resto é o que sobra por não atingir outro grupo completo.'}
+            </div>
+        `;
+        feedbackBox.style.display = 'flex';
+    } else {
+        soundManager.playError();
+        AppState.currentLessonScores[atv.id] = 0;
+        feedbackBox.className = 'activity-feedback-box incorrect';
+        let msg = 'Verifique as respostas destacadas em vermelho.';
+        if (emptyCount > 0 && wrongCount === 0) {
+            msg = `Preencha os ${emptyCount} campos pendentes (quantos cabem ou quanto sobra).`;
+        } else if (wrongCount > 0) {
+            msg = `Há ${wrongCount} resposta(s) incorreta(s). Multiplique o número de compartimentos pelo que coube e veja a diferença para o total!`;
+        }
+        feedbackBox.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.3rem;"></i>
+            <div>
+                <strong>Contagem com Sobra Incorreta!</strong> ${msg}
             </div>
         `;
         feedbackBox.style.display = 'flex';

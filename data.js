@@ -1173,6 +1173,702 @@ const CURRICULO_INVESTIGACAO = {
                         explicacao: 'ACESSO TOTAL CONCEDIDO! O COFRE CENTRAL FOI ABERTO! Você superou todos os 20 desafios da Aula 02 de Matemática com maestria absoluta e agora é oficialmente um MESTRE DAS OPERAÇÕES BÁSICAS!'
                     }
                 ]
+            },
+            {
+                id: 'mat_aula_3',
+                numero: 3,
+                titulo: 'Divisão: A Arte Forense de Repartir em Partes Iguais',
+                descricao: 'Desvende o segredo da divisão! Aprenda a repartir em partes rigorosamente iguais com representações visuais, domine o algoritmo da divisão armada (a tradicional chave pericial), descubra o resto e avance para a divisão com vírgula gerando decimais finitos sem parar na sobra!',
+                dificuldade: 'Iniciante',
+                tempoEstimado: '35 min',
+                xpRecompensa: 200,
+                atividades: [
+                    {
+                        id: 'mat_3_atv_1',
+                        tipo: 'divisao_reparticao_visual',
+                        titulo: 'Enigma dos Doces Periciais: Quantas Balas Cada Criança Recebe?',
+                        instrucoes: 'Os detetives confiscaram pacotes de balas e precisam reparti-las em partes exatamente iguais entre as crianças! Observe as balas e as crianças em cada caso, calcule quantas balas cada criança vai receber e digite o número correto no quadro de respostas.',
+                        linhas: [
+                            {
+                                id: 'rep_balas_1',
+                                label: 'Caso 1: 3 balas para 3 crianças',
+                                item: { nome: 'Balas', icone: '🍬', quantidade: 3 },
+                                receptor: { nome: 'Crianças', icone: '🧒', quantidade: 3 },
+                                respostaEsperada: 1,
+                                expressao: '3 ÷ 3'
+                            },
+                            {
+                                id: 'rep_balas_2',
+                                label: 'Caso 2: 6 balas para 3 crianças',
+                                item: { nome: 'Balas', icone: '🍬', quantidade: 6 },
+                                receptor: { nome: 'Crianças', icone: '🧒', quantidade: 3 },
+                                respostaEsperada: 2,
+                                expressao: '6 ÷ 3'
+                            },
+                            {
+                                id: 'rep_balas_3',
+                                label: 'Caso 3: 9 balas para 3 crianças',
+                                item: { nome: 'Balas', icone: '🍬', quantidade: 9 },
+                                receptor: { nome: 'Crianças', icone: '🧒', quantidade: 3 },
+                                respostaEsperada: 3,
+                                expressao: '9 ÷ 3'
+                            }
+                        ],
+                        dica: 'Dica Forense: Repartir em partes iguais significa que nenhuma criança pode ficar com mais ou menos que as outras! Imagine entregando 1 bala para cada uma de cada vez.',
+                        explicacao: 'Excelente raciocínio, Detetive! 3 ÷ 3 = 1 bala, 6 ÷ 3 = 2 balas e 9 ÷ 3 = 3 balas para cada criança.'
+                    },
+                    {
+                        id: 'mat_3_atv_2',
+                        tipo: 'divisao_reparticao_visual',
+                        titulo: 'Enigma do Pomar da Investigação: Laranjas e Pessoas',
+                        instrucoes: 'A equipe pericial colheu laranjas durante a investigação e precisa reparti-las de forma justa e idêntica entre as pessoas. Em cada linha, veja o total de laranjas e a quantidade de pessoas, e descubra quantas laranjas cada uma receberá!',
+                        linhas: [
+                            {
+                                id: 'rep_laranjas_1',
+                                label: 'Caso 1: 4 laranjas para 2 pessoas',
+                                item: { nome: 'Laranjas', icone: '🍊', quantidade: 4 },
+                                receptor: { nome: 'Pessoas', icone: '🧑', quantidade: 2 },
+                                respostaEsperada: 2,
+                                expressao: '4 ÷ 2'
+                            },
+                            {
+                                id: 'rep_laranjas_2',
+                                label: 'Caso 2: 6 laranjas para 3 pessoas',
+                                item: { nome: 'Laranjas', icone: '🍊', quantidade: 6 },
+                                receptor: { nome: 'Pessoas', icone: '🧑', quantidade: 3 },
+                                respostaEsperada: 2,
+                                expressao: '6 ÷ 3'
+                            },
+                            {
+                                id: 'rep_laranjas_3',
+                                label: 'Caso 3: 8 laranjas para 2 pessoas',
+                                item: { nome: 'Laranjas', icone: '🍊', quantidade: 8 },
+                                receptor: { nome: 'Pessoas', icone: '🧑', quantidade: 2 },
+                                respostaEsperada: 4,
+                                expressao: '8 ÷ 2'
+                            },
+                            {
+                                id: 'rep_laranjas_4',
+                                label: 'Caso 4: 9 laranjas para 3 pessoas',
+                                item: { nome: 'Laranjas', icone: '🍊', quantidade: 9 },
+                                receptor: { nome: 'Pessoas', icone: '🧑', quantidade: 3 },
+                                respostaEsperada: 3,
+                                expressao: '9 ÷ 3'
+                            }
+                        ],
+                        dica: 'Dica Forense: Pense na tabuada! Qual número multiplicado pela quantidade de pessoas é igual ao total de laranjas?',
+                        explicacao: 'Perfeito, Agente! Todas as laranjas foram repartidas perfeitamente entre os grupos de pessoas.'
+                    },
+                    {
+                        id: 'mat_3_atv_3',
+                        tipo: 'divisao_reparticao_visual',
+                        titulo: 'Enigma dos Equipamentos Forenses: Distribuição de Recursos',
+                        instrucoes: 'O laboratório forense recebeu lotes de evidências e ferramentas investigativas. Reparta os itens igualmente entre os detetives e especialistas de cada caso para manter a equipe equipada!',
+                        linhas: [
+                            {
+                                id: 'rep_equip_1',
+                                label: 'Caso 1: 8 lupas forenses para 4 detetives',
+                                item: { nome: 'Lupas', icone: '🔍', quantidade: 8 },
+                                receptor: { nome: 'Detetives', icone: '🕵️', quantidade: 4 },
+                                respostaEsperada: 2,
+                                expressao: '8 ÷ 4'
+                            },
+                            {
+                                id: 'rep_equip_2',
+                                label: 'Caso 2: 10 medalhas de honra para 2 agentes',
+                                item: { nome: 'Medalhas', icone: '🏅', quantidade: 10 },
+                                receptor: { nome: 'Agentes', icone: '🕵️', quantidade: 2 },
+                                respostaEsperada: 5,
+                                expressao: '10 ÷ 2'
+                            },
+                            {
+                                id: 'rep_equip_3',
+                                label: 'Caso 3: 12 crachás de segurança para 3 peritos',
+                                item: { nome: 'Crachás', icone: '🪪', quantidade: 12 },
+                                receptor: { nome: 'Peritos', icone: '🕵️', quantidade: 3 },
+                                respostaEsperada: 4,
+                                expressao: '12 ÷ 3'
+                            },
+                            {
+                                id: 'rep_equip_4',
+                                label: 'Caso 4: 15 moedas periciais para 5 recrutas',
+                                item: { nome: 'Moedas', icone: '🪙', quantidade: 15 },
+                                receptor: { nome: 'Recrutas', icone: '🕵️', quantidade: 5 },
+                                respostaEsperada: 3,
+                                expressao: '15 ÷ 5'
+                            }
+                        ],
+                        dica: 'Dica Forense: Dividir por 2 é encontrar a metade exata! Dividir por 3 é encontrar a terça parte!',
+                        explicacao: 'Distribuição impecável! Cada especialista recebeu sua cota correta de equipamentos sem nenhuma sobra.'
+                    },
+                    {
+                        id: 'mat_3_atv_4',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'O Algoritmo Pericial da Divisão: Contas Armadas Exatas (A Chave)',
+                        instrucoes: 'Chegou a hora de aprender a famosa <strong>Chave da Divisão</strong>! Em cada conta armada abaixo, descubra quantas vezes o <strong>divisor</strong> cabe dentro do <strong>dividendo</strong>. Digite o <strong>quociente</strong> (resultado) embaixo da chave e o <strong>resto</strong> no final.',
+                        contas: [
+                            {
+                                id: 'adiv_1',
+                                titulo: 'Operação 1: 10 ÷ 2 (Divisão Exata)',
+                                dividendo: 10,
+                                divisor: 2,
+                                quocienteEsperado: 5,
+                                produtoEsperado: 10,
+                                restoEsperado: 0,
+                                passoAPasso: 'Quantas vezes o 2 cabe no 10? O 2 cabe 5 vezes, pois 5 × 2 = 10. Subtraindo 10 - 10, sobra 0 de resto!'
+                            },
+                            {
+                                id: 'adiv_2',
+                                titulo: 'Operação 2: 15 ÷ 3 (Divisão Exata)',
+                                dividendo: 15,
+                                divisor: 3,
+                                quocienteEsperado: 5,
+                                produtoEsperado: 15,
+                                restoEsperado: 0,
+                                passoAPasso: 'Quantas vezes o 3 cabe no 15? Na tabuada do 3, temos 3 × 5 = 15. O quociente é 5 e o resto é 0!'
+                            },
+                            {
+                                id: 'adiv_3',
+                                titulo: 'Operação 3: 16 ÷ 4 (Divisão Exata)',
+                                dividendo: 16,
+                                divisor: 4,
+                                quocienteEsperado: 4,
+                                produtoEsperado: 16,
+                                restoEsperado: 0,
+                                passoAPasso: 'Quantas vezes o 4 cabe no 16? 4 × 4 = 16! O quociente é 4 e o resto é 0!'
+                            }
+                        ],
+                        dica: 'Dica Forense: O QUOCIENTE fica embaixo da chave (é a sua resposta). Multiplique o quociente pelo divisor e subtraia do dividendo para achar o RESTO. Quando não sobra nada, o resto é 0!',
+                        explicacao: 'Fantástico domínio do algoritmo, Detetive! Você calculou 10 ÷ 2 = 5, 15 ÷ 3 = 5 e 16 ÷ 4 = 4 com resto 0 perfeito.'
+                    },
+                    {
+                        id: 'mat_3_atv_5',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'O Algoritmo Pericial da Divisão: Contas Armadas com Resto (Não Exatas)',
+                        instrucoes: 'Atenção redobrada, Investigador! Nem toda divisão dá conta exata. Quando não dá para repartir tudo sem quebrar nada, o que sobra é chamado de <strong>RESTO</strong>! Resolva cada conta armada descobrindo quantas vezes o divisor cabe no dividendo sem ultrapassar, e anote o quociente e o resto.',
+                        contas: [
+                            {
+                                id: 'adiv_resto_1',
+                                titulo: 'Operação 1: 11 ÷ 2 (Divisão com Resto)',
+                                dividendo: 11,
+                                divisor: 2,
+                                quocienteEsperado: 5,
+                                produtoEsperado: 10,
+                                restoEsperado: 1,
+                                passoAPasso: 'Quantas vezes o 2 cabe no 11 sem passar? Cabe 5 vezes (5 × 2 = 10). Subtraindo 11 - 10, sobra 1 de Resto!'
+                            },
+                            {
+                                id: 'adiv_resto_2',
+                                titulo: 'Operação 2: 16 ÷ 3 (Divisão com Resto)',
+                                dividendo: 16,
+                                divisor: 3,
+                                quocienteEsperado: 5,
+                                produtoEsperado: 15,
+                                restoEsperado: 1,
+                                passoAPasso: 'Quantas vezes o 3 cabe no 16 sem passar? Cabe 5 vezes (5 × 3 = 15). Subtraindo 16 - 15, sobra 1 de Resto!'
+                            },
+                            {
+                                id: 'adiv_resto_3',
+                                titulo: 'Operação 3: 17 ÷ 4 (Divisão com Resto)',
+                                dividendo: 17,
+                                divisor: 4,
+                                quocienteEsperado: 4,
+                                produtoEsperado: 16,
+                                restoEsperado: 1,
+                                passoAPasso: 'Quantas vezes o 4 cabe no 17 sem passar? Cabe 4 vezes (4 × 4 = 16). Subtraindo 17 - 16, sobra 1 de Resto!'
+                            }
+                        ],
+                        dica: 'Dica Forense: Procure na tabuada do divisor o resultado que mais se aproxima do dividendo SEM PASSAR dele! A diferença que falta para alcançar o dividendo é o seu RESTO.',
+                        explicacao: 'Brilhante técnica investigativa! Em 11 ÷ 2 deu 5 (resto 1), em 16 ÷ 3 deu 5 (resto 1) e em 17 ÷ 4 deu 4 (resto 1).'
+                    },
+                    {
+                        id: 'mat_3_atv_6',
+                        tipo: 'divisao_tabuada_inversa',
+                        titulo: 'A Conexão Secreta: A Divisão é o Inverso da Multiplicação!',
+                        instrucoes: 'Segredo de mestre: <em>Quem sabe a tabuada da multiplicação já sabe dividir!</em> Observe a multiplicação-chave e use-a para desvendar as duas divisões correspondentes da mesma família numérica.',
+                        casos: [
+                            {
+                                id: 'inv_1',
+                                multiplicacao: { a: 2, b: 5, produto: 10 },
+                                div1: { dividendo: 10, divisor: 2, esperado: 5 },
+                                div2: { dividendo: 10, divisor: 5, esperado: 2 }
+                            },
+                            {
+                                id: 'inv_2',
+                                multiplicacao: { a: 3, b: 4, produto: 12 },
+                                div1: { dividendo: 12, divisor: 3, esperado: 4 },
+                                div2: { dividendo: 12, divisor: 4, esperado: 3 }
+                            },
+                            {
+                                id: 'inv_3',
+                                multiplicacao: { a: 4, b: 5, produto: 20 },
+                                div1: { dividendo: 20, divisor: 4, esperado: 5 },
+                                div2: { dividendo: 20, divisor: 5, esperado: 4 }
+                            },
+                            {
+                                id: 'inv_4',
+                                multiplicacao: { a: 3, b: 6, produto: 18 },
+                                div1: { dividendo: 18, divisor: 3, esperado: 6 },
+                                div2: { dividendo: 18, divisor: 6, esperado: 3 }
+                            }
+                        ],
+                        dica: 'Dica Forense: Se 2 × 5 = 10, então 10 ÷ 2 = 5 e 10 ÷ 5 = 2! Os três números formam um trio matemático inseparável.',
+                        explicacao: 'Sensacional dedução! Você descobriu que a divisão desfaz a multiplicação, transformando a tabuada na sua maior aliada.'
+                    },
+                    {
+                        id: 'mat_3_atv_7',
+                        tipo: 'termos_divisao_identificacao',
+                        titulo: 'Os 4 Agentes da Chave: Dividendo, Divisor, Quociente e Resto',
+                        instrucoes: 'Para conversar como um perito profissional, você precisa conhecer o nome oficial de cada parte da divisão! Examine o guia pericial colorido e identifique o papel de cada número nas operações.',
+                        guiaTermos: [
+                            { nome: 'Dividendo', cor: 'blue', papel: 'O total que será repartido' },
+                            { nome: 'Divisor', cor: 'yellow', papel: 'Em quantas partes iguais vamos repartir' },
+                            { nome: 'Quociente', cor: 'green', papel: 'O resultado da divisão (quanto cada um ganha)' },
+                            { nome: 'Resto', cor: 'red', papel: 'A sobra que não deu para dividir igualmente' }
+                        ],
+                        perguntas: [
+                            {
+                                id: 'termo_p1',
+                                titulo: 'Operação A: 15 ÷ 3 = 5 (Resto 0)',
+                                expressao: '15 ÷ 3 = 5  (Resto: 0)',
+                                dividendo: 15,
+                                divisor: 3,
+                                quociente: 5,
+                                resto: 0
+                            },
+                            {
+                                id: 'termo_p2',
+                                titulo: 'Operação B: 19 ÷ 2 = 9 (Resto 1)',
+                                expressao: '19 ÷ 2 = 9  (Resto: 1)',
+                                dividendo: 19,
+                                divisor: 2,
+                                quociente: 9,
+                                resto: 1
+                            },
+                            {
+                                id: 'termo_p3',
+                                titulo: 'Operação C: 14 ÷ 4 = 3 (Resto 2)',
+                                expressao: '14 ÷ 4 = 3  (Resto: 2)',
+                                dividendo: 14,
+                                divisor: 4,
+                                quociente: 3,
+                                resto: 2
+                            },
+                            {
+                                id: 'termo_p4',
+                                titulo: 'Operação D: 22 ÷ 5 = 4 (Resto 2)',
+                                expressao: '22 ÷ 5 = 4  (Resto: 2)',
+                                dividendo: 22,
+                                divisor: 5,
+                                quociente: 4,
+                                resto: 2
+                            }
+                        ],
+                        dica: 'Dica Forense: DIVIDENDO é o total geral; DIVISOR é a quantidade de partes; QUOCIENTE é o resultado da divisão; RESTO é o que sobrou!',
+                        explicacao: 'Perfeito, Especialista! Você dominou a anatomia e a nomenclatura oficial de todas as posições da divisão.'
+                    },
+                    {
+                        id: 'mat_3_atv_8',
+                        tipo: 'divisao_resto_visual',
+                        titulo: 'O Enigma da Sobra: Visualizando o Resto no Mundo Concreto',
+                        instrucoes: 'Na investigação real, muitas vezes sobram pistas que não cabem igualmente nos compartimentos. Conte os itens e os recipientes, digite quantos itens vão em CADA compartimento e quantos itens SOBRAM DE FORA (Resto)!',
+                        casos: [
+                            {
+                                id: 'rv_1',
+                                titulo: 'Caso 1: 7 Diamantes Preciosos em 2 Maletas',
+                                total: 7,
+                                itemNome: 'Diamantes',
+                                itemIcone: '💎',
+                                recipientesNome: 'Maletas',
+                                recipienteIcone: '💼',
+                                numRecipientes: 2,
+                                quocienteEsperado: 3,
+                                restoEsperado: 1,
+                                explicacaoCalculo: 'Cabem 3 diamantes em cada maleta (2 × 3 = 6) e sobra 1 diamante fora.'
+                            },
+                            {
+                                id: 'rv_2',
+                                titulo: 'Caso 2: 10 Lupas Táticas para 3 Detetives',
+                                total: 10,
+                                itemNome: 'Lupas',
+                                itemIcone: '🔍',
+                                recipientesNome: 'Detetives',
+                                recipienteIcone: '🕵️',
+                                numRecipientes: 3,
+                                quocienteEsperado: 3,
+                                restoEsperado: 1,
+                                explicacaoCalculo: 'Cabem 3 lupas para cada detetive (3 × 3 = 9) e sobra 1 lupa de fora.'
+                            },
+                            {
+                                id: 'rv_3',
+                                titulo: 'Caso 3: 14 Documentos Secretos em 4 Pastas',
+                                total: 14,
+                                itemNome: 'Documentos',
+                                itemIcone: '📄',
+                                recipientesNome: 'Pastas',
+                                recipienteIcone: '📁',
+                                numRecipientes: 4,
+                                quocienteEsperado: 3,
+                                restoEsperado: 2,
+                                explicacaoCalculo: 'Cabem 3 documentos por pasta (4 × 3 = 12) e sobram 2 documentos.'
+                            },
+                            {
+                                id: 'rv_4',
+                                titulo: 'Caso 4: 17 Moedas Periciais em 5 Cofres',
+                                total: 17,
+                                itemNome: 'Moedas',
+                                itemIcone: '🪙',
+                                recipientesNome: 'Cofres',
+                                recipienteIcone: '🧰',
+                                numRecipientes: 5,
+                                quocienteEsperado: 3,
+                                restoEsperado: 2,
+                                explicacaoCalculo: 'Cabem 3 moedas por cofre (5 × 3 = 15) e sobram 2 moedas de resto.'
+                            }
+                        ],
+                        dica: 'Dica Forense: Multiplique o número de compartimentos pela quantia que coube. A diferença até o total é a sobra exata!',
+                        explicacao: 'Excepcional! Você comprovou no concreto que o resto é simplesmente a quantidade que faltou para completar outro grupo.'
+                    },
+                    {
+                        id: 'mat_3_atv_9',
+                        tipo: 'situacoes_problema_operacoes',
+                        titulo: 'Casos Forenses da Divisão: Situações-Problema do Cotidiano',
+                        instrucoes: 'Os detetives da delegacia precisam solucionar estes 4 casos práticos de repartição do dia a dia! Leia cada relato investigativo, faça o cálculo de divisão mentalmente ou no papel e digite o resultado final.',
+                        casos: [
+                            {
+                                id: 'sp_div_1',
+                                titulo: 'Caso 1: Rastro no Jardim',
+                                operacao: 'Divisão',
+                                texto: 'O Detetive Léo encontrou 18 pegadas misteriosas no jardim pericial. Elas estavam divididas igualmente em 2 caminhos diferentes. Quantas pegadas havia em cada caminho?',
+                                expressaoDica: '18 ÷ 2',
+                                respostaEsperada: 9,
+                                unidade: 'pegadas'
+                            },
+                            {
+                                id: 'sp_div_2',
+                                titulo: 'Caso 2: Frascos de Reagente',
+                                operacao: 'Divisão',
+                                texto: 'A perita Luiza precisa guardar 24 frascos de reagente químico pericial em 3 maletas de segurança, colocando a mesma quantia em cada uma. Quantos frascos ela colocará em cada maleta?',
+                                expressaoDica: '24 ÷ 3',
+                                respostaEsperada: 8,
+                                unidade: 'frascos'
+                            },
+                            {
+                                id: 'sp_div_3',
+                                titulo: 'Caso 3: Distintivos de Elite',
+                                operacao: 'Divisão',
+                                texto: 'O chefe da perícia tem 20 distintivos de honra para condecorar 4 equipes de investigação. Cada equipe receberá o mesmo número de distintivos. Quantos distintivos cada equipe ganhará?',
+                                expressaoDica: '20 ÷ 4',
+                                respostaEsperada: 5,
+                                unidade: 'distintivos'
+                            },
+                            {
+                                id: 'sp_div_4',
+                                titulo: 'Caso 4: Álbum de Evidências',
+                                operacao: 'Divisão',
+                                texto: 'Um investigador revelou 27 fotografias da cena do crime e vai colar exatamente 3 fotografias em cada folha do dossiê. De quantas folhas de papel ele precisará?',
+                                expressaoDica: '27 ÷ 3',
+                                respostaEsperada: 9,
+                                unidade: 'folhas'
+                            }
+                        ],
+                        dica: 'Dica Forense: Identifique o TOTAL que precisa ser dividido e por QUANTAS partes vamos repartir. Lembre-se da tabuada correspondente para encontrar o resultado velozmente!',
+                        explicacao: 'Incrível raciocínio lógico! Todas as 4 situações-problema de divisão foram solucionadas com maestria forense.'
+                    },
+                    {
+                        id: 'mat_3_atv_10',
+                        tipo: 'cofre_final_operacoes',
+                        titulo: 'O Grande Desafio Final: O Cofre Secreto dos Mestres da Divisão',
+                        instrucoes: 'Para conquistar o título definitivo de MESTRE DECIFRADOR DA DIVISÃO, desative as 5 travas de segurança do cofre central do laboratório! Calcule cada divisão rápida para descobrir o dígito correspondente de cada trava da senha.',
+                        pistas: [
+                            {
+                                id: 'pista_div_1',
+                                numero: 1,
+                                operacao: 'Divisão por 2',
+                                texto: 'Calcule: 12 ÷ 2. Qual é a metade de 12?',
+                                calculoAuxiliar: '12 ÷ 2 = 6',
+                                digitoEsperado: 6
+                            },
+                            {
+                                id: 'pista_div_2',
+                                numero: 2,
+                                operacao: 'Divisão por 5',
+                                texto: 'Calcule: 15 ÷ 5. Quantas vezes o 5 cabe no 15?',
+                                calculoAuxiliar: '15 ÷ 5 = 3',
+                                digitoEsperado: 3
+                            },
+                            {
+                                id: 'pista_div_3',
+                                numero: 3,
+                                operacao: 'Divisão por 4',
+                                texto: 'Calcule: 20 ÷ 4. Na tabuada do 4, quem multiplicado por 4 dá 20?',
+                                calculoAuxiliar: '20 ÷ 4 = 5',
+                                digitoEsperado: 5
+                            },
+                            {
+                                id: 'pista_div_4',
+                                numero: 4,
+                                operacao: 'Divisão por 2',
+                                texto: 'Calcule: 16 ÷ 2. Qual é a metade de 16?',
+                                calculoAuxiliar: '16 ÷ 2 = 8',
+                                digitoEsperado: 8
+                            },
+                            {
+                                id: 'pista_div_5',
+                                numero: 5,
+                                operacao: 'Divisão por 3',
+                                texto: 'Calcule: 21 ÷ 3. Na tabuada do 3, qual número vezes 3 é igual a 21?',
+                                calculoAuxiliar: '21 ÷ 3 = 7',
+                                digitoEsperado: 7
+                            }
+                        ],
+                        senhaEsperada: '63587',
+                        dica: 'Dica Forense: Calcule cada divisão mentalmente ou consulte a tabuada da multiplicação correspondente! Digite os 5 dígitos no painel do cofre para destravar a câmara secreta.',
+                        explicacao: 'ACESSO TOTAL CONCEDIDO! O COFRE DA DIVISÃO FOI DESTRAVADO! Você superou as 10 primeiras etapas com sucesso! Agora prepare-se para o nível avançado: continuar a divisão no mundo dos decimais finitos!'
+                    },
+                    {
+                        id: 'mat_3_atv_11',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'Divisão Decimal Passo a Passo: A Metade Não Para no Resto!',
+                        instrucoes: 'Atenção, Detetive Especialista! Quando sobra 1 na divisão por 2, nós <strong>não precisamos parar no resto</strong>! Nós colocamos uma <strong>vírgula (,) no quociente</strong> e acrescentamos um <strong>zero (0) ao resto</strong> para transformá-lo em 10. Assim, 10 ÷ 2 = 5! Descubra o quociente decimal e confira o resto final 0.',
+                        contas: [
+                            {
+                                id: 'adiv_dec_1',
+                                titulo: 'Operação 1: 5 ÷ 2 (Metade Decimal)',
+                                isDecimal: true,
+                                dividendo: 5,
+                                divisor: 2,
+                                produtoInteiro: 4,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '2,5',
+                                restoEsperado: 0,
+                                passoAPasso: '5 ÷ 2 dá 2 (pois 2 × 2 = 4) e sobra 1. Para continuar, colocamos a vírgula no quociente e acrescentamos 0 ao 1, virando 10! 10 ÷ 2 = 5. O quociente é 2,5 e o resto final é 0!'
+                            },
+                            {
+                                id: 'adiv_dec_2',
+                                titulo: 'Operação 2: 7 ÷ 2 (Metade Decimal)',
+                                isDecimal: true,
+                                dividendo: 7,
+                                divisor: 2,
+                                produtoInteiro: 6,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '3,5',
+                                restoEsperado: 0,
+                                passoAPasso: '7 ÷ 2 dá 3 (pois 3 × 2 = 6) e sobra 1. Acrescentamos a vírgula no quociente e 0 ao resto: 10 ÷ 2 = 5. Quociente final: 3,5 e resto 0!'
+                            },
+                            {
+                                id: 'adiv_dec_3',
+                                titulo: 'Operação 3: 9 ÷ 2 (Metade Decimal)',
+                                isDecimal: true,
+                                dividendo: 9,
+                                divisor: 2,
+                                produtoInteiro: 8,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '4,5',
+                                restoEsperado: 0,
+                                passoAPasso: '9 ÷ 2 dá 4 (pois 4 × 2 = 8) e sobra 1. Adicionamos a vírgula e 0 ao lado do 1: 10 ÷ 2 = 5. Quociente final: 4,5 e resto 0!'
+                            }
+                        ],
+                        dica: 'Dica Forense: Quando não der mais para dividir números inteiros, coloque a vírgula no quociente e ganhe um zero no resto para continuar dividindo até zerar a conta!',
+                        explicacao: 'Excelente início no reino dos números decimais! Você aprendeu que a metade de 5 é 2,5, a de 7 é 3,5 e a de 9 é 4,5.'
+                    },
+                    {
+                        id: 'mat_3_atv_12',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'Algoritmo Decimal da Chave: O Grande Caso do 17 ÷ 2',
+                        instrucoes: 'Aplique a técnica do zero e da vírgula em números maiores! Em 17 ÷ 2, cabe 8 vezes (8 × 2 = 16) e sobra 1. Coloque a <strong>vírgula (,) no quociente</strong>, baixe o <strong>0</strong> para formar 10, e continue: 10 ÷ 2 = 5. O resultado é 8,5! Resolva todas as 3 contas decimais armadas.',
+                        contas: [
+                            {
+                                id: 'adiv_dec_4',
+                                titulo: 'Operação 1: 17 ÷ 2 (Divisão Decimal Finitos)',
+                                isDecimal: true,
+                                dividendo: 17,
+                                divisor: 2,
+                                produtoInteiro: 16,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '8,5',
+                                restoEsperado: 0,
+                                passoAPasso: '17 ÷ 2 = 8 (pois 8 × 2 = 16) com resto 1. Colocamos a vírgula no quociente e 0 no resto -> vira 10. 10 ÷ 2 = 5 (5 × 2 = 10). Subtraindo 10 - 10, resto final 0! Quociente: 8,5.'
+                            },
+                            {
+                                id: 'adiv_dec_5',
+                                titulo: 'Operação 2: 13 ÷ 2 (Divisão Decimal Finitos)',
+                                isDecimal: true,
+                                dividendo: 13,
+                                divisor: 2,
+                                produtoInteiro: 12,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '6,5',
+                                restoEsperado: 0,
+                                passoAPasso: '13 ÷ 2 = 6 (pois 6 × 2 = 12) e sobra 1. Pomos a vírgula e acrescentamos 0 ao lado do 1: 10 ÷ 2 = 5. Resto final 0! Quociente: 6,5.'
+                            },
+                            {
+                                id: 'adiv_dec_6',
+                                titulo: 'Operação 3: 15 ÷ 2 (Divisão Decimal Finitos)',
+                                isDecimal: true,
+                                dividendo: 15,
+                                divisor: 2,
+                                produtoInteiro: 14,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '7,5',
+                                restoEsperado: 0,
+                                passoAPasso: '15 ÷ 2 = 7 (pois 7 × 2 = 14) e sobra 1. Pomos vírgula no quociente e 0 no resto para formar 10: 10 ÷ 2 = 5. Resto final 0! Quociente: 7,5.'
+                            }
+                        ],
+                        dica: 'Dica Forense: Dividir qualquer número ímpar por 2 sempre terminará com ,5 (cinco décimos ou meia unidade)!',
+                        explicacao: 'Sensacional, Agente! 17 ÷ 2 = 8,5; 13 ÷ 2 = 6,5; e 15 ÷ 2 = 7,5. O mistério das metades decimais foi decifrado com perfeição!'
+                    },
+                    {
+                        id: 'mat_3_atv_13',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'Algoritmo Decimal por 5: Conquistando Décimos Precisos',
+                        instrucoes: 'Agora vamos dividir por 5 sem parar no resto! Quando dividimos por 5 e sobra um resto, colocamos a vírgula no quociente e acrescentamos um 0 ao resto. Na tabuada do 5, todo número terminado em 0 tem divisão exata! Encontre os quocientes decimais.',
+                        contas: [
+                            {
+                                id: 'adiv_dec_7',
+                                titulo: 'Operação 1: 12 ÷ 5 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 12,
+                                divisor: 5,
+                                produtoInteiro: 10,
+                                sobraInteira: 2,
+                                produtoDecimal: 20,
+                                quocienteEsperado: '2,4',
+                                restoEsperado: 0,
+                                passoAPasso: '12 ÷ 5 = 2 (pois 2 × 5 = 10) e sobram 2. Pomos vírgula no quociente e 0 no resto -> vira 20! 20 ÷ 5 = 4 (4 × 5 = 20). 20 - 20 = 0. Quociente: 2,4!'
+                            },
+                            {
+                                id: 'adiv_dec_8',
+                                titulo: 'Operação 2: 14 ÷ 5 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 14,
+                                divisor: 5,
+                                produtoInteiro: 10,
+                                sobraInteira: 4,
+                                produtoDecimal: 40,
+                                quocienteEsperado: '2,8',
+                                restoEsperado: 0,
+                                passoAPasso: '14 ÷ 5 = 2 (pois 2 × 5 = 10) e sobram 4. Pomos vírgula e 0 no resto -> vira 40! 40 ÷ 5 = 8 (8 × 5 = 40). 40 - 40 = 0. Quociente: 2,8!'
+                            },
+                            {
+                                id: 'adiv_dec_9',
+                                titulo: 'Operação 3: 21 ÷ 5 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 21,
+                                divisor: 5,
+                                produtoInteiro: 20,
+                                sobraInteira: 1,
+                                produtoDecimal: 10,
+                                quocienteEsperado: '4,2',
+                                restoEsperado: 0,
+                                passoAPasso: '21 ÷ 5 = 4 (pois 4 × 5 = 20) e sobra 1. Pomos vírgula e 0 no resto -> vira 10! 10 ÷ 5 = 2 (2 × 5 = 10). 10 - 10 = 0. Quociente: 4,2!'
+                            }
+                        ],
+                        dica: 'Dica Forense: Ao colocar o 0 no resto, a sobra vira 10, 20, 30 ou 40. Todos estão na tabuada do 5: 5 × 2 = 10, 5 × 4 = 20, 5 × 6 = 30 e 5 × 8 = 40!',
+                        explicacao: 'Extraordinário! Você dominou a divisão decimal com divisor 5: 12 ÷ 5 = 2,4; 14 ÷ 5 = 2,8; e 21 ÷ 5 = 4,2!'
+                    },
+                    {
+                        id: 'mat_3_atv_14',
+                        tipo: 'algoritmo_divisao',
+                        titulo: 'Algoritmo Decimal por 4: Quocientes com Casas Decimais',
+                        instrucoes: 'Vamos treinar a chave com o divisor 4! Quando dividimos por 4 e sobram 2 unidades, colocamos vírgula no quociente e acrescentamos 0 ao 2, virando 20! E 20 ÷ 4 = 5. Calcule o quociente decimal e o resto final 0.',
+                        contas: [
+                            {
+                                id: 'adiv_dec_10',
+                                titulo: 'Operação 1: 6 ÷ 4 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 6,
+                                divisor: 4,
+                                produtoInteiro: 4,
+                                sobraInteira: 2,
+                                produtoDecimal: 20,
+                                quocienteEsperado: '1,5',
+                                restoEsperado: 0,
+                                passoAPasso: '6 ÷ 4 = 1 (pois 1 × 4 = 4) e sobram 2. Pomos a vírgula e 0 no 2 -> vira 20! 20 ÷ 4 = 5 (5 × 4 = 20). 20 - 20 = 0. Quociente: 1,5!'
+                            },
+                            {
+                                id: 'adiv_dec_11',
+                                titulo: 'Operação 2: 10 ÷ 4 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 10,
+                                divisor: 4,
+                                produtoInteiro: 8,
+                                sobraInteira: 2,
+                                produtoDecimal: 20,
+                                quocienteEsperado: '2,5',
+                                restoEsperado: 0,
+                                passoAPasso: '10 ÷ 4 = 2 (pois 2 × 4 = 8) e sobram 2. Pomos vírgula e acrescentamos 0 -> vira 20! 20 ÷ 4 = 5 (5 × 4 = 20). 20 - 20 = 0. Quociente: 2,5!'
+                            },
+                            {
+                                id: 'adiv_dec_12',
+                                titulo: 'Operação 3: 18 ÷ 4 (Divisão Decimal)',
+                                isDecimal: true,
+                                dividendo: 18,
+                                divisor: 4,
+                                produtoInteiro: 16,
+                                sobraInteira: 2,
+                                produtoDecimal: 20,
+                                quocienteEsperado: '4,5',
+                                restoEsperado: 0,
+                                passoAPasso: '18 ÷ 4 = 4 (pois 4 × 4 = 16) e sobram 2. Pomos vírgula e 0 -> vira 20! 20 ÷ 4 = 5 (5 × 4 = 20). 20 - 20 = 0. Quociente: 4,5!'
+                            }
+                        ],
+                        dica: 'Dica Forense: Uma sobra de 2 ao dividir por 4 equivale à metade (2 ÷ 4 = 0,5)! Por isso o quociente sempre termina com ,5!',
+                        explicacao: 'Impressionante precisão! 6 ÷ 4 = 1,5; 10 ÷ 4 = 2,5; e 18 ÷ 4 = 4,5 com resto final 0 zerado com maestria!'
+                    },
+                    {
+                        id: 'mat_3_atv_15',
+                        tipo: 'situacoes_problema_operacoes',
+                        titulo: 'Casos Decimais da Perícia: Divisões Decimais na Prática do Dia a Dia',
+                        instrucoes: 'Situações reais do cotidiano investigativo exigem divisões que continuam até a vírgula decimal! Leia os 4 relatórios periciais, realize o cálculo da divisão decimal e digite a resposta com vírgula (ex: 8,5).',
+                        casos: [
+                            {
+                                id: 'sp_dec_1',
+                                titulo: 'Caso 1: Recompensa em Dinheiro',
+                                operacao: 'Divisão Decimal',
+                                texto: 'Dois agentes detetives receberam uma recompensa de R$ 17 por resolverem um caso e vão dividir o valor igualmente entre si (17 ÷ 2). Quantos reais cada um receberá?',
+                                expressaoDica: '17 ÷ 2',
+                                respostaEsperada: '8,5',
+                                unidade: 'reais'
+                            },
+                            {
+                                id: 'sp_dec_2',
+                                titulo: 'Caso 2: Fita de Isolamento Pericial',
+                                operacao: 'Divisão Decimal',
+                                texto: 'Uma fita de isolamento pericial mede 14 metros e precisa ser cortada em 4 pedaços de comprimentos exatamente iguais (14 ÷ 4). Quantos metros medirá cada pedaço?',
+                                expressaoDica: '14 ÷ 4',
+                                respostaEsperada: '3,5',
+                                unidade: 'metros'
+                            },
+                            {
+                                id: 'sp_dec_3',
+                                titulo: 'Caso 3: Reagente do Laboratório',
+                                operacao: 'Divisão Decimal',
+                                texto: 'O laboratório pericial recebeu um galão com 11 litros de reagente que foram repartidos igualmente em 2 recipientes idênticos (11 ÷ 2). Quantos litros foram colocados em cada recipiente?',
+                                expressaoDica: '11 ÷ 2',
+                                respostaEsperada: '5,5',
+                                unidade: 'litros'
+                            },
+                            {
+                                id: 'sp_dec_4',
+                                titulo: 'Caso 4: Barras Energéticas do Plantão',
+                                operacao: 'Divisão Decimal',
+                                texto: 'Os detetives pediram 13 barras de cereais energéticos para 2 pesquisadores de plantão (13 ÷ 2). Dividindo de forma exata sem sobrar nenhuma, quantas barras cada pesquisador receberá?',
+                                expressaoDica: '13 ÷ 2',
+                                respostaEsperada: '6,5',
+                                unidade: 'barras'
+                            }
+                        ],
+                        dica: 'Dica Forense: Não pare no resto! Ao dividir números ímpares por 2 ou números com sobra por 4, coloque a vírgula para encontrar os decimais (ex: 8,5 reais ou 3,5 metros)!',
+                        explicacao: 'MISSÃO CUMPRIDA COM DISTINÇÃO E LOUVOR! Você dominou completamente a divisão: desde a repartição visual concreta de balas e laranjas até a continuidade do algoritmo na chave gerando decimais exatos finitos!'
+                    }
+                ]
             }
         ]
     },
